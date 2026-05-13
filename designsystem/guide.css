@@ -139,7 +139,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   width: 44px;
   height: 44px;
   background: var(--fs-escuro);
-  border-radius: var(--fs-radius-sm);
+  border-radius: 0;
   align-items: center;
   justify-content: center;
   box-shadow: var(--fs-shadow-card);
@@ -193,6 +193,18 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   letter-spacing: var(--fs-tracking-tight);
   line-height: var(--fs-leading-snug);
   margin-bottom: var(--fs-space-4);
+  padding-bottom: var(--fs-space-6);
+  position: relative;
+}
+
+.sg-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 1px;
+  background: rgba(199,164,83,0.5);
 }
 
 .sg-header h1 em {
@@ -241,8 +253,19 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   text-transform: uppercase;
   color: var(--fs-dourado);
   font-weight: var(--fs-weight-semibold);
-  margin-bottom: var(--fs-space-2);
+  margin-bottom: var(--fs-space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--fs-space-3);
+}
+
+.sg-section__num::before {
+  content: '';
   display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--fs-dourado);
+  flex-shrink: 0;
 }
 
 .sg-section__title {
@@ -313,7 +336,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: var(--fs-musgo-deep);
   background: rgba(78,102,69,0.08);
   padding: 2px 6px;
-  border-radius: var(--fs-radius-xs);
+  border-radius: 0;
 }
 
 .sg-token-value {
@@ -331,7 +354,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .sg-color-card {
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   overflow: hidden;
   border: var(--fs-border);
   background: var(--fs-branco);
@@ -377,7 +400,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .sg-color-chip {
   flex: 1;
   min-width: 0;
-  border-radius: var(--fs-radius-sm);
+  border-radius: 0;
   overflow: hidden;
   border: var(--fs-border);
 }
@@ -400,7 +423,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-8) var(--fs-space-8);
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   margin-bottom: var(--fs-space-4);
 }
 
@@ -529,7 +552,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-6) var(--fs-space-6);
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   margin-bottom: var(--fs-space-4);
 }
 
@@ -559,9 +582,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: var(--fs-font-body);
   font-size: var(--fs-text-button);
   font-weight: var(--fs-weight-medium);
-  letter-spacing: var(--fs-tracking-wide);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  border-radius: var(--fs-radius-sm);
+  border-radius: 0;
   transition: all var(--fs-transition-base);
   cursor: pointer;
   border: 1px solid transparent;
@@ -740,13 +763,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .fs-dish-card {
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
   overflow: hidden;
-  transition: box-shadow var(--fs-transition-base), transform var(--fs-transition-base);
+  transition: border-color var(--fs-transition-base);
 }
 .fs-dish-card:hover {
-  box-shadow: var(--fs-shadow-card);
-  transform: translateY(-2px);
+  border-bottom-color: var(--fs-dourado);
 }
 
 .fs-dish-card__img {
@@ -798,7 +821,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .fs-feature-card {
   background: var(--fs-areia-100);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   padding: var(--fs-space-8) var(--fs-space-6);
   text-align: center;
   border-top: 2px solid var(--fs-dourado);
@@ -839,28 +862,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .fs-proof-card {
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-left: 2px solid var(--fs-dourado);
+  border-radius: 0;
   padding: var(--fs-space-6);
   position: relative;
 }
 
 .fs-proof-card::before {
-  content: '\201C';
-  font-family: var(--fs-font-display);
-  font-size: 4rem;
-  color: var(--fs-dourado);
-  line-height: 0.5;
-  position: absolute;
-  top: var(--fs-space-5);
-  left: var(--fs-space-5);
-  opacity: 0.4;
+  content: none;
 }
 
 .fs-proof-card__text {
   font-size: var(--fs-text-body-sm);
   color: var(--fs-terra);
   line-height: var(--fs-leading-relaxed);
-  margin-top: var(--fs-space-5);
+  margin-top: 0;
   font-style: italic;
 }
 
@@ -877,7 +893,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .fs-info-card {
   background: var(--fs-areia-50);
   border: var(--fs-border-dourado);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   padding: var(--fs-space-5) var(--fs-space-6);
   display: flex;
   align-items: flex-start;
@@ -909,7 +925,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .sg-sample {
   border: 1px dashed var(--fs-dourado);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   overflow: hidden;
   margin-bottom: var(--fs-space-8);
   position: relative;
@@ -925,7 +941,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: var(--fs-dourado);
   color: var(--fs-escuro);
   padding: 3px 8px;
-  border-radius: var(--fs-radius-xs);
+  border-radius: 0;
   font-weight: var(--fs-weight-semibold);
   z-index: 2;
 }
@@ -999,7 +1015,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .sg-sample--chef .chef-photo {
   background: var(--fs-areia-200);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   height: 320px;
   display: flex;
   align-items: center;
@@ -1107,7 +1123,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: var(--fs-terra-deep);
   background: var(--fs-branco);
   border: var(--fs-border-medium);
-  border-radius: var(--fs-radius-sm);
+  border-radius: 0;
   transition: border-color var(--fs-transition-fast), box-shadow var(--fs-transition-fast);
   appearance: none;
   line-height: var(--fs-leading-normal);
@@ -1151,7 +1167,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .fs-accordion {
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   overflow: hidden;
   background: var(--fs-branco);
 }
@@ -1303,7 +1319,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-4) var(--fs-space-5);
   background: rgba(199,164,83,0.10);
   border: var(--fs-border-dourado);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   font-size: var(--fs-text-caption);
   color: var(--fs-terra);
   line-height: var(--fs-leading-relaxed);
@@ -1336,7 +1352,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-5);
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   min-width: 100px;
   text-align: center;
 }
@@ -1364,7 +1380,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-3) var(--fs-space-4);
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-sm);
+  border-radius: 0;
 }
 
 .sg-spacing-bar {
@@ -1393,7 +1409,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   gap: var(--fs-space-3);
   background: var(--fs-areia-200);
   padding: var(--fs-space-3);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   margin-bottom: var(--fs-space-3);
 }
 
@@ -1414,7 +1430,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .sg-shadow-card {
   background: var(--fs-branco);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   padding: var(--fs-space-8) var(--fs-space-6);
   text-align: center;
 }
@@ -1466,7 +1482,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .sg-img-rule {
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -1516,7 +1532,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-4) var(--fs-space-5);
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   font-size: var(--fs-text-caption);
   color: var(--fs-terra);
   line-height: 1.5;
@@ -1537,7 +1553,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   width: 20px;
   height: 20px;
   border: 1.5px solid rgba(107,66,38,0.3);
-  border-radius: var(--fs-radius-xs);
+  border-radius: 0;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -1577,7 +1593,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-4) var(--fs-space-5);
   background: rgba(192,57,43,0.04);
   border: 1px solid rgba(192,57,43,0.12);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
 }
 
 .sg-avoid-icon {
@@ -1614,7 +1630,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-4) var(--fs-space-5);
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   border-left: 3px solid var(--fs-musgo);
 }
 
@@ -1639,7 +1655,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .sg-contrast-block {
-  border-radius: var(--fs-radius-sm);
+  border-radius: 0;
   padding: var(--fs-space-4);
   text-align: center;
 }
@@ -1678,7 +1694,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-5);
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
 }
 
 .sg-motion-item__label {
@@ -1745,7 +1761,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: var(--fs-space-6) var(--fs-space-6);
   background: var(--fs-branco);
   border: var(--fs-border);
-  border-radius: var(--fs-radius-md);
+  border-radius: 0;
   border-top: 2px solid var(--fs-dourado);
 }
 

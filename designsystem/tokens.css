@@ -125,7 +125,10 @@
 
 
   /* ── BORDER RADIUS ──────────────────────────────── */
+  /* Componentes de UI (botões, cards, inputs) usam border-radius: 0 */
+  /* Estes tokens existem para referência e para elementos circulares */
 
+  --fs-radius-none: 0;
   --fs-radius-xs:   2px;
   --fs-radius-sm:   4px;
   --fs-radius-md:   8px;
