@@ -1,5 +1,5 @@
 /* =====================================================
-   GUIDE JS — STYLE GUIDE · FLOR DE SAL BISTRÔ & BAR
+   GUIDE JS — DESIGN SYSTEM · FLOR DE SAL BISTRÔ & BAR
    ===================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
