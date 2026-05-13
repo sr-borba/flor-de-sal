@@ -433,6 +433,53 @@
           <div class="sg-motion-demo"></div>
         </div>
       </div>
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Parallax — Profundidade suave ao rolar</h3>
+        <div class="sg-parallax-demo" id="sg-parallax-demo">
+          <div class="sg-parallax-demo__bg" id="sg-parallax-bg"></div>
+          <div class="sg-parallax-demo__content">
+            <p class="sg-parallax-demo__label">Parallax scroll · role a página para sentir o efeito</p>
+            <p class="sg-parallax-demo__headline">Uma noite à beira-mar,<br><em>sabores do Nordeste</em></p>
+            <div class="fs-scroll-indicator">Scroll</div>
+          </div>
+        </div>
+        <p style="font-size:var(--fs-text-caption);color:rgba(250,250,248,.35);margin-top:var(--fs-space-3)">
+          Use <code style="color:var(--fs-dourado);font-size:0.75rem">.fs-parallax</code> +
+          <code style="color:var(--fs-dourado);font-size:0.75rem">.fs-parallax__bg</code>.
+          Desloca o fundo em ~18% do offset de scroll. Sempre com <code style="color:var(--fs-dourado);font-size:0.75rem">will-change: transform</code>.
+        </p>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Animate In — Entrada gradual ao rolar</h3>
+        <div class="sg-animate-demo">
+          <div class="sg-animate-box fs-animate-in" data-animate>
+            <div class="sg-animate-box__label">fs-animate-in</div>
+            <div class="sg-animate-box__code">fade-up · 0.7s · sem delay</div>
+          </div>
+          <div class="sg-animate-box fs-animate-in fs-animate-in--delay-1" data-animate>
+            <div class="sg-animate-box__label">fs-animate-in--delay-1</div>
+            <div class="sg-animate-box__code">delay: 0.1s</div>
+          </div>
+          <div class="sg-animate-box fs-animate-in fs-animate-in--delay-2" data-animate>
+            <div class="sg-animate-box__label">fs-animate-in--delay-2</div>
+            <div class="sg-animate-box__code">delay: 0.25s</div>
+          </div>
+          <div class="sg-animate-box fs-animate-in fs-animate-in--delay-3" data-animate>
+            <div class="sg-animate-box__label">fs-animate-in--delay-3</div>
+            <div class="sg-animate-box__code">delay: 0.4s</div>
+          </div>
+          <div class="sg-animate-box fs-animate-fade" data-animate>
+            <div class="sg-animate-box__label">fs-animate-fade</div>
+            <div class="sg-animate-box__code">fade only · 0.9s</div>
+          </div>
+        </div>
+        <p style="font-size:var(--fs-text-caption);color:rgba(250,250,248,.35);margin-top:var(--fs-space-3)">
+          Adicione <code style="color:var(--fs-dourado);font-size:0.75rem">data-animate</code> ao elemento.
+          O JS adiciona <code style="color:var(--fs-dourado);font-size:0.75rem">.is-visible</code> via IntersectionObserver quando entra na viewport.
+        </p>
+      </div>
+
     </section>
 
     <!-- ══ 06 BOTÕES ══════════════════════════════════ -->
@@ -592,6 +639,33 @@
           </div>
         </div>
       </div>
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Editorial Card — Cursos do Menu</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--fs-space-3);background:var(--fs-areia-100);padding:var(--fs-space-8);border:1px solid rgba(107,66,38,0.08)">
+          <div class="fs-feature-card--light">
+            <div class="fs-feature-card__ghost">01</div>
+            <div class="fs-feature-card__title">Les Entrées</div>
+            <div class="fs-feature-card__desc">O primeiro movimento da noite: frescor, crocância e notas do mar para abrir o encontro.</div>
+            <div class="fs-feature-card__img">Foto do prato</div>
+          </div>
+          <div class="fs-feature-card--light">
+            <div class="fs-feature-card__ghost">02</div>
+            <div class="fs-feature-card__title">Les Signatures</div>
+            <div class="fs-feature-card__desc">Obras-primas principais com Provence, frutos do mar, bisque e cortes nobres em uma sequência memorável.</div>
+            <div class="fs-feature-card__img">Foto do prato</div>
+          </div>
+          <div class="fs-feature-card--light">
+            <div class="fs-feature-card__ghost">03</div>
+            <div class="fs-feature-card__title">Les Desserts</div>
+            <div class="fs-feature-card__desc">Um fechamento delicado, doce e cinematográfico, feito para o último brinde durar um pouco mais.</div>
+            <div class="fs-feature-card__img">Foto do prato</div>
+          </div>
+        </div>
+        <p style="font-size:var(--fs-text-caption);color:var(--fs-terra);margin-top:var(--fs-space-3)">
+          Use <code style="font-size:0.75rem">.fs-feature-card--light</code> com <code style="font-size:0.75rem">.fs-feature-card__ghost</code> para o número fantasma absoluto. Fundo sempre areia. Grade mínima: 3 colunas.
+        </p>
+      </div>
+
     </section>
 
     <!-- ══ 09 FORMULÁRIOS ════════════════════════════ -->
@@ -651,6 +725,94 @@
           <button class="fs-btn fs-btn--primary" style="width:100%">Enviar Reserva</button>
         </div>
       </div>
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Formulário de Reserva — Split</h3>
+        <div class="sg-reservation-demo">
+
+          <!-- COLUNA ESQUERDA: oferta -->
+          <div class="sg-reservation-demo__offer">
+            <span class="sg-reservation-demo__eyebrow">Reserva Exclusiva</span>
+            <h3 class="sg-reservation-demo__headline">Garanta a mesa da sua noite em Saint-Tropez</h3>
+            <p class="sg-reservation-demo__sub">Poucas noites merecem ser deixadas para depois. Escolha o horário, informe os convidados e deixe o Dia dos Namorados começar antes mesmo do primeiro brinde.</p>
+
+            <div class="fs-price-display">
+              <span class="fs-price-display__value">R$ 295</span>
+              <span class="fs-price-display__unit">por pessoa</span>
+            </div>
+            <p class="sg-reservation-demo__sub" style="margin-bottom:var(--fs-space-6)">R$ 590 o casal · jantar degustação completo à beira-mar.</p>
+
+            <ul style="list-style:disc;padding-left:var(--fs-space-5);display:flex;flex-direction:column;gap:var(--fs-space-3)">
+              <li style="font-size:var(--fs-text-caption);color:rgba(250,250,248,0.5);line-height:1.6">Menu em sequência criado para o casal viver a experiência completa.</li>
+              <li style="font-size:var(--fs-text-caption);color:rgba(250,250,248,0.5);line-height:1.6">Horários selecionados para uma noite íntima, elegante e sem pressa.</li>
+              <li style="font-size:var(--fs-text-caption);color:rgba(250,250,248,0.5);line-height:1.6">Confirmação pela central após a reserva.</li>
+            </ul>
+          </div>
+
+          <!-- COLUNA DIREITA: formulário -->
+          <div class="sg-reservation-demo__form">
+            <h4 class="sg-reservation-demo__form-title">Sua mesa espera por vocês</h4>
+            <p class="sg-reservation-demo__form-sub">Preencha os dados para reservar este momento.</p>
+
+            <div class="sg-form-2col">
+              <div class="sg-form-field">
+                <label class="sg-field-label">Nome completo</label>
+                <input class="fs-input" type="text" placeholder="Nome e sobrenome" />
+              </div>
+              <div class="sg-form-field">
+                <label class="sg-field-label">E-mail</label>
+                <input class="fs-input" type="email" placeholder="seu@email.com" />
+              </div>
+              <div class="sg-form-field">
+                <label class="sg-field-label">Telefone/WhatsApp</label>
+                <input class="fs-input" type="tel" placeholder="(82) 9 0000-0000" />
+              </div>
+              <div class="sg-form-field">
+                <label class="sg-field-label">@Instagram opcional</label>
+                <input class="fs-input" type="text" placeholder="@" />
+              </div>
+            </div>
+
+            <div class="sg-form-field">
+              <span class="sg-form-section-label">Quantidade de pessoas</span>
+              <div class="fs-stepper">
+                <button class="fs-stepper__btn" data-stepper-dec aria-label="Diminuir">−</button>
+                <span class="fs-stepper__value" data-value="2">2 pessoas</span>
+                <button class="fs-stepper__btn" data-stepper-inc aria-label="Aumentar">+</button>
+              </div>
+            </div>
+
+            <div class="sg-form-field">
+              <span class="sg-form-section-label">Horário do serviço</span>
+              <div class="fs-time-slots">
+                <div class="fs-time-slot is-selected" data-time="20h">20H</div>
+                <div class="fs-time-slot" data-time="21h">21H</div>
+                <div class="fs-time-slot" data-time="22h">22H</div>
+                <div class="fs-time-slot" data-time="23h">23H</div>
+              </div>
+            </div>
+
+            <div class="fs-stats-row" style="margin-bottom:var(--fs-space-4)">
+              <div class="fs-stat-box">
+                <span class="fs-stat-box__label">Pessoas</span>
+                <span class="fs-stat-box__value" data-stat-people>2</span>
+              </div>
+              <div class="fs-stat-box">
+                <span class="fs-stat-box__label">Total</span>
+                <span class="fs-stat-box__value" data-stat-total>R$ 590</span>
+              </div>
+              <div class="fs-stat-box">
+                <span class="fs-stat-box__label">Evento</span>
+                <span class="fs-stat-box__value" data-stat-evento>20h às 00h</span>
+              </div>
+            </div>
+
+            <button class="fs-btn fs-btn--primary" style="width:100%;justify-content:center">Reservar pela Central</button>
+            <p class="sg-reservation-demo__microcopy">Você será direcionado ao WhatsApp da central com os dados da sua solicitação.</p>
+          </div>
+
+        </div>
+      </div>
+
     </section>
 
     <!-- ══ 10 ACCORDION ══════════════════════════════ -->
@@ -858,6 +1020,84 @@
           <p class="cta-locations">Pajuçara · Maceió · Alagoas</p>
         </div>
       </div>
+      <div class="sg-sample">
+        <span class="sg-sample__label">Le Menu — Lista de Pratos</span>
+        <div style="background:var(--fs-escuro);padding:var(--fs-space-20) var(--fs-space-16)">
+          <div style="max-width:720px;margin:0 auto">
+            <span class="fs-split__eyebrow">Le Menu</span>
+            <h2 style="font-family:var(--fs-font-display);font-size:clamp(2rem,4vw,3.25rem);font-style:italic;font-weight:300;color:var(--fs-branco);line-height:1.05;margin:0 0 var(--fs-space-4)">Sabores da Provence,<br>à beira-mar em Maceió</h2>
+            <p class="fs-split__body" style="margin-bottom:var(--fs-space-12)">Uma jornada à mesa: entradas delicadas, principais com presença e sobremesas para terminar sem pressa.</p>
+
+            <div class="fs-menu-list">
+              <div class="fs-menu-category">
+                <span class="fs-menu-category__label">Mise en Bouche</span>
+                <span class="fs-menu-category__note">(pequenas entradas)</span>
+                <div class="fs-menu-category__line"></div>
+              </div>
+              <div class="fs-menu-item">
+                <span class="fs-menu-item__name">Tuna com gazpacho</span>
+                <span class="fs-menu-item__tag">Frescor</span>
+                <span class="fs-menu-item__desc">Atum em composição fria, com gazpacho e notas refrescantes de kiwi e hortelã.</span>
+              </div>
+              <div class="fs-menu-item">
+                <span class="fs-menu-item__name">Croquetas de pato</span>
+                <span class="fs-menu-item__tag">Textura</span>
+                <span class="fs-menu-item__desc">Crocância delicada com aioli de laranja Bahia.</span>
+              </div>
+              <div class="fs-menu-item">
+                <span class="fs-menu-item__name">Mini vol-au-vent de frutos do mar</span>
+                <span class="fs-menu-item__tag">Mar</span>
+                <span class="fs-menu-item__desc">Massa leve e amanteigada, recheio de frutos do mar e ovas de peixe.</span>
+              </div>
+
+              <div class="fs-menu-category" style="margin-top:var(--fs-space-10)">
+                <span class="fs-menu-category__label">Les Signatures</span>
+                <span class="fs-menu-category__note">(pratos principais)</span>
+                <div class="fs-menu-category__line"></div>
+              </div>
+              <div class="fs-menu-item">
+                <span class="fs-menu-item__name">Camarão ao bisque de lagosta</span>
+                <span class="fs-menu-item__tag">Mar</span>
+                <span class="fs-menu-item__desc">Camarão rosa grelhado, bisque cremoso e crocante de tapioca.</span>
+              </div>
+              <div class="fs-menu-item">
+                <span class="fs-menu-item__name">Carré de cordeiro com jus</span>
+                <span class="fs-menu-item__tag">Carne</span>
+                <span class="fs-menu-item__desc">Carré rosado, jus de ervas, purê de celeriac e haricots verts.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-sample">
+        <span class="sg-sample__label">L'Ambiance — Split com Galeria</span>
+        <div style="background:#1a1007;padding:var(--fs-space-20) var(--fs-space-16)">
+          <div class="fs-split" style="margin-bottom:var(--fs-space-12)">
+            <div>
+              <span class="fs-split__eyebrow">L'Ambiance</span>
+              <h2 class="fs-split__headline">O Sais acende<br>a Riviera<br>na Pajuçara</h2>
+            </div>
+            <div>
+              <p class="fs-split__body">Em frente às piscinas naturais da Pajuçara, o Sais une sofisticação contemporânea, design biofílico e materiais que celebram Alagoas. Para a noite dos namorados, esse refúgio à beira-mar vira cenário de luz baixa, música, gastronomia e conversa sem pressa.</p>
+            </div>
+          </div>
+          <div class="fs-gallery-grid">
+            <div class="fs-gallery-item">
+              <div class="fs-gallery-item__placeholder">Foto principal</div>
+            </div>
+            <div class="fs-gallery-item">
+              <div class="fs-gallery-item__placeholder">Foto 02</div>
+              <span class="fs-gallery-item__caption">Música ao vivo</span>
+            </div>
+            <div class="fs-gallery-item">
+              <div class="fs-gallery-item__placeholder">Foto 03</div>
+              <span class="fs-gallery-item__caption">Primeiro brinde</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- ══ 14 IMAGENS ═════════════════════════════════ -->

@@ -149,4 +149,95 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+
+  /* ── PARALLAX ──────────────────────────────────── */
+  const parallaxBg = document.getElementById('sg-parallax-bg');
+  const parallaxEl = document.getElementById('sg-parallax-demo');
+  if (parallaxBg && parallaxEl) {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced) {
+      window.addEventListener('scroll', () => {
+        const rect = parallaxEl.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const offset = (center - window.innerHeight / 2) * 0.18;
+        parallaxBg.style.transform = `translateY(${offset}px)`;
+      }, { passive: true });
+    }
+  }
+
+
+  /* ── ANIMATE IN — IntersectionObserver ─────────── */
+  const animateEls = document.querySelectorAll('[data-animate]');
+  if (animateEls.length) {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      animateEls.forEach(el => el.classList.add('is-visible'));
+    } else {
+      const aio = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            aio.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      animateEls.forEach(el => aio.observe(el));
+    }
+  }
+
+
+  /* ── STEPPER — Quantidade de pessoas ───────────── */
+  document.querySelectorAll('.fs-stepper').forEach(stepper => {
+    const valueEl = stepper.querySelector('.fs-stepper__value');
+    const minusBtn = stepper.querySelector('[data-stepper-dec]');
+    const plusBtn  = stepper.querySelector('[data-stepper-inc]');
+    if (!valueEl) return;
+
+    let count = parseInt(valueEl.dataset.value || 2, 10);
+
+    function updateStepper() {
+      valueEl.textContent = count + (count === 1 ? ' pessoa' : ' pessoas');
+      valueEl.dataset.value = count;
+      updateReservationStats();
+    }
+
+    minusBtn && minusBtn.addEventListener('click', () => {
+      if (count > 1) { count--; updateStepper(); }
+    });
+    plusBtn && plusBtn.addEventListener('click', () => {
+      if (count < 20) { count++; updateStepper(); }
+    });
+  });
+
+
+  /* ── TIME SLOTS ────────────────────────────────── */
+  document.querySelectorAll('.fs-time-slots').forEach(group => {
+    group.querySelectorAll('.fs-time-slot').forEach(slot => {
+      slot.addEventListener('click', () => {
+        group.querySelectorAll('.fs-time-slot').forEach(s => s.classList.remove('is-selected'));
+        slot.classList.add('is-selected');
+        updateReservationStats();
+      });
+    });
+  });
+
+
+  /* ── STATS — Resumo da reserva ─────────────────── */
+  function updateReservationStats() {
+    const stepperVal = document.querySelector('.fs-stepper__value');
+    const selectedSlot = document.querySelector('.fs-time-slot.is-selected');
+    if (!stepperVal) return;
+
+    const count = parseInt(stepperVal.dataset.value || 2, 10);
+    const total = count * 295;
+
+    const peopleEl = document.querySelector('[data-stat-people]');
+    const totalEl  = document.querySelector('[data-stat-total]');
+    const eventoEl = document.querySelector('[data-stat-evento]');
+
+    if (peopleEl) peopleEl.textContent = count;
+    if (totalEl)  totalEl.textContent  = 'R$ ' + total.toLocaleString('pt-BR');
+    if (eventoEl && selectedSlot) eventoEl.textContent = selectedSlot.dataset.time + ' às 00h';
+  }
+
 });
