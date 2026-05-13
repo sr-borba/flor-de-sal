@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Style Guide — Flor de Sal Bistrô & Bar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="guide.css" />
+</head>
+<body>
+<div class="sg-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sg-sidebar">
+    <div class="sg-sidebar__brand">
+      <img class="sg-sidebar__logo"
+           src="../Identidade%20Visual/SVG/Logotipo_Icone_Dourado.svg"
+           alt="Flor de Sal"
+           onerror="this.style.display='none'" />
+      <div>
+        <div class="sg-sidebar__title">Flor de Sal</div>
+        <div class="sg-sidebar__subtitle">Design System</div>
+      </div>
+    </div>
+
+    <nav class="sg-nav">
+      <div class="sg-nav__group-label">Fundamentos</div>
+      <a class="sg-nav__item" href="#cores"><span class="num">01</span>Cores</a>
+      <a class="sg-nav__item" href="#tipografia"><span class="num">02</span>Tipografia</a>
+      <a class="sg-nav__item" href="#espacamento"><span class="num">03</span>Espaçamento</a>
+      <a class="sg-nav__item" href="#sombras"><span class="num">04</span>Sombras & Bordas</a>
+      <a class="sg-nav__item" href="#motion"><span class="num">05</span>Motion</a>
+
+      <div class="sg-nav__group-label">Componentes</div>
+      <a class="sg-nav__item" href="#botoes"><span class="num">06</span>Botões</a>
+      <a class="sg-nav__item" href="#badges"><span class="num">07</span>Badges</a>
+      <a class="sg-nav__item" href="#cards"><span class="num">08</span>Cards</a>
+      <a class="sg-nav__item" href="#formularios"><span class="num">09</span>Formulários</a>
+      <a class="sg-nav__item" href="#accordion"><span class="num">10</span>Accordion</a>
+      <a class="sg-nav__item" href="#icones"><span class="num">11</span>Ícones</a>
+      <a class="sg-nav__item" href="#sticky"><span class="num">12</span>Sticky CTA</a>
+
+      <div class="sg-nav__group-label">Padrões</div>
+      <a class="sg-nav__item" href="#secoes"><span class="num">13</span>Seções Modelo</a>
+      <a class="sg-nav__item" href="#imagens"><span class="num">14</span>Imagens</a>
+      <a class="sg-nav__item" href="#checklist"><span class="num">15</span>Checklist</a>
+      <a class="sg-nav__item" href="#evitar"><span class="num">16</span>O que Evitar</a>
+      <a class="sg-nav__item" href="#acessibilidade"><span class="num">17</span>Acessibilidade</a>
+      <a class="sg-nav__item" href="#principios"><span class="num">18</span>Princípios</a>
+    </nav>
+  </aside>
+
+  <!-- MOBILE TOGGLE -->
+  <button class="sg-mobile-toggle" aria-label="Abrir menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+  </button>
+
+  <!-- MAIN -->
+  <main class="sg-main">
+
+    <!-- HEADER -->
+    <header class="sg-header">
+      <div class="sg-header__badge">Design System</div>
+      <h1>Flor de Sal<br><em>Bistrô & Bar</em></h1>
+      <p style="color:rgba(250,250,248,.6);font-size:var(--fs-text-body-sm);line-height:1.7;max-width:52ch;margin-top:var(--fs-space-4)">
+        Referência visual oficial do restaurante. Sais Beach Living Hotel — Pajuçara, Maceió, Alagoas.
+      </p>
+      <div class="sg-header__meta">
+        <div class="sg-header__meta-item"><strong>Versão</strong>1.0.0</div>
+        <div class="sg-header__meta-item"><strong>Projeto</strong>Landing Page Jantar</div>
+        <div class="sg-header__meta-item"><strong>Fontes</strong>Cormorant Garamond + Inter</div>
+        <div class="sg-header__meta-item"><strong>Status</strong>Ativo</div>
+      </div>
+    </header>
+
+    <!-- ══ 01 CORES ══════════════════════════════════ -->
+    <section class="sg-section" id="cores">
+      <div class="sg-section__header">
+        <span class="sg-section__num">01</span>
+        <h2 class="sg-section__title">Paleta de Cores</h2>
+        <p class="sg-section__desc">Cores derivadas do ambiente natural de Pajuçara — areia, terra, musgo e dourado do pôr-do-sol.</p>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Cores primárias</h3>
+        <div class="sg-color-grid">
+          <div class="sg-color-card">
+            <div class="sg-color-swatch" style="background:#c7a453"></div>
+            <div class="sg-color-info">
+              <span class="sg-color-name">Dourado</span>
+              <span class="sg-color-hex">--fs-dourado · #c7a453</span>
+              <span class="sg-color-role">CTA, destaques, logotipo</span>
+            </div>
+          </div>
+          <div class="sg-color-card">
+            <div class="sg-color-swatch" style="background:#3D2015"></div>
+            <div class="sg-color-info">
+              <span class="sg-color-name">Terra Deep</span>
+              <span class="sg-color-hex">--fs-terra-deep · #3D2015</span>
+              <span class="sg-color-role">Títulos, textos principais</span>
+            </div>
+          </div>
+          <div class="sg-color-card">
+            <div class="sg-color-swatch" style="background:#1A0E06"></div>
+            <div class="sg-color-info">
+              <span class="sg-color-name">Escuro</span>
+              <span class="sg-color-hex">--fs-escuro · #1A0E06</span>
+              <span class="sg-color-role">Hero, CTA final, sidebar</span>
+            </div>
+          </div>
+          <div class="sg-color-card">
+            <div class="sg-color-swatch" style="background:#F5EDD8"></div>
+            <div class="sg-color-info">
+              <span class="sg-color-name">Areia</span>
+              <span class="sg-color-hex">--fs-areia · #F5EDD8</span>
+              <span class="sg-color-role">Fundo principal, áreas de respiro</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Escala Terra</h3>
+        <div class="sg-color-row">
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#C4997A"></div>
+            <div class="sg-color-chip__label">200 · #C4997A</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#9A6644"></div>
+            <div class="sg-color-chip__label">400 · #9A6644</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#6B4226"></div>
+            <div class="sg-color-chip__label">base · #6B4226</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#3D2015"></div>
+            <div class="sg-color-chip__label">deep · #3D2015</div>
+          </div>
+        </div>
+
+        <h3 class="sg-subsection__title">Escala Dourado</h3>
+        <div class="sg-color-row">
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#E3CC8A"></div>
+            <div class="sg-color-chip__label">200 · #E3CC8A</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#c7a453"></div>
+            <div class="sg-color-chip__label">base · #c7a453</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#96762A"></div>
+            <div class="sg-color-chip__label">deep · #96762A</div>
+          </div>
+        </div>
+
+        <h3 class="sg-subsection__title">Escala Musgo</h3>
+        <div class="sg-color-row">
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#8A9E7A"></div>
+            <div class="sg-color-chip__label">300 · #8A9E7A</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#4E6645"></div>
+            <div class="sg-color-chip__label">base · #4E6645</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#334430"></div>
+            <div class="sg-color-chip__label">deep · #334430</div>
+          </div>
+        </div>
+
+        <h3 class="sg-subsection__title">Escala Areia & Neutros</h3>
+        <div class="sg-color-row">
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#FEFCF6;border:1px solid #eee"></div>
+            <div class="sg-color-chip__label">50 · #FEFCF6</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#F5EDD8"></div>
+            <div class="sg-color-chip__label">100 · #F5EDD8</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#EAD9B4"></div>
+            <div class="sg-color-chip__label">200 · #EAD9B4</div>
+          </div>
+          <div class="sg-color-chip">
+            <div class="sg-color-chip__swatch" style="background:#D9C898"></div>
+            <div class="sg-color-chip__label">300 · #D9C898</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Tokens — referência completa</h3>
+        <table class="sg-token-table">
+          <thead>
+            <tr><th>Token</th><th>Valor</th><th>Uso</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="sg-token-name">--fs-areia-50</span></td><td class="sg-token-value">#FEFCF6</td><td>Fundo base</td></tr>
+            <tr><td><span class="sg-token-name">--fs-areia-100</span></td><td class="sg-token-value">#F5EDD8</td><td>Fundos secundários</td></tr>
+            <tr><td><span class="sg-token-name">--fs-terra-deep</span></td><td class="sg-token-value">#3D2015</td><td>Textos principais</td></tr>
+            <tr><td><span class="sg-token-name">--fs-terra</span></td><td class="sg-token-value">#6B4226</td><td>Textos corpo</td></tr>
+            <tr><td><span class="sg-token-name">--fs-dourado</span></td><td class="sg-token-value">#c7a453</td><td>Destaques, CTA</td></tr>
+            <tr><td><span class="sg-token-name">--fs-dourado-deep</span></td><td class="sg-token-value">#96762A</td><td>Hover dourado</td></tr>
+            <tr><td><span class="sg-token-name">--fs-musgo</span></td><td class="sg-token-value">#4E6645</td><td>Sucesso, badges localização</td></tr>
+            <tr><td><span class="sg-token-name">--fs-escuro</span></td><td class="sg-token-value">#1A0E06</td><td>Hero, sidebar, CTA final</td></tr>
+            <tr><td><span class="sg-token-name">--fs-branco</span></td><td class="sg-token-value">#FAFAF8</td><td>Textos sobre escuro</td></tr>
+            <tr><td><span class="sg-token-name">--fs-vermelho</span></td><td class="sg-token-value">#8B2020</td><td>Logotipo alternativo (restrito)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══ 02 TIPOGRAFIA ═════════════════════════════ -->
+    <section class="sg-section" id="tipografia">
+      <div class="sg-section__header">
+        <span class="sg-section__num">02</span>
+        <h2 class="sg-section__title">Tipografia</h2>
+        <p class="sg-section__desc">Cormorant Garamond para títulos — elegância e peso histórico. Inter para corpo — legibilidade e modernidade.</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">H1 — Display <span>Cormorant Garamond Light · clamp(2.25rem → 3.75rem)</span></div>
+        <p class="sg-type-h1">Uma noite à beira-mar,<br>sabores do Nordeste</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">H2 — Seção <span>Cormorant Garamond Regular · clamp(1.625rem → 2.5rem)</span></div>
+        <p class="sg-type-h2">O Chef e sua história com o mar</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">H3 — Subseção <span>Cormorant Garamond Medium · clamp(1.25rem → 1.75rem)</span></div>
+        <p class="sg-type-h3">Ingredientes frescos do litoral alagoano</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">Sub — Linha de apoio <span>Inter Light · clamp(1rem → 1.25rem)</span></div>
+        <p class="sg-type-sub">Culinária autoral com raízes no sertão e olhos voltados ao mar</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">Body — Corpo <span>Inter Regular · 1rem</span></div>
+        <p class="sg-type-body">O Flor de Sal Bistrô & Bar nasceu da vontade de contar a história de Alagoas por meio da gastronomia. Cada prato é uma conversa entre o interior e o litoral, entre o passado e o presente.</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">Caption <span>Inter Regular · 0.875rem</span></div>
+        <p class="sg-type-caption">Reserve com antecedência. Capacidade limitada a 40 convidados por noite.</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">Micro <span>Inter Regular · 0.75rem · tracking +0.04em</span></div>
+        <p class="sg-type-micro">Pajuçara · Maceió · Alagoas</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">Button <span>Inter Medium · 0.875rem · uppercase · tracking +0.04em</span></div>
+        <p class="sg-type-button">Reservar minha mesa</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">Badge <span>Inter SemiBold · 0.6875rem · uppercase · tracking +0.14em</span></div>
+        <p class="sg-type-badge">Jantar Exclusivo</p>
+      </div>
+
+      <div class="sg-type-sample">
+        <div class="sg-type-sample__label">Quote <span>Cormorant Garamond Italic · clamp(1.125rem → 1.5rem)</span></div>
+        <blockquote class="sg-type-quote">"A cozinha é a memória afetiva de um povo, temperada com o sal do mar e a sabedoria da terra."</blockquote>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Tokens de tipografia</h3>
+        <table class="sg-token-table">
+          <thead><tr><th>Token</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td><span class="sg-token-name">--fs-font-display</span></td><td class="sg-token-value">'Cormorant Garamond', Georgia, serif</td></tr>
+            <tr><td><span class="sg-token-name">--fs-font-body</span></td><td class="sg-token-value">'Inter', system-ui, sans-serif</td></tr>
+            <tr><td><span class="sg-token-name">--fs-text-h1</span></td><td class="sg-token-value">clamp(2.25rem, 5vw, 3.75rem)</td></tr>
+            <tr><td><span class="sg-token-name">--fs-text-h2</span></td><td class="sg-token-value">clamp(1.625rem, 3.5vw, 2.5rem)</td></tr>
+            <tr><td><span class="sg-token-name">--fs-text-h3</span></td><td class="sg-token-value">clamp(1.25rem, 2.5vw, 1.75rem)</td></tr>
+            <tr><td><span class="sg-token-name">--fs-weight-light</span></td><td class="sg-token-value">300</td></tr>
+            <tr><td><span class="sg-token-name">--fs-weight-regular</span></td><td class="sg-token-value">400</td></tr>
+            <tr><td><span class="sg-token-name">--fs-weight-medium</span></td><td class="sg-token-value">500</td></tr>
+            <tr><td><span class="sg-token-name">--fs-weight-semibold</span></td><td class="sg-token-value">600</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══ 03 ESPAÇAMENTO ════════════════════════════ -->
+    <section class="sg-section" id="espacamento">
+      <div class="sg-section__header">
+        <span class="sg-section__num">03</span>
+        <h2 class="sg-section__title">Espaçamento & Grid</h2>
+        <p class="sg-section__desc">Escala em base-4. Container máximo de 1200px com 12 colunas em desktop.</p>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Escala de espaçamento</h3>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:4px"></div><span class="sg-spacing-label">--fs-space-1</span><span class="sg-spacing-value">0.25rem · 4px</span></div>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:8px"></div><span class="sg-spacing-label">--fs-space-2</span><span class="sg-spacing-value">0.5rem · 8px</span></div>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:12px"></div><span class="sg-spacing-label">--fs-space-3</span><span class="sg-spacing-value">0.75rem · 12px</span></div>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:16px"></div><span class="sg-spacing-label">--fs-space-4</span><span class="sg-spacing-value">1rem · 16px</span></div>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:24px"></div><span class="sg-spacing-label">--fs-space-6</span><span class="sg-spacing-value">1.5rem · 24px</span></div>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:32px"></div><span class="sg-spacing-label">--fs-space-8</span><span class="sg-spacing-value">2rem · 32px</span></div>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:48px"></div><span class="sg-spacing-label">--fs-space-12</span><span class="sg-spacing-value">3rem · 48px</span></div>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:64px"></div><span class="sg-spacing-label">--fs-space-16</span><span class="sg-spacing-value">4rem · 64px</span></div>
+        <div class="sg-spacing-row"><div class="sg-spacing-bar" style="width:80px"></div><span class="sg-spacing-label">--fs-space-20</span><span class="sg-spacing-value">5rem · 80px</span></div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Grid de 12 colunas (desktop)</h3>
+        <div class="sg-grid-demo">
+          <div class="sg-grid-col"></div><div class="sg-grid-col"></div><div class="sg-grid-col"></div>
+          <div class="sg-grid-col"></div><div class="sg-grid-col"></div><div class="sg-grid-col"></div>
+          <div class="sg-grid-col"></div><div class="sg-grid-col"></div><div class="sg-grid-col"></div>
+          <div class="sg-grid-col"></div><div class="sg-grid-col"></div><div class="sg-grid-col"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:var(--fs-space-3);margin-bottom:var(--fs-space-3)">
+          <div style="grid-column:span 8;background:rgba(199,164,83,.2);border-radius:var(--fs-radius-xs);height:24px;display:flex;align-items:center;justify-content:center;font-size:.625rem;color:var(--fs-terra)">8 col</div>
+          <div style="grid-column:span 4;background:rgba(199,164,83,.35);border-radius:var(--fs-radius-xs);height:24px;display:flex;align-items:center;justify-content:center;font-size:.625rem;color:var(--fs-terra)">4 col</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:var(--fs-space-3)">
+          <div style="grid-column:span 4;background:rgba(199,164,83,.2);border-radius:var(--fs-radius-xs);height:24px;display:flex;align-items:center;justify-content:center;font-size:.625rem;color:var(--fs-terra)">4 col</div>
+          <div style="grid-column:span 4;background:rgba(199,164,83,.2);border-radius:var(--fs-radius-xs);height:24px;display:flex;align-items:center;justify-content:center;font-size:.625rem;color:var(--fs-terra)">4 col</div>
+          <div style="grid-column:span 4;background:rgba(199,164,83,.2);border-radius:var(--fs-radius-xs);height:24px;display:flex;align-items:center;justify-content:center;font-size:.625rem;color:var(--fs-terra)">4 col</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 04 SOMBRAS & BORDAS ═══════════════════════ -->
+    <section class="sg-section" id="sombras">
+      <div class="sg-section__header">
+        <span class="sg-section__num">04</span>
+        <h2 class="sg-section__title">Sombras & Bordas</h2>
+        <p class="sg-section__desc">Sombras sutis baseadas na cor escura do sistema — nunca preto puro.</p>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Sombras</h3>
+        <div class="sg-shadow-grid">
+          <div class="sg-shadow-card" style="box-shadow:var(--fs-shadow-subtle)">
+            <div class="sg-shadow-label">--fs-shadow-subtle</div>
+          </div>
+          <div class="sg-shadow-card" style="box-shadow:var(--fs-shadow-card)">
+            <div class="sg-shadow-label">--fs-shadow-card</div>
+          </div>
+          <div class="sg-shadow-card" style="box-shadow:var(--fs-shadow-elevated)">
+            <div class="sg-shadow-label">--fs-shadow-elevated</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Border Radius</h3>
+        <div class="sg-radius-row">
+          <div class="sg-radius-item">
+            <div class="sg-radius-box" style="border-radius:2px"></div>
+            <span class="sg-radius-name">--fs-radius-xs<br>2px</span>
+          </div>
+          <div class="sg-radius-item">
+            <div class="sg-radius-box" style="border-radius:4px"></div>
+            <span class="sg-radius-name">--fs-radius-sm<br>4px</span>
+          </div>
+          <div class="sg-radius-item">
+            <div class="sg-radius-box" style="border-radius:8px"></div>
+            <span class="sg-radius-name">--fs-radius-md<br>8px</span>
+          </div>
+          <div class="sg-radius-item">
+            <div class="sg-radius-box" style="border-radius:16px"></div>
+            <span class="sg-radius-name">--fs-radius-lg<br>16px</span>
+          </div>
+          <div class="sg-radius-item">
+            <div class="sg-radius-box" style="border-radius:24px"></div>
+            <span class="sg-radius-name">--fs-radius-xl<br>24px</span>
+          </div>
+          <div class="sg-radius-item">
+            <div class="sg-radius-box" style="border-radius:9999px;width:80px;height:40px"></div>
+            <span class="sg-radius-name">--fs-radius-full<br>9999px</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Bordas</h3>
+        <table class="sg-token-table">
+          <thead><tr><th>Token</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td><span class="sg-token-name">--fs-border</span></td><td class="sg-token-value">1px solid rgba(107,66,38,0.14)</td></tr>
+            <tr><td><span class="sg-token-name">--fs-border-medium</span></td><td class="sg-token-value">1px solid rgba(107,66,38,0.26)</td></tr>
+            <tr><td><span class="sg-token-name">--fs-border-dourado</span></td><td class="sg-token-value">1px solid rgba(199,164,83,0.40)</td></tr>
+            <tr><td><span class="sg-token-name">--fs-border-focus</span></td><td class="sg-token-value">2px solid var(--fs-dourado)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══ 05 MOTION ═════════════════════════════════ -->
+    <section class="sg-section" id="motion">
+      <div class="sg-section__header">
+        <span class="sg-section__num">05</span>
+        <h2 class="sg-section__title">Motion</h2>
+        <p class="sg-section__desc">Transições intencionais — rápidas para feedback, lentas para entradas. Passe o mouse nos cards para ver a demo.</p>
+      </div>
+
+      <div class="sg-motion-grid">
+        <div class="sg-motion-item">
+          <div class="sg-motion-item__label">Fast</div>
+          <div class="sg-motion-item__value">--fs-transition-fast</div>
+          <div class="sg-motion-item__desc">150ms ease — feedback imediato: hover, foco, toggle</div>
+          <div class="sg-motion-demo"></div>
+        </div>
+        <div class="sg-motion-item">
+          <div class="sg-motion-item__label">Base</div>
+          <div class="sg-motion-item__value">--fs-transition-base</div>
+          <div class="sg-motion-item__desc">250ms ease — transições padrão de componentes</div>
+          <div class="sg-motion-demo"></div>
+        </div>
+        <div class="sg-motion-item">
+          <div class="sg-motion-item__label">Slow</div>
+          <div class="sg-motion-item__value">--fs-transition-slow</div>
+          <div class="sg-motion-item__desc">400ms cubic-bezier — entradas, modais, accordion</div>
+          <div class="sg-motion-demo"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 06 BOTÕES ══════════════════════════════════ -->
+    <section class="sg-section" id="botoes">
+      <div class="sg-section__header">
+        <span class="sg-section__num">06</span>
+        <h2 class="sg-section__title">Botões</h2>
+        <p class="sg-section__desc">Hierarquia de ação clara: Primary para conversão principal, Secondary para CTAs de destaque, demais para ações secundárias.</p>
+      </div>
+
+      <div class="sg-btn-row">
+        <div class="sg-btn-row__label">Fundos claros</div>
+        <button class="fs-btn fs-btn--primary">Reservar Mesa</button>
+        <button class="fs-btn fs-btn--secondary">Ver Cardápio</button>
+        <button class="fs-btn fs-btn--outline">Saiba Mais</button>
+        <button class="fs-btn fs-btn--ghost">Ver mais</button>
+        <button class="fs-btn fs-btn--primary" disabled>Desabilitado</button>
+      </div>
+
+      <div class="sg-btn-row dark-bg">
+        <div class="sg-btn-row__label">Fundos escuros</div>
+        <button class="fs-btn fs-btn--cta-final">Garantir Minha Vaga</button>
+        <button class="fs-btn fs-btn--outline-light">Ver Cardápio</button>
+        <button class="fs-btn fs-btn--whatsapp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </button>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Microcopy</h3>
+        <div style="display:inline-block">
+          <button class="fs-btn fs-btn--cta-final">Garantir Minha Vaga</button>
+          <span class="fs-btn-microcopy">Sem taxa de reserva · Cancelamento gratuito</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 07 BADGES ═════════════════════════════════ -->
+    <section class="sg-section" id="badges">
+      <div class="sg-section__header">
+        <span class="sg-section__num">07</span>
+        <h2 class="sg-section__title">Badges</h2>
+        <p class="sg-section__desc">Indicadores contextuais — usados com moderação para não poluir a hierarquia visual.</p>
+      </div>
+
+      <div class="sg-badge-grid">
+        <span class="fs-badge fs-badge--authority">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+          Chef Premiado
+        </span>
+        <span class="fs-badge fs-badge--info">Apenas Sex. e Sáb.</span>
+        <span class="fs-badge fs-badge--location">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Pajuçara · Maceió
+        </span>
+        <span class="fs-badge fs-badge--capacity">40 lugares</span>
+        <span class="fs-badge fs-badge--required">Reserva Obrigatória</span>
+      </div>
+    </section>
+
+    <!-- ══ 08 CARDS ═══════════════════════════════════ -->
+    <section class="sg-section" id="cards">
+      <div class="sg-section__header">
+        <span class="sg-section__num">08</span>
+        <h2 class="sg-section__title">Cards</h2>
+        <p class="sg-section__desc">Quatro tipos de card para contextos distintos: prato, feature, prova social e informação prática.</p>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Card de Prato</h3>
+        <div class="sg-cards-grid">
+          <div class="fs-dish-card">
+            <div class="fs-dish-card__img">
+              <div class="fs-dish-card__img-placeholder">Foto do prato</div>
+            </div>
+            <div class="fs-dish-card__body">
+              <h3 class="fs-dish-card__name">Camarão ao Leite de Coco</h3>
+              <p class="fs-dish-card__desc">Camarão fresco do litoral, leite de coco babaçu, pimenta-de-cheiro e farofa crocante de castanha.</p>
+              <span class="fs-dish-card__price">R$ 89,00 por pessoa</span>
+            </div>
+          </div>
+          <div class="fs-dish-card">
+            <div class="fs-dish-card__img">
+              <div class="fs-dish-card__img-placeholder">Foto do prato</div>
+            </div>
+            <div class="fs-dish-card__body">
+              <h3 class="fs-dish-card__name">Peixe da Maré</h3>
+              <p class="fs-dish-card__desc">Filé do dia capturado nas praias de Maceió, manteiga de ervas, limão siciliano e purê de mandioca.</p>
+              <span class="fs-dish-card__price">R$ 74,00 por pessoa</span>
+            </div>
+          </div>
+          <div class="fs-dish-card">
+            <div class="fs-dish-card__img">
+              <div class="fs-dish-card__img-placeholder">Foto do prato</div>
+            </div>
+            <div class="fs-dish-card__body">
+              <h3 class="fs-dish-card__name">Picuí do Sertão</h3>
+              <p class="fs-dish-card__desc">Carne-de-sol maturada, jerimum assado, queijo coalho grelhado e vinagrete de caju.</p>
+              <span class="fs-dish-card__price">R$ 68,00 por pessoa</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Feature Card</h3>
+        <div class="sg-cards-grid">
+          <div class="fs-feature-card">
+            <div class="fs-feature-card__num">40</div>
+            <div class="fs-feature-card__title">Lugares por Noite</div>
+            <div class="fs-feature-card__desc">Experiência íntima e exclusiva em ambiente à beira-mar.</div>
+          </div>
+          <div class="fs-feature-card">
+            <div class="fs-feature-card__num">12+</div>
+            <div class="fs-feature-card__title">Anos de Cozinha</div>
+            <div class="fs-feature-card__desc">Chef com trajetória premiada no Nordeste e experiência internacional.</div>
+          </div>
+          <div class="fs-feature-card">
+            <div class="fs-feature-card__num">100%</div>
+            <div class="fs-feature-card__title">Ingredientes Locais</div>
+            <div class="fs-feature-card__desc">Fornecedores alagoanos, pesca artesanal e horta própria.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Prova Social</h3>
+        <div class="sg-cards-grid">
+          <div class="fs-proof-card">
+            <p class="fs-proof-card__text">Uma das experiências gastronômicas mais marcantes que já tive em Alagoas. O ambiente, o serviço e a comida são simplesmente impecáveis.</p>
+            <div class="fs-proof-card__author">Ana Beatriz S. — Google Reviews</div>
+          </div>
+          <div class="fs-proof-card">
+            <p class="fs-proof-card__text">O jantar do Flor de Sal é uma viagem sensorial pelo Nordeste. Cada garfada conta uma história. Vale cada centavo e muito mais.</p>
+            <div class="fs-proof-card__author">Rafael M. — TripAdvisor</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Info Card</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--fs-space-4)">
+          <div class="fs-info-card">
+            <svg class="fs-info-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <div>
+              <div class="fs-info-card__title">Dias & Horários</div>
+              <div class="fs-info-card__value">Sextas e Sábados · 19h às 22h30</div>
+            </div>
+          </div>
+          <div class="fs-info-card">
+            <svg class="fs-info-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <div class="fs-info-card__title">Localização</div>
+              <div class="fs-info-card__value">Sais Beach Living Hotel · Pajuçara, Maceió</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 09 FORMULÁRIOS ════════════════════════════ -->
+    <section class="sg-section" id="formularios">
+      <div class="sg-section__header">
+        <span class="sg-section__num">09</span>
+        <h2 class="sg-section__title">Formulários</h2>
+        <p class="sg-section__desc">Inputs com estados claros: padrão, foco (dourado), erro (vermelho) e sucesso (musgo).</p>
+      </div>
+
+      <div style="max-width:600px">
+        <div class="sg-form-grid">
+          <div class="fs-field">
+            <label class="fs-label">Nome <span class="required">*</span></label>
+            <input class="fs-input" type="text" placeholder="Seu nome completo" />
+          </div>
+          <div class="fs-field">
+            <label class="fs-label">WhatsApp <span class="required">*</span></label>
+            <input class="fs-input" type="tel" placeholder="(82) 9 0000-0000" />
+          </div>
+          <div class="fs-field">
+            <label class="fs-label">E-mail</label>
+            <input class="fs-input fs-input--error" type="email" placeholder="seu@email.com" value="email-invalido" />
+            <span class="fs-field-message fs-field-message--error">Informe um e-mail válido</span>
+          </div>
+          <div class="fs-field">
+            <label class="fs-label">Data preferida</label>
+            <input class="fs-input fs-input--success" type="date" value="2025-07-11" />
+            <span class="fs-field-message fs-field-message--success">Data disponível!</span>
+          </div>
+          <div class="fs-field">
+            <label class="fs-label">Número de pessoas</label>
+            <select class="fs-select">
+              <option value="">Selecione</option>
+              <option>1 pessoa</option>
+              <option>2 pessoas</option>
+              <option selected>4 pessoas</option>
+              <option>6 pessoas</option>
+            </select>
+          </div>
+          <div class="fs-field">
+            <label class="fs-label">Ocasião especial</label>
+            <select class="fs-select">
+              <option value="">Nenhuma</option>
+              <option>Aniversário</option>
+              <option>Pedido de casamento</option>
+              <option>Confraternização</option>
+            </select>
+          </div>
+          <div class="fs-field fs-field--full">
+            <label class="fs-label">Observações</label>
+            <textarea class="fs-textarea" placeholder="Restrições alimentares, pedidos especiais..."></textarea>
+            <span class="fs-field-message fs-field-message--hint">Máximo 300 caracteres</span>
+          </div>
+        </div>
+        <div style="margin-top:var(--fs-space-6)">
+          <button class="fs-btn fs-btn--primary" style="width:100%">Enviar Reserva</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 10 ACCORDION ══════════════════════════════ -->
+    <section class="sg-section" id="accordion">
+      <div class="sg-section__header">
+        <span class="sg-section__num">10</span>
+        <h2 class="sg-section__title">Accordion / FAQ</h2>
+        <p class="sg-section__desc">Um item aberto por vez. Abre o primeiro por padrão via JavaScript.</p>
+      </div>
+
+      <div style="max-width:640px">
+        <div class="fs-accordion">
+          <div class="fs-accordion-item">
+            <button class="fs-accordion-trigger" aria-expanded="false">
+              Preciso pagar para reservar?
+              <svg class="fs-accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="fs-accordion-content">
+              <div class="fs-accordion-body">Não. A reserva é gratuita. O pagamento ocorre apenas no dia, ao final do jantar. Aceitamos cartões, PIX e dinheiro.</div>
+            </div>
+          </div>
+          <div class="fs-accordion-item">
+            <button class="fs-accordion-trigger" aria-expanded="false">
+              Posso cancelar minha reserva?
+              <svg class="fs-accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="fs-accordion-content">
+              <div class="fs-accordion-body">Sim, com até 24h de antecedência sem nenhuma cobrança. Para cancelamentos de última hora, pedimos que nos avise pelo WhatsApp.</div>
+            </div>
+          </div>
+          <div class="fs-accordion-item">
+            <button class="fs-accordion-trigger" aria-expanded="false">
+              O jantar tem cardápio fixo?
+              <svg class="fs-accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="fs-accordion-content">
+              <div class="fs-accordion-body">Sim. O menu degustação tem 4 tempos e varia semanalmente conforme os ingredientes disponíveis. Sempre comunicamos com antecedência.</div>
+            </div>
+          </div>
+          <div class="fs-accordion-item">
+            <button class="fs-accordion-trigger" aria-expanded="false">
+              Atende restrições alimentares?
+              <svg class="fs-accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="fs-accordion-content">
+              <div class="fs-accordion-body">Atendemos vegetarianos, veganos e restrições por alergia. Informe no momento da reserva e adaptaremos o menu com antecedência.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 11 ÍCONES ══════════════════════════════════ -->
+    <section class="sg-section" id="icones">
+      <div class="sg-section__header">
+        <span class="sg-section__num">11</span>
+        <h2 class="sg-section__title">Ícones</h2>
+        <p class="sg-section__desc">Biblioteca: Lucide Icons (stroke-width: 1.5, tamanho base: 20×20px). Stroke, nunca fill.</p>
+      </div>
+
+      <div class="sg-icon-grid">
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>location</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span>calendar</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          <span>clock</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>users</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+          <span>star</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span>heart</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+          <span>utensils</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.9 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>phone</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>user</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20,6 9,17 4,12"/></svg>
+          <span>check</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>info</span>
+        </div>
+        <div class="sg-icon-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"/></svg>
+          <span>chevron-down</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 12 STICKY CTA ═════════════════════════════ -->
+    <section class="sg-section" id="sticky">
+      <div class="sg-section__header">
+        <span class="sg-section__num">12</span>
+        <h2 class="sg-section__title">Sticky CTA Mobile</h2>
+        <p class="sg-section__desc">Dois padrões de CTA fixa para mobile: FAB flutuante (WhatsApp) e barra inferior (reserva).</p>
+      </div>
+
+      <div class="sg-sticky-demo">
+        <div>
+          <p style="font-size:var(--fs-text-caption);color:var(--fs-terra);margin-bottom:var(--fs-space-4)"><strong>FAB — WhatsApp</strong><br>Botão flutuante no canto inferior direito. Sempre visível.</p>
+          <div class="sg-mobile-frame">
+            <div class="sg-mobile-screen">
+              <div class="sg-mobile-content">
+                <h3>Flor de Sal</h3>
+                <p>Menu degustação 4 tempos. Ingredientes frescos do litoral alagoano preparados pelo Chef Wanderson Medeiros.</p>
+                <p>Reserve com antecedência. Vagas limitadas por noite.</p>
+              </div>
+              <div class="sg-sticky-fab">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p style="font-size:var(--fs-text-caption);color:var(--fs-terra);margin-bottom:var(--fs-space-4)"><strong>Bottom Bar — Reserva</strong><br>Barra fixa na base. Ativo na rolagem acima do CTA principal.</p>
+          <div class="sg-mobile-frame">
+            <div class="sg-mobile-screen">
+              <div class="sg-mobile-content">
+                <h3>Garantir Vaga</h3>
+                <p>Apenas Sex e Sáb. Jantar às 19h. 40 lugares disponíveis.</p>
+                <p>Reserve agora e garanta sua mesa para uma experiência única.</p>
+              </div>
+              <div class="sg-sticky-bottombar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span>Reservar Minha Mesa</span>
+              </div>
+            </div>
+          </div>
+          <div class="sg-sticky-rec">
+            <strong>Recomendação</strong>
+            Use o FAB de WhatsApp como alternativa à barra de reserva — converte melhor em mobile por ser mais familiar ao público.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 13 SEÇÕES MODELO ══════════════════════════ -->
+    <section class="sg-section" id="secoes">
+      <div class="sg-section__header">
+        <span class="sg-section__num">13</span>
+        <h2 class="sg-section__title">Seções Modelo</h2>
+        <p class="sg-section__desc">Estruturas de seção prontas para reutilizar na Landing Page.</p>
+      </div>
+
+      <div class="sg-sample">
+        <span class="sg-sample__label">Hero</span>
+        <div class="sg-sample--hero">
+          <div class="hero-content">
+            <span class="hero-badge">Sais Beach Living Hotel · Pajuçara</span>
+            <h2>Uma noite à beira-mar,<br>sabores do Nordeste</h2>
+            <p class="hero-sub">Menu degustação 4 tempos com ingredientes frescos do litoral alagoano. Chef Wanderson Medeiros.</p>
+            <div style="display:flex;gap:var(--fs-space-4);flex-wrap:wrap">
+              <button class="fs-btn fs-btn--cta-final">Garantir Minha Vaga</button>
+              <button class="fs-btn fs-btn--outline-light">Ver Cardápio</button>
+            </div>
+            <p class="hero-info">Sex &amp; Sáb · 19h · 40 lugares · Reserva gratuita</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-sample">
+        <span class="sg-sample__label">Chef</span>
+        <div class="sg-sample--chef">
+          <div class="chef-photo">Foto do Chef</div>
+          <div>
+            <h2 class="chef-headline">Chef Wanderson Medeiros<br>— o sertão encontra o mar</h2>
+            <p class="chef-text">Nascido em Picuí, no Sertão da Paraíba, Wanderson carrega na memória os sabores do interior e, na técnica, os anos de formação em cozinhas reconhecidas do Nordeste.</p>
+            <blockquote class="chef-quote">"Cozinhar é contar a história de onde você vem."</blockquote>
+            <button class="fs-btn fs-btn--outline" style="margin-top:var(--fs-space-2)">Conhecer a História</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-sample">
+        <span class="sg-sample__label">CTA Final</span>
+        <div class="sg-sample--cta-final">
+          <p class="escassez">Apenas 40 lugares por noite</p>
+          <h2>Pronto para uma experiência<br>que você não vai esquecer?</h2>
+          <p class="subtexto">Reserve agora e garanta sua mesa. Cancelamento gratuito com até 24h de antecedência.</p>
+          <button class="fs-btn fs-btn--cta-final">Garantir Minha Vaga</button>
+          <span class="fs-btn-microcopy" style="color:rgba(250,250,248,.4);margin-top:var(--fs-space-3)">Sem taxa de reserva</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 14 IMAGENS ═════════════════════════════════ -->
+    <section class="sg-section" id="imagens">
+      <div class="sg-section__header">
+        <span class="sg-section__num">14</span>
+        <h2 class="sg-section__title">Diretrizes de Imagem</h2>
+        <p class="sg-section__desc">Fotografia com paleta quente, foco nos detalhes e atmosfera noturna/intimista.</p>
+      </div>
+
+      <div class="sg-img-grid">
+        <div class="sg-img-rule">
+          <div class="sg-img-rule__thumb" style="background:linear-gradient(135deg,#3D2015,#6B4226)">Ambiente</div>
+          <div class="sg-img-rule__info">
+            <div class="sg-img-rule__type">Ambiente & Mesa</div>
+            <div class="sg-img-rule__desc">Mesa posta com vela, luz ambiente quente, mar ao fundo. Foco em textura e detalhe.</div>
+          </div>
+        </div>
+        <div class="sg-img-rule">
+          <div class="sg-img-rule__thumb" style="background:linear-gradient(135deg,#6B4226,#c7a453)">Pratos</div>
+          <div class="sg-img-rule__info">
+            <div class="sg-img-rule__type">Fotografia Gastronômica</div>
+            <div class="sg-img-rule__desc">Ângulo 45° ou top-down. Fundo neutro (ardósia, madeira). Sem edição excessiva.</div>
+          </div>
+        </div>
+        <div class="sg-img-rule">
+          <div class="sg-img-rule__thumb" style="background:linear-gradient(135deg,#334430,#4E6645)">Chef</div>
+          <div class="sg-img-rule__info">
+            <div class="sg-img-rule__type">Retrato do Chef</div>
+            <div class="sg-img-rule__desc">Ambiente de cozinha ou mesa do bistrô. Expressão natural, sem pose forçada.</div>
+          </div>
+        </div>
+        <div class="sg-img-rule">
+          <div class="sg-img-rule__thumb" style="background:linear-gradient(135deg,#1A0E06,#4A3020)">Evitar</div>
+          <div class="sg-img-rule__info">
+            <div class="sg-img-rule__type" style="color:#C0392B">O que Evitar</div>
+            <div class="sg-img-rule__desc">Fotos super-saturadas, filtros Instagram, iluminação fria, stock photos genéricas.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 15 CHECKLIST ══════════════════════════════ -->
+    <section class="sg-section" id="checklist">
+      <div class="sg-section__header">
+        <span class="sg-section__num">15</span>
+        <h2 class="sg-section__title">Checklist de Publicação</h2>
+        <p class="sg-section__desc">Clique nos itens para marcar como concluído antes de publicar a landing page.</p>
+      </div>
+
+      <div class="sg-checklist">
+        <div class="sg-checklist-item">
+          <div class="sg-check-box"><svg class="sg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
+          Textos revisados e aprovados
+        </div>
+        <div class="sg-checklist-item">
+          <div class="sg-check-box"><svg class="sg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
+          Fotos com licença de uso
+        </div>
+        <div class="sg-checklist-item">
+          <div class="sg-check-box"><svg class="sg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
+          Formulário conectado ao CRM
+        </div>
+        <div class="sg-checklist-item">
+          <div class="sg-check-box"><svg class="sg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
+          WhatsApp link configurado
+        </div>
+        <div class="sg-checklist-item">
+          <div class="sg-check-box"><svg class="sg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
+          Meta tags OG configuradas
+        </div>
+        <div class="sg-checklist-item">
+          <div class="sg-check-box"><svg class="sg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
+          Google Analytics / Pixel instalados
+        </div>
+        <div class="sg-checklist-item">
+          <div class="sg-check-box"><svg class="sg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
+          Teste em mobile (iOS + Android)
+        </div>
+        <div class="sg-checklist-item">
+          <div class="sg-check-box"><svg class="sg-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg></div>
+          Performance &gt; 90 no PageSpeed
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 16 O QUE EVITAR ═══════════════════════════ -->
+    <section class="sg-section" id="evitar">
+      <div class="sg-section__header">
+        <span class="sg-section__num">16</span>
+        <h2 class="sg-section__title">O que Evitar</h2>
+        <p class="sg-section__desc">Anti-padrões que comprometem a identidade premium do Flor de Sal.</p>
+      </div>
+
+      <div class="sg-avoid-grid">
+        <div class="sg-avoid-item">
+          <svg class="sg-avoid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <div class="sg-avoid-text"><strong>Cores fora da paleta</strong>Nunca use azul, verde-lima, roxo ou outras cores não definidas nos tokens.</div>
+        </div>
+        <div class="sg-avoid-item">
+          <svg class="sg-avoid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <div class="sg-avoid-text"><strong>Mais de 2 fontes</strong>Apenas Cormorant Garamond (display) e Inter (corpo). Nunca misture outras.</div>
+        </div>
+        <div class="sg-avoid-item">
+          <svg class="sg-avoid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <div class="sg-avoid-text"><strong>Títulos em caixa alta</strong>Os títulos display usam case sentence. Apenas badges e rótulos são uppercase.</div>
+        </div>
+        <div class="sg-avoid-item">
+          <svg class="sg-avoid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <div class="sg-avoid-text"><strong>Logos sobre imagens coloridas</strong>O logotipo dourado só aparece sobre fundos escuros (escuro, terra-deep). O vermelho, apenas quando necessário.</div>
+        </div>
+        <div class="sg-avoid-item">
+          <svg class="sg-avoid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <div class="sg-avoid-text"><strong>Múltiplos CTAs em destaque</strong>Apenas um Primary por seção. O resto deve ter hierarquia visual inferior.</div>
+        </div>
+        <div class="sg-avoid-item">
+          <svg class="sg-avoid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <div class="sg-avoid-text"><strong>Animações excessivas</strong>Motion serve para guiar o olhar, não para impressionar. Sem parallax agressivo nem loop de partículas.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 17 ACESSIBILIDADE ══════════════════════════ -->
+    <section class="sg-section" id="acessibilidade">
+      <div class="sg-section__header">
+        <span class="sg-section__num">17</span>
+        <h2 class="sg-section__title">Acessibilidade</h2>
+        <p class="sg-section__desc">WCAG 2.1 AA como padrão mínimo. Contraste, navegação por teclado e semântica HTML.</p>
+      </div>
+
+      <div class="sg-a11y-grid">
+        <div class="sg-a11y-item">
+          <div class="sg-a11y-item__title">Contraste mínimo</div>
+          <div class="sg-a11y-item__desc">Textos normais: 4.5:1. Textos grandes (18pt+): 3:1. Use o token --fs-terra-deep sobre --fs-areia-50.</div>
+        </div>
+        <div class="sg-a11y-item">
+          <div class="sg-a11y-item__title">Focus visível</div>
+          <div class="sg-a11y-item__desc">Todo elemento interativo precisa de outline visível ao receber foco. Use --fs-border-focus.</div>
+        </div>
+        <div class="sg-a11y-item">
+          <div class="sg-a11y-item__title">Alt text em imagens</div>
+          <div class="sg-a11y-item__desc">Imagens decorativas: alt="". Fotos de pratos e do chef: descrição do conteúdo.</div>
+        </div>
+        <div class="sg-a11y-item">
+          <div class="sg-a11y-item__title">Semântica HTML</div>
+          <div class="sg-a11y-item__desc">Use &lt;main&gt;, &lt;section&gt;, &lt;nav&gt;, &lt;header&gt;, &lt;footer&gt;. Hierarquia de headings correta (h1 → h2 → h3).</div>
+        </div>
+        <div class="sg-a11y-item">
+          <div class="sg-a11y-item__title">aria-label em ícones</div>
+          <div class="sg-a11y-item__desc">Botões que contêm apenas ícone precisam de aria-label descritivo.</div>
+        </div>
+        <div class="sg-a11y-item">
+          <div class="sg-a11y-item__title">prefers-reduced-motion</div>
+          <div class="sg-a11y-item__desc">Respeite a preferência do sistema. Desative animações quando o usuário as desativa no SO.</div>
+        </div>
+      </div>
+
+      <div class="sg-subsection">
+        <h3 class="sg-subsection__title">Pares de contraste</h3>
+        <div class="sg-contrast-demo">
+          <div class="sg-contrast-block" style="background:#3D2015;color:#F5EDD8">
+            <span class="ratio">11.2:1</span>
+            <span class="pair">Terra-deep / Areia</span>
+            <span class="status" style="color:#8A9E7A">AAA</span>
+          </div>
+          <div class="sg-contrast-block" style="background:#1A0E06;color:#FAFAF8">
+            <span class="ratio">18.7:1</span>
+            <span class="pair">Escuro / Branco</span>
+            <span class="status" style="color:#8A9E7A">AAA</span>
+          </div>
+          <div class="sg-contrast-block" style="background:#1A0E06;color:#c7a453">
+            <span class="ratio">6.1:1</span>
+            <span class="pair">Escuro / Dourado</span>
+            <span class="status" style="color:#8A9E7A">AA</span>
+          </div>
+          <div class="sg-contrast-block" style="background:#F5EDD8;color:#6B4226">
+            <span class="ratio">5.8:1</span>
+            <span class="pair">Areia / Terra</span>
+            <span class="status" style="color:#8A9E7A">AA</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 18 PRINCÍPIOS ═════════════════════════════ -->
+    <section class="sg-section" id="principios">
+      <div class="sg-section__header">
+        <span class="sg-section__num">18</span>
+        <h2 class="sg-section__title">Princípios de Design</h2>
+        <p class="sg-section__desc">Os valores que guiam cada decisão visual do Flor de Sal.</p>
+      </div>
+
+      <div class="sg-principles-grid">
+        <div class="sg-principle-card">
+          <div class="sg-principle-card__num">01</div>
+          <div class="sg-principle-card__title">Elegância sem pretensão</div>
+          <div class="sg-principle-card__desc">O design evoca sofisticação sem criar distância. Quem entra se sente bem-vindo, não intimidado.</div>
+        </div>
+        <div class="sg-principle-card">
+          <div class="sg-principle-card__num">02</div>
+          <div class="sg-principle-card__title">Pertencimento ao lugar</div>
+          <div class="sg-principle-card__desc">Cada cor, textura e palavra remete ao Nordeste. O Flor de Sal é de Alagoas, e isso é orgulhosamente presente em tudo.</div>
+        </div>
+        <div class="sg-principle-card">
+          <div class="sg-principle-card__num">03</div>
+          <div class="sg-principle-card__title">Clareza acima de tudo</div>
+          <div class="sg-principle-card__desc">O visitante precisa entender em segundos o que é o jantar, quando acontece e como reservar. Design que confunde não converte.</div>
+        </div>
+        <div class="sg-principle-card">
+          <div class="sg-principle-card__num">04</div>
+          <div class="sg-principle-card__title">Escassez real, não falsa urgência</div>
+          <div class="sg-principle-card__desc">40 lugares. Dois dias na semana. Essa limitação é real e o design a comunica com honestidade — sem contadores falsos.</div>
+        </div>
+        <div class="sg-principle-card">
+          <div class="sg-principle-card__num">05</div>
+          <div class="sg-principle-card__title">Mobile é o palco principal</div>
+          <div class="sg-principle-card__desc">A reserva acontece no celular. Todo componente é desenhado mobile-first e validado em telas de 375px.</div>
+        </div>
+        <div class="sg-principle-card">
+          <div class="sg-principle-card__num">06</div>
+          <div class="sg-principle-card__title">Velocidade é respeito</div>
+          <div class="sg-principle-card__desc">Páginas lentas perdem clientes. Imagens otimizadas, fontes com display:swap, sem scripts desnecessários.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="sg-footer">
+      <p class="sg-footer__text">
+        <strong>Flor de Sal Bistrô & Bar</strong> · Design System v1.0 · Sais Beach Living Hotel
+      </p>
+      <span class="sg-footer__version">Style Guide · 2025</span>
+    </footer>
+
+  </main>
+</div>
+
+<script src="guide.js"></script>
+</body>
+</html>
