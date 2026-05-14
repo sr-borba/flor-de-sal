@@ -311,13 +311,41 @@
       inset: 0;
       background: var(--fs-escuro);
     }
-    .hero__bg img {
+    .hero__bg img,
+    .hero__bg video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       opacity: 0.55;
     }
+    .hero__audio-toggle {
+      position: absolute;
+      bottom: clamp(1.5rem, 4vw, 2.5rem);
+      right: var(--fs-gutter);
+      z-index: 4;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(10,6,2,0.55);
+      border: 1px solid rgba(199,164,83,0.4);
+      color: var(--fs-dourado);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--fs-transition-base), border-color var(--fs-transition-base);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .hero__audio-toggle:hover {
+      background: rgba(10,6,2,0.8);
+      border-color: var(--fs-dourado);
+    }
+    .hero__audio-toggle svg { width: 18px; height: 18px; }
+    .hero__audio-toggle .icon-on { display: none; }
+    .hero__audio-toggle.is-on .icon-on { display: block; }
+    .hero__audio-toggle.is-on .icon-off { display: none; }
     .hero__bg::after {
       content: '';
       position: absolute;
@@ -1174,62 +1202,6 @@
       .localizacao__map iframe { height: 220px; }
     }
 
-    /* ── S09 CTA FINAL ───────────────────────────────── */
-    .cta-final {
-      background: var(--fs-escuro);
-      padding: var(--fs-section-y) 0;
-      text-align: center;
-    }
-
-    .cta-final__inner {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    .cta-final__headline {
-      font-family: var(--fs-font-display);
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      font-weight: 400;
-      color: var(--fs-branco);
-      line-height: 1.15;
-      margin-bottom: 1.25rem;
-    }
-    .cta-final__headline em {
-      font-style: italic;
-      color: var(--fs-dourado-200);
-    }
-
-    .cta-final__escassez {
-      font-size: var(--fs-text-badge);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(250,250,248,0.45);
-      margin-bottom: 1.25rem;
-    }
-
-    .cta-final__sub {
-      font-size: var(--fs-text-sub);
-      color: rgba(250,250,248,0.6);
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-      font-style: italic;
-      font-family: var(--fs-font-display);
-    }
-
-    .cta-final__btn { min-width: 280px; }
-
-    .cta-final__credencial {
-      margin-top: 2rem;
-      font-size: var(--fs-text-micro);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(250,250,248,0.3);
-    }
-
-    @media (max-width: 480px) {
-      .cta-final__btn { width: 100%; }
-    }
-
     /* ── FOOTER ──────────────────────────────────────── */
     .footer {
       background: var(--fs-escuro);
@@ -1245,7 +1217,12 @@
       text-align: center;
     }
 
-    .footer__logo { height: 28px; width: auto; opacity: 0.7; }
+    .footer__logo {
+      height: clamp(72px, 9vw, 110px);
+      width: auto;
+      opacity: 1;
+      margin-bottom: 0.5rem;
+    }
 
     .footer__info {
       font-size: var(--fs-text-micro);
@@ -1361,13 +1338,31 @@
     <!-- ── S01 HERO ──────────────────────────────────── -->
     <section class="hero" id="hero" aria-label="Apresentação">
       <div class="hero__bg">
-        <img
-          src="assets/hero-ambiente.jpg"
-          alt="Ambiente do Flor de Sal Bistrô &amp; Bar — Sais Beach Living Hotel, Maceió"
-          loading="eager"
-          fetchpriority="high"
-        />
+        <video
+          id="heroVideo"
+          src="assets/hero-video.mp4"
+          poster="assets/hero-poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-label="Vídeo de apresentação do Flor de Sal Bistrô e Bar"
+        ></video>
       </div>
+
+      <button type="button" class="hero__audio-toggle" id="heroAudioToggle" aria-label="Ativar som do vídeo" aria-pressed="false">
+        <svg class="icon-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+        <svg class="icon-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+      </button>
 
       <a href="#hero" class="hero__logo-wrap" aria-label="Flor de Sal">
         <img
@@ -1875,38 +1870,6 @@
       </div>
     </section>
 
-    <!-- ── S09 CTA FINAL ─────────────────────────────── -->
-    <section class="cta-final" id="cta-final" aria-label="Reserve sua mesa">
-      <div class="container">
-        <div class="cta-final__inner">
-          <div data-animate>
-            <p class="cta-final__escassez">34 lugares · Jantar das 19h às 22h · Reserva obrigatória</p>
-            <h2 class="cta-final__headline">
-              Uma mesa com vista para as<br>
-              <em>piscinas naturais.</em>
-            </h2>
-            <p class="cta-final__sub">
-              O Flor de Sal não é para todos — é para quem escolhe com cuidado onde passa a noite.
-            </p>
-            <a
-              href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
-              class="btn btn--primary cta-final__btn"
-              target="_blank"
-              rel="noopener"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.559 4.14 1.535 5.876L.057 23.885a.5.5 0 0 0 .606.625l6.198-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.912 0-3.71-.504-5.265-1.385l-.378-.214-3.917 1.03 1.048-3.826-.23-.37A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-              </svg>
-              Reservar agora
-            </a>
-            <span class="btn-microcopy" style="color:rgba(250,250,248,0.4);display:block;text-align:center;margin-top:0.875rem;">Uma mensagem. Confirmação em até 5 minutos.</span>
-            <p class="cta-final__credencial">Melhor Chef Banqueteiro do Brasil · Prazeres da Mesa · 2018 e 2022</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- ── FOOTER ─────────────────────────────────────── -->
@@ -1964,8 +1927,6 @@
     // ── Sticky header após scroll do hero ────────────────
     const header = document.getElementById('site-header');
     const hero   = document.querySelector('.hero');
-    const fab    = document.getElementById('sticky-fab');
-    const ctaFinal = document.querySelector('.cta-final');
 
     const headerObserver = new IntersectionObserver(
       ([entry]) => header.classList.toggle('is-visible', !entry.isIntersecting),
@@ -1973,13 +1934,18 @@
     );
     if (hero) headerObserver.observe(hero);
 
-    // ── Oculta FAB quando CTA final está visível ──────────
-    if (fab && ctaFinal) {
-      const fabObserver = new IntersectionObserver(
-        ([entry]) => fab.classList.toggle('is-hidden', entry.isIntersecting),
-        { threshold: 0.3 }
-      );
-      fabObserver.observe(ctaFinal);
+    // ── Hero video: toggle de áudio ─────────────────────
+    const heroVideo = document.getElementById('heroVideo');
+    const heroAudioBtn = document.getElementById('heroAudioToggle');
+    if (heroVideo && heroAudioBtn) {
+      heroAudioBtn.addEventListener('click', () => {
+        heroVideo.muted = !heroVideo.muted;
+        const on = !heroVideo.muted;
+        heroAudioBtn.classList.toggle('is-on', on);
+        heroAudioBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        heroAudioBtn.setAttribute('aria-label', on ? 'Desativar som do vídeo' : 'Ativar som do vídeo');
+        if (on) heroVideo.play().catch(() => {});
+      });
     }
 
     // ── Animate-in via IntersectionObserver ──────────────
