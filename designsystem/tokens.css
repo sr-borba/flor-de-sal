@@ -49,6 +49,7 @@
 
   --fs-font-display: 'Cormorant Garamond', 'Georgia', serif;
   --fs-font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --fs-font-mono:    'JetBrains Mono', 'Courier New', monospace;
 
   /* Escala fluida — h1 a badge */
   --fs-text-h1:      clamp(2.25rem, 5vw, 3.75rem);
