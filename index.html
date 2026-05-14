@@ -790,93 +790,202 @@
       line-height: 1.15;
     }
 
-    .reserva-form {
+    .reserva-card {
       max-width: 760px;
       margin: 0 auto;
+      background: rgba(10,6,2,0.55);
+      border: 1px solid rgba(199,164,83,0.2);
+      border-radius: 16px;
+      padding: clamp(1.5rem, 4vw, 2.75rem);
     }
-    .reserva-form__grid {
+    .reserva-card__header { margin-bottom: 1.75rem; }
+    .reserva-card__title {
+      font-family: var(--fs-font-display);
+      font-style: italic;
+      font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+      font-weight: 400;
+      color: var(--fs-branco);
+      line-height: 1.15;
+      margin-bottom: 0.4rem;
+    }
+    .reserva-card__subtitle {
+      font-size: var(--fs-text-caption);
+      color: rgba(250,250,248,0.55);
+      letter-spacing: 0.01em;
+    }
+
+    .reserva-card__grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.75rem 1.5rem;
-      margin-bottom: 2.5rem;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
     }
-    .reserva-form__field {
-      display: flex;
-      flex-direction: column;
-    }
-    .reserva-form__field--full {
-      grid-column: 1 / -1;
-    }
-    .reserva-form__label {
+    .reserva-field { display: flex; flex-direction: column; }
+    .reserva-field--full { grid-column: 1 / -1; }
+    .reserva-field__label {
       font-size: var(--fs-text-micro);
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--fs-dourado-200);
-      margin-bottom: 0.625rem;
+      margin-bottom: 0.55rem;
       font-weight: 500;
     }
-    .reserva-form__input,
-    .reserva-form__select,
-    .reserva-form__textarea {
+    .reserva-field__input,
+    .reserva-field__textarea {
       width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(199,164,83,0.28);
-      padding: 0.625rem 0;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(199,164,83,0.18);
+      border-radius: 8px;
+      padding: 0.75rem 0.875rem;
       color: var(--fs-branco);
       font-family: inherit;
-      font-size: 1rem;
+      font-size: 0.95rem;
       outline: none;
-      transition: border-color var(--fs-transition-base);
-      border-radius: 0;
+      transition: border-color var(--fs-transition-base), background var(--fs-transition-base);
     }
-    .reserva-form__input:focus,
-    .reserva-form__select:focus,
-    .reserva-form__textarea:focus {
-      border-bottom-color: var(--fs-dourado);
+    .reserva-field__input:focus,
+    .reserva-field__textarea:focus {
+      border-color: rgba(199,164,83,0.55);
+      background: rgba(0,0,0,0.5);
     }
-    .reserva-form__textarea {
+    .reserva-field__textarea {
       resize: vertical;
-      min-height: 84px;
+      min-height: 96px;
       line-height: 1.5;
     }
-    .reserva-form__select {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23E3CC8A' d='M6 8 0 0h12z'/></svg>");
-      background-repeat: no-repeat;
-      background-position: right 0.25rem center;
-      padding-right: 1.75rem;
-      cursor: pointer;
-    }
-    .reserva-form__select option {
-      background: var(--fs-escuro-800);
-      color: var(--fs-branco);
-    }
-    .reserva-form__micro {
+    .reserva-field__hint {
       font-size: var(--fs-text-micro);
-      color: rgba(250,250,248,0.5);
-      margin-top: 0.5rem;
-      letter-spacing: 0.02em;
+      color: rgba(250,250,248,0.45);
+      margin-top: 0.4rem;
     }
-    .reserva-form__input::placeholder,
-    .reserva-form__textarea::placeholder {
-      color: rgba(250,250,248,0.35);
-    }
-    .reserva-form__input[type="date"]::-webkit-calendar-picker-indicator {
+    .reserva-field__input::placeholder,
+    .reserva-field__textarea::placeholder { color: rgba(250,250,248,0.32); }
+    .reserva-field__input[type="date"]::-webkit-calendar-picker-indicator {
       filter: invert(0.72) sepia(0.6) saturate(1.8) hue-rotate(5deg);
       cursor: pointer;
       opacity: 0.85;
     }
-    .reserva-form__actions {
-      text-align: center;
+
+    .stepper {
+      display: grid;
+      grid-template-columns: 44px 1fr 44px;
+      align-items: stretch;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(199,164,83,0.18);
+      border-radius: 8px;
+      overflow: hidden;
     }
-    .reserva-form__submit {
-      min-width: 280px;
+    .stepper__btn {
+      background: transparent;
+      border: none;
+      color: var(--fs-dourado-200);
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: background var(--fs-transition-fast);
+      line-height: 1;
+    }
+    .stepper__btn:hover:not(:disabled) { background: rgba(199,164,83,0.1); }
+    .stepper__btn:disabled { color: rgba(250,250,248,0.18); cursor: not-allowed; }
+    .stepper__value {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fs-branco);
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-left: 1px solid rgba(199,164,83,0.12);
+      border-right: 1px solid rgba(199,164,83,0.12);
+      padding: 0.75rem 0;
+    }
+    .stepper__suffix { color: rgba(250,250,248,0.55); margin-left: 0.4rem; font-weight: 400; }
+
+    .time-slots {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.5rem;
+    }
+    .time-slot {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(199,164,83,0.18);
+      border-radius: 8px;
+      color: var(--fs-branco);
+      padding: 0.7rem 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: all var(--fs-transition-fast);
+      font-family: inherit;
+    }
+    .time-slot:hover { border-color: rgba(199,164,83,0.45); }
+    .time-slot.is-active {
+      background: var(--fs-dourado);
+      border-color: var(--fs-dourado);
+      color: var(--fs-escuro);
+    }
+    .time-slots.is-error { animation: shake 0.36s; }
+    .time-slots.is-error .time-slot:not(.is-active) { border-color: rgba(220,90,80,0.5); }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    .reserva-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+    .reserva-summary__card {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(199,164,83,0.14);
+      border-radius: 8px;
+      padding: 0.875rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .reserva-summary__label {
+      font-size: var(--fs-text-micro);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fs-dourado-200);
+    }
+    .reserva-summary__value {
+      font-family: var(--fs-font-display);
+      font-size: 1.15rem;
+      color: var(--fs-branco);
+    }
+
+    .reserva-card__submit {
+      width: 100%;
+      background: linear-gradient(180deg, var(--fs-dourado-200) 0%, var(--fs-dourado) 100%);
+      color: var(--fs-escuro);
+      border: none;
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: filter var(--fs-transition-base), transform var(--fs-transition-base);
+      font-family: inherit;
+    }
+    .reserva-card__submit:hover { filter: brightness(1.06); }
+    .reserva-card__footnote {
+      text-align: center;
+      margin-top: 0.875rem;
+      font-size: var(--fs-text-micro);
+      color: rgba(250,250,248,0.5);
+      letter-spacing: 0.02em;
     }
 
     @media (max-width: 640px) {
-      .reserva-form__grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .reserva-card__grid { grid-template-columns: 1fr; gap: 1.1rem; }
+      .time-slots { grid-template-columns: repeat(3, 1fr); }
+      .reserva-summary { grid-template-columns: 1fr; }
     }
 
     /* ── S07 FAQ ─────────────────────────────────────── */
@@ -1474,60 +1583,87 @@
           <h2 class="como-funciona__headline">Garanta sua mesa</h2>
         </div>
 
-        <form class="reserva-form" id="reservaForm" data-animate novalidate>
-          <div class="reserva-form__grid">
-            <div class="reserva-form__field">
-              <label for="rf-nome" class="reserva-form__label">Nome</label>
-              <input type="text" id="rf-nome" name="nome" class="reserva-form__input" required autocomplete="given-name" />
+        <form class="reserva-card" id="reservaForm" data-animate novalidate>
+          <header class="reserva-card__header">
+            <p class="reserva-card__subtitle">Preencha os dados para reservar este momento.</p>
+          </header>
+
+          <div class="reserva-card__grid">
+            <div class="reserva-field">
+              <label for="rf-nome" class="reserva-field__label">Nome</label>
+              <input type="text" id="rf-nome" name="nome" class="reserva-field__input" required autocomplete="given-name" />
             </div>
-            <div class="reserva-form__field">
-              <label for="rf-sobrenome" class="reserva-form__label">Sobrenome</label>
-              <input type="text" id="rf-sobrenome" name="sobrenome" class="reserva-form__input" required autocomplete="family-name" />
+            <div class="reserva-field">
+              <label for="rf-sobrenome" class="reserva-field__label">Sobrenome</label>
+              <input type="text" id="rf-sobrenome" name="sobrenome" class="reserva-field__input" required autocomplete="family-name" />
             </div>
-            <div class="reserva-form__field reserva-form__field--full">
-              <label for="rf-email" class="reserva-form__label">E-mail</label>
-              <input type="email" id="rf-email" name="email" class="reserva-form__input" required autocomplete="email" />
-              <span class="reserva-form__micro">Você receberá a confirmação por e-mail.</span>
+
+            <div class="reserva-field reserva-field--full">
+              <label for="rf-email" class="reserva-field__label">E-mail</label>
+              <input type="email" id="rf-email" name="email" class="reserva-field__input" required autocomplete="email" />
+              <span class="reserva-field__hint">Você receberá a confirmação por e-mail.</span>
             </div>
-            <div class="reserva-form__field reserva-form__field--full">
-              <label for="rf-celular" class="reserva-form__label">Celular/WhatsApp</label>
-              <input type="tel" id="rf-celular" name="celular" class="reserva-form__input" required autocomplete="tel" placeholder="(00) 00000-0000" />
+
+            <div class="reserva-field">
+              <label for="rf-celular" class="reserva-field__label">Celular/WhatsApp</label>
+              <input type="tel" id="rf-celular" name="celular" class="reserva-field__input" required autocomplete="tel" placeholder="(00) 00000-0000" />
             </div>
-            <div class="reserva-form__field">
-              <label for="rf-data" class="reserva-form__label">Data</label>
-              <input type="date" id="rf-data" name="data" class="reserva-form__input" required />
+            <div class="reserva-field">
+              <label for="rf-data" class="reserva-field__label">Data</label>
+              <input type="date" id="rf-data" name="data" class="reserva-field__input" required />
             </div>
-            <div class="reserva-form__field">
-              <label for="rf-horario" class="reserva-form__label">Horário</label>
-              <select id="rf-horario" name="horario" class="reserva-form__select" required>
-                <option value="" disabled selected>Selecione</option>
-                <option value="19h">19h</option>
-                <option value="19h30">19h30</option>
-                <option value="20h">20h</option>
-                <option value="20h30">20h30</option>
-                <option value="21h">21h</option>
-                <option value="21h30">21h30</option>
-              </select>
+
+            <div class="reserva-field">
+              <label class="reserva-field__label">Adultos</label>
+              <div class="stepper" data-stepper data-target="adultos" data-min="1">
+                <button type="button" class="stepper__btn" data-action="dec" aria-label="Diminuir adultos">−</button>
+                <span class="stepper__value"><span data-stepper-value>2</span><span class="stepper__suffix" data-stepper-suffix>adultos</span></span>
+                <button type="button" class="stepper__btn" data-action="inc" aria-label="Aumentar adultos">+</button>
+                <input type="hidden" name="adultos" value="2" />
+              </div>
             </div>
-            <div class="reserva-form__field">
-              <label for="rf-adultos" class="reserva-form__label">Adultos</label>
-              <input type="number" id="rf-adultos" name="adultos" class="reserva-form__input" min="1" step="1" required />
+            <div class="reserva-field">
+              <label class="reserva-field__label">Crianças até 12 anos</label>
+              <div class="stepper" data-stepper data-target="criancas" data-min="0">
+                <button type="button" class="stepper__btn" data-action="dec" aria-label="Diminuir crianças">−</button>
+                <span class="stepper__value"><span data-stepper-value>0</span><span class="stepper__suffix" data-stepper-suffix>crianças</span></span>
+                <button type="button" class="stepper__btn" data-action="inc" aria-label="Aumentar crianças">+</button>
+                <input type="hidden" name="criancas" value="0" />
+              </div>
             </div>
-            <div class="reserva-form__field">
-              <label for="rf-criancas" class="reserva-form__label">Crianças até 12 anos</label>
-              <input type="number" id="rf-criancas" name="criancas" class="reserva-form__input" min="0" step="1" required />
+
+            <div class="reserva-field reserva-field--full">
+              <label class="reserva-field__label">Horário do jantar</label>
+              <div class="time-slots" id="timeSlots" role="radiogroup" aria-label="Horário do jantar">
+                <button type="button" class="time-slot" data-value="19h" role="radio" aria-checked="false">19h</button>
+                <button type="button" class="time-slot" data-value="19h30" role="radio" aria-checked="false">19h30</button>
+                <button type="button" class="time-slot" data-value="20h" role="radio" aria-checked="false">20h</button>
+                <button type="button" class="time-slot" data-value="20h30" role="radio" aria-checked="false">20h30</button>
+                <button type="button" class="time-slot" data-value="21h" role="radio" aria-checked="false">21h</button>
+                <button type="button" class="time-slot" data-value="21h30" role="radio" aria-checked="false">21h30</button>
+                <input type="hidden" name="horario" id="rf-horario" />
+              </div>
             </div>
-            <div class="reserva-form__field reserva-form__field--full">
-              <label for="rf-obs" class="reserva-form__label">Observações</label>
-              <textarea id="rf-obs" name="observacoes" class="reserva-form__textarea" rows="3" placeholder="Restrições alimentares, data especial, alguma preferência."></textarea>
+
+            <div class="reserva-field reserva-field--full">
+              <label for="rf-obs" class="reserva-field__label">Observações</label>
+              <textarea id="rf-obs" name="observacoes" class="reserva-field__textarea" rows="3" placeholder="Restrições alimentares, data especial, alguma preferência."></textarea>
             </div>
           </div>
 
-          <div class="reserva-form__actions">
-            <button type="submit" class="btn btn--primary reserva-form__submit">
-              Enviar para o Concierge
-            </button>
+          <div class="reserva-summary">
+            <div class="reserva-summary__card">
+              <span class="reserva-summary__label">Pessoas</span>
+              <span class="reserva-summary__value" id="sum-pessoas">2</span>
+            </div>
+            <div class="reserva-summary__card">
+              <span class="reserva-summary__label">Evento</span>
+              <span class="reserva-summary__value" id="sum-evento">—</span>
+            </div>
           </div>
+
+          <button type="submit" class="reserva-card__submit">Enviar para o Concierge</button>
+          <p class="reserva-card__footnote">Você será direcionado ao WhatsApp do Concierge com os dados da sua solicitação.</p>
         </form>
       </div>
     </section>
@@ -1841,11 +1977,79 @@
       animEls.forEach(el => el.classList.add('is-visible'));
     }
 
-    // ── Reserva: envia formulário para o WhatsApp ────────
+    // ── Reserva: card form (steppers, slots, summary, WhatsApp) ───
     const reservaForm = document.getElementById('reservaForm');
     if (reservaForm) {
-      const dataInput = document.getElementById('rf-data');
+      const dataInput     = document.getElementById('rf-data');
+      const horarioInput  = document.getElementById('rf-horario');
+      const slotsGroup    = document.getElementById('timeSlots');
+      const sumPessoas    = document.getElementById('sum-pessoas');
+      const sumEvento     = document.getElementById('sum-evento');
+
       if (dataInput) dataInput.min = new Date().toISOString().split('T')[0];
+
+      // Steppers
+      const STEPPER_SUFFIX = {
+        adultos:  { one: 'adulto',  many: 'adultos'  },
+        criancas: { one: 'criança', many: 'crianças' },
+      };
+      const refreshSummary = () => {
+        let total = 0;
+        reservaForm.querySelectorAll('[data-stepper]').forEach(s => {
+          total += parseInt(s.querySelector('input[type="hidden"]').value, 10) || 0;
+        });
+        sumPessoas.textContent = total;
+
+        const iso = dataInput.value;
+        const dataBr = iso ? iso.split('-').reverse().join('/').slice(0,5) : '';
+        const h = horarioInput.value;
+        if (dataBr && h)      sumEvento.textContent = `${dataBr} · ${h}`;
+        else if (dataBr)      sumEvento.textContent = dataBr;
+        else if (h)           sumEvento.textContent = h;
+        else                  sumEvento.textContent = '—';
+      };
+
+      const updateStepper = (stepper, delta) => {
+        const target  = stepper.dataset.target;
+        const min     = parseInt(stepper.dataset.min || '0', 10);
+        const hidden  = stepper.querySelector('input[type="hidden"]');
+        const valueEl = stepper.querySelector('[data-stepper-value]');
+        const suffix  = stepper.querySelector('[data-stepper-suffix]');
+        const decBtn  = stepper.querySelector('[data-action="dec"]');
+        let v = parseInt(hidden.value, 10) || 0;
+        v = Math.max(min, v + delta);
+        hidden.value = v;
+        valueEl.textContent = v;
+        if (suffix) suffix.textContent = (v === 1 ? STEPPER_SUFFIX[target].one : STEPPER_SUFFIX[target].many);
+        decBtn.disabled = (v <= min);
+        refreshSummary();
+      };
+
+      reservaForm.querySelectorAll('[data-stepper]').forEach(s => {
+        updateStepper(s, 0);
+        s.querySelectorAll('.stepper__btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            updateStepper(s, btn.dataset.action === 'inc' ? 1 : -1);
+          });
+        });
+      });
+
+      // Time slots
+      slotsGroup.querySelectorAll('.time-slot').forEach(slot => {
+        slot.addEventListener('click', () => {
+          slotsGroup.querySelectorAll('.time-slot').forEach(s => {
+            s.classList.remove('is-active');
+            s.setAttribute('aria-checked', 'false');
+          });
+          slot.classList.add('is-active');
+          slot.setAttribute('aria-checked', 'true');
+          horarioInput.value = slot.dataset.value;
+          slotsGroup.classList.remove('is-error');
+          refreshSummary();
+        });
+      });
+
+      dataInput.addEventListener('change', refreshSummary);
 
       reservaForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -1853,6 +2057,12 @@
           reservaForm.reportValidity();
           return;
         }
+        if (!horarioInput.value) {
+          slotsGroup.classList.add('is-error');
+          slotsGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
         const fd = new FormData(reservaForm);
         const iso = (fd.get('data') || '').toString();
         const dataBr = iso ? iso.split('-').reverse().join('/') : '';
