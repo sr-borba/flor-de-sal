@@ -790,27 +790,74 @@
       line-height: 1.15;
     }
 
+    .reserva-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .reserva-block--left {
+      padding-top: 0.5rem;
+    }
+    .reserva-block__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 400;
+      color: var(--fs-branco);
+      line-height: 1.1;
+      margin: 0.75rem 0 1.5rem;
+    }
+    .reserva-block__text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(250,250,248,0.7);
+      margin-bottom: 2rem;
+      max-width: 28rem;
+    }
+    .reserva-info {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-top: 1px solid rgba(199,164,83,0.18);
+    }
+    .reserva-info li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.875rem 0;
+      border-bottom: 1px solid rgba(199,164,83,0.18);
+    }
+    .reserva-info__label {
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fs-dourado-200);
+    }
+    .reserva-info__value {
+      color: var(--fs-branco);
+      font-size: 0.95rem;
+    }
+
     .reserva-card {
-      max-width: 760px;
-      margin: 0 auto;
       background: rgba(10,6,2,0.55);
       border: 1px solid rgba(199,164,83,0.2);
-      border-radius: 16px;
-      padding: clamp(1.5rem, 4vw, 2.75rem);
+      padding: clamp(1.5rem, 3.5vw, 2.5rem);
     }
     .reserva-card__header { margin-bottom: 1.75rem; }
     .reserva-card__title {
       font-family: var(--fs-font-display);
       font-style: italic;
-      font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+      font-size: clamp(1.6rem, 3vw, 2rem);
       font-weight: 400;
-      color: var(--fs-branco);
+      color: var(--fs-dourado);
       line-height: 1.15;
       margin-bottom: 0.4rem;
     }
     .reserva-card__subtitle {
       font-size: var(--fs-text-caption);
-      color: rgba(250,250,248,0.55);
+      color: rgba(250,250,248,0.6);
       letter-spacing: 0.01em;
     }
 
@@ -835,7 +882,7 @@
       width: 100%;
       background: rgba(0,0,0,0.35);
       border: 1px solid rgba(199,164,83,0.18);
-      border-radius: 8px;
+      border-radius: 0;
       padding: 0.75rem 0.875rem;
       color: var(--fs-branco);
       font-family: inherit;
@@ -845,18 +892,13 @@
     }
     .reserva-field__input:focus,
     .reserva-field__textarea:focus {
-      border-color: rgba(199,164,83,0.55);
+      border-color: var(--fs-dourado);
       background: rgba(0,0,0,0.5);
     }
     .reserva-field__textarea {
       resize: vertical;
       min-height: 96px;
       line-height: 1.5;
-    }
-    .reserva-field__hint {
-      font-size: var(--fs-text-micro);
-      color: rgba(250,250,248,0.45);
-      margin-top: 0.4rem;
     }
     .reserva-field__input::placeholder,
     .reserva-field__textarea::placeholder { color: rgba(250,250,248,0.32); }
@@ -872,19 +914,19 @@
       align-items: stretch;
       background: rgba(0,0,0,0.35);
       border: 1px solid rgba(199,164,83,0.18);
-      border-radius: 8px;
+      border-radius: 0;
       overflow: hidden;
     }
     .stepper__btn {
       background: transparent;
       border: none;
-      color: var(--fs-dourado-200);
+      color: var(--fs-dourado);
       font-size: 1.25rem;
       cursor: pointer;
       transition: background var(--fs-transition-fast);
       line-height: 1;
     }
-    .stepper__btn:hover:not(:disabled) { background: rgba(199,164,83,0.1); }
+    .stepper__btn:hover:not(:disabled) { background: rgba(199,164,83,0.12); }
     .stepper__btn:disabled { color: rgba(250,250,248,0.18); cursor: not-allowed; }
     .stepper__value {
       display: flex;
@@ -907,7 +949,7 @@
     .time-slot {
       background: rgba(0,0,0,0.35);
       border: 1px solid rgba(199,164,83,0.18);
-      border-radius: 8px;
+      border-radius: 0;
       color: var(--fs-branco);
       padding: 0.7rem 0.4rem;
       font-size: 0.9rem;
@@ -917,7 +959,7 @@
       transition: all var(--fs-transition-fast);
       font-family: inherit;
     }
-    .time-slot:hover { border-color: rgba(199,164,83,0.45); }
+    .time-slot:hover { border-color: var(--fs-dourado); }
     .time-slot.is-active {
       background: var(--fs-dourado);
       border-color: var(--fs-dourado);
@@ -931,49 +973,22 @@
       75% { transform: translateX(4px); }
     }
 
-    .reserva-summary {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.875rem;
-      margin-bottom: 1.5rem;
-    }
-    .reserva-summary__card {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(199,164,83,0.14);
-      border-radius: 8px;
-      padding: 0.875rem 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .reserva-summary__label {
-      font-size: var(--fs-text-micro);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--fs-dourado-200);
-    }
-    .reserva-summary__value {
-      font-family: var(--fs-font-display);
-      font-size: 1.15rem;
-      color: var(--fs-branco);
-    }
-
     .reserva-card__submit {
       width: 100%;
-      background: linear-gradient(180deg, var(--fs-dourado-200) 0%, var(--fs-dourado) 100%);
+      background: var(--fs-dourado);
       color: var(--fs-escuro);
       border: none;
-      border-radius: 10px;
+      border-radius: 0;
       padding: 1rem;
       font-size: 0.95rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: filter var(--fs-transition-base), transform var(--fs-transition-base);
+      transition: background var(--fs-transition-base);
       font-family: inherit;
     }
-    .reserva-card__submit:hover { filter: brightness(1.06); }
+    .reserva-card__submit:hover { background: var(--fs-dourado-200); }
     .reserva-card__footnote {
       text-align: center;
       margin-top: 0.875rem;
@@ -982,10 +997,13 @@
       letter-spacing: 0.02em;
     }
 
+    @media (max-width: 900px) {
+      .reserva-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .reserva-block__text { max-width: none; }
+    }
     @media (max-width: 640px) {
       .reserva-card__grid { grid-template-columns: 1fr; gap: 1.1rem; }
       .time-slots { grid-template-columns: repeat(3, 1fr); }
-      .reserva-summary { grid-template-columns: 1fr; }
     }
 
     /* ── S07 FAQ ─────────────────────────────────────── */
@@ -1578,93 +1596,86 @@
     <!-- ── S06 COMO FUNCIONA ─────────────────────────── -->
     <section class="como-funciona" id="como-funciona" aria-label="Reserva">
       <div class="container">
-        <div class="como-funciona__intro" data-animate>
-          <span class="eyebrow">Reserva</span>
-          <h2 class="como-funciona__headline">Garanta sua mesa</h2>
+        <div class="reserva-layout">
+          <div class="reserva-block reserva-block--left" data-animate>
+            <span class="eyebrow">Reserva</span>
+            <h2 class="reserva-block__headline">Garanta sua mesa</h2>
+            <p class="reserva-block__text">A noite começa quando você reserva. São apenas 34 lugares por jantar — quem reserva garante mais do que uma mesa, garante uma noite inteiramente dedicada à sua experiência.</p>
+            <ul class="reserva-info">
+              <li><span class="reserva-info__label">Jantar</span><span class="reserva-info__value">19h às 22h</span></li>
+              <li><span class="reserva-info__label">Funcionamento</span><span class="reserva-info__value">Todos os dias</span></li>
+              <li><span class="reserva-info__label">Lugares</span><span class="reserva-info__value">34 por noite</span></li>
+              <li><span class="reserva-info__label">Reserva</span><span class="reserva-info__value">Obrigatória</span></li>
+            </ul>
+          </div>
+
+          <form class="reserva-card" id="reservaForm" data-animate novalidate>
+            <header class="reserva-card__header">
+              <h3 class="reserva-card__title">Sua mesa espera por você.</h3>
+              <p class="reserva-card__subtitle">Preencha os dados para reservar este momento.</p>
+            </header>
+
+            <div class="reserva-card__grid">
+              <div class="reserva-field">
+                <label for="rf-nome" class="reserva-field__label">Nome Completo</label>
+                <input type="text" id="rf-nome" name="nome" class="reserva-field__input" required autocomplete="name" />
+              </div>
+              <div class="reserva-field">
+                <label for="rf-email" class="reserva-field__label">E-mail</label>
+                <input type="email" id="rf-email" name="email" class="reserva-field__input" required autocomplete="email" />
+              </div>
+
+              <div class="reserva-field">
+                <label for="rf-celular" class="reserva-field__label">Telefone/WhatsApp</label>
+                <input type="tel" id="rf-celular" name="celular" class="reserva-field__input" required autocomplete="tel" placeholder="(00) 00000-0000" />
+              </div>
+              <div class="reserva-field">
+                <label for="rf-data" class="reserva-field__label">Data</label>
+                <input type="date" id="rf-data" name="data" class="reserva-field__input" required />
+              </div>
+
+              <div class="reserva-field">
+                <label class="reserva-field__label">Adultos</label>
+                <div class="stepper" data-stepper data-target="adultos" data-min="1">
+                  <button type="button" class="stepper__btn" data-action="dec" aria-label="Diminuir adultos">−</button>
+                  <span class="stepper__value"><span data-stepper-value>2</span><span class="stepper__suffix" data-stepper-suffix>adultos</span></span>
+                  <button type="button" class="stepper__btn" data-action="inc" aria-label="Aumentar adultos">+</button>
+                  <input type="hidden" name="adultos" value="2" />
+                </div>
+              </div>
+              <div class="reserva-field">
+                <label class="reserva-field__label">Crianças até 12 anos</label>
+                <div class="stepper" data-stepper data-target="criancas" data-min="0">
+                  <button type="button" class="stepper__btn" data-action="dec" aria-label="Diminuir crianças">−</button>
+                  <span class="stepper__value"><span data-stepper-value>0</span><span class="stepper__suffix" data-stepper-suffix>crianças</span></span>
+                  <button type="button" class="stepper__btn" data-action="inc" aria-label="Aumentar crianças">+</button>
+                  <input type="hidden" name="criancas" value="0" />
+                </div>
+              </div>
+
+              <div class="reserva-field reserva-field--full">
+                <label class="reserva-field__label">Horário do Jantar</label>
+                <div class="time-slots" id="timeSlots" role="radiogroup" aria-label="Horário do jantar">
+                  <button type="button" class="time-slot" data-value="19h" role="radio" aria-checked="false">19h</button>
+                  <button type="button" class="time-slot" data-value="19h30" role="radio" aria-checked="false">19h30</button>
+                  <button type="button" class="time-slot" data-value="20h" role="radio" aria-checked="false">20h</button>
+                  <button type="button" class="time-slot" data-value="20h30" role="radio" aria-checked="false">20h30</button>
+                  <button type="button" class="time-slot" data-value="21h" role="radio" aria-checked="false">21h</button>
+                  <button type="button" class="time-slot" data-value="21h30" role="radio" aria-checked="false">21h30</button>
+                  <input type="hidden" name="horario" id="rf-horario" />
+                </div>
+              </div>
+
+              <div class="reserva-field reserva-field--full">
+                <label for="rf-obs" class="reserva-field__label">Observações (opcional)</label>
+                <textarea id="rf-obs" name="observacoes" class="reserva-field__textarea" rows="3" placeholder="Restrições alimentares, data especial, alguma preferência."></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="reserva-card__submit">Enviar para o Concierge</button>
+            <p class="reserva-card__footnote">Você será direcionado ao WhatsApp do Concierge com os dados da sua solicitação.</p>
+          </form>
         </div>
-
-        <form class="reserva-card" id="reservaForm" data-animate novalidate>
-          <header class="reserva-card__header">
-            <p class="reserva-card__subtitle">Preencha os dados para reservar este momento.</p>
-          </header>
-
-          <div class="reserva-card__grid">
-            <div class="reserva-field">
-              <label for="rf-nome" class="reserva-field__label">Nome</label>
-              <input type="text" id="rf-nome" name="nome" class="reserva-field__input" required autocomplete="given-name" />
-            </div>
-            <div class="reserva-field">
-              <label for="rf-sobrenome" class="reserva-field__label">Sobrenome</label>
-              <input type="text" id="rf-sobrenome" name="sobrenome" class="reserva-field__input" required autocomplete="family-name" />
-            </div>
-
-            <div class="reserva-field reserva-field--full">
-              <label for="rf-email" class="reserva-field__label">E-mail</label>
-              <input type="email" id="rf-email" name="email" class="reserva-field__input" required autocomplete="email" />
-              <span class="reserva-field__hint">Você receberá a confirmação por e-mail.</span>
-            </div>
-
-            <div class="reserva-field">
-              <label for="rf-celular" class="reserva-field__label">Celular/WhatsApp</label>
-              <input type="tel" id="rf-celular" name="celular" class="reserva-field__input" required autocomplete="tel" placeholder="(00) 00000-0000" />
-            </div>
-            <div class="reserva-field">
-              <label for="rf-data" class="reserva-field__label">Data</label>
-              <input type="date" id="rf-data" name="data" class="reserva-field__input" required />
-            </div>
-
-            <div class="reserva-field">
-              <label class="reserva-field__label">Adultos</label>
-              <div class="stepper" data-stepper data-target="adultos" data-min="1">
-                <button type="button" class="stepper__btn" data-action="dec" aria-label="Diminuir adultos">−</button>
-                <span class="stepper__value"><span data-stepper-value>2</span><span class="stepper__suffix" data-stepper-suffix>adultos</span></span>
-                <button type="button" class="stepper__btn" data-action="inc" aria-label="Aumentar adultos">+</button>
-                <input type="hidden" name="adultos" value="2" />
-              </div>
-            </div>
-            <div class="reserva-field">
-              <label class="reserva-field__label">Crianças até 12 anos</label>
-              <div class="stepper" data-stepper data-target="criancas" data-min="0">
-                <button type="button" class="stepper__btn" data-action="dec" aria-label="Diminuir crianças">−</button>
-                <span class="stepper__value"><span data-stepper-value>0</span><span class="stepper__suffix" data-stepper-suffix>crianças</span></span>
-                <button type="button" class="stepper__btn" data-action="inc" aria-label="Aumentar crianças">+</button>
-                <input type="hidden" name="criancas" value="0" />
-              </div>
-            </div>
-
-            <div class="reserva-field reserva-field--full">
-              <label class="reserva-field__label">Horário do jantar</label>
-              <div class="time-slots" id="timeSlots" role="radiogroup" aria-label="Horário do jantar">
-                <button type="button" class="time-slot" data-value="19h" role="radio" aria-checked="false">19h</button>
-                <button type="button" class="time-slot" data-value="19h30" role="radio" aria-checked="false">19h30</button>
-                <button type="button" class="time-slot" data-value="20h" role="radio" aria-checked="false">20h</button>
-                <button type="button" class="time-slot" data-value="20h30" role="radio" aria-checked="false">20h30</button>
-                <button type="button" class="time-slot" data-value="21h" role="radio" aria-checked="false">21h</button>
-                <button type="button" class="time-slot" data-value="21h30" role="radio" aria-checked="false">21h30</button>
-                <input type="hidden" name="horario" id="rf-horario" />
-              </div>
-            </div>
-
-            <div class="reserva-field reserva-field--full">
-              <label for="rf-obs" class="reserva-field__label">Observações</label>
-              <textarea id="rf-obs" name="observacoes" class="reserva-field__textarea" rows="3" placeholder="Restrições alimentares, data especial, alguma preferência."></textarea>
-            </div>
-          </div>
-
-          <div class="reserva-summary">
-            <div class="reserva-summary__card">
-              <span class="reserva-summary__label">Pessoas</span>
-              <span class="reserva-summary__value" id="sum-pessoas">2</span>
-            </div>
-            <div class="reserva-summary__card">
-              <span class="reserva-summary__label">Evento</span>
-              <span class="reserva-summary__value" id="sum-evento">—</span>
-            </div>
-          </div>
-
-          <button type="submit" class="reserva-card__submit">Enviar para o Concierge</button>
-          <p class="reserva-card__footnote">Você será direcionado ao WhatsApp do Concierge com os dados da sua solicitação.</p>
-        </form>
       </div>
     </section>
 
@@ -1977,36 +1988,18 @@
       animEls.forEach(el => el.classList.add('is-visible'));
     }
 
-    // ── Reserva: card form (steppers, slots, summary, WhatsApp) ───
+    // ── Reserva: card form (steppers, slots, WhatsApp) ────────
     const reservaForm = document.getElementById('reservaForm');
     if (reservaForm) {
       const dataInput     = document.getElementById('rf-data');
       const horarioInput  = document.getElementById('rf-horario');
       const slotsGroup    = document.getElementById('timeSlots');
-      const sumPessoas    = document.getElementById('sum-pessoas');
-      const sumEvento     = document.getElementById('sum-evento');
 
       if (dataInput) dataInput.min = new Date().toISOString().split('T')[0];
 
-      // Steppers
       const STEPPER_SUFFIX = {
         adultos:  { one: 'adulto',  many: 'adultos'  },
         criancas: { one: 'criança', many: 'crianças' },
-      };
-      const refreshSummary = () => {
-        let total = 0;
-        reservaForm.querySelectorAll('[data-stepper]').forEach(s => {
-          total += parseInt(s.querySelector('input[type="hidden"]').value, 10) || 0;
-        });
-        sumPessoas.textContent = total;
-
-        const iso = dataInput.value;
-        const dataBr = iso ? iso.split('-').reverse().join('/').slice(0,5) : '';
-        const h = horarioInput.value;
-        if (dataBr && h)      sumEvento.textContent = `${dataBr} · ${h}`;
-        else if (dataBr)      sumEvento.textContent = dataBr;
-        else if (h)           sumEvento.textContent = h;
-        else                  sumEvento.textContent = '—';
       };
 
       const updateStepper = (stepper, delta) => {
@@ -2022,7 +2015,6 @@
         valueEl.textContent = v;
         if (suffix) suffix.textContent = (v === 1 ? STEPPER_SUFFIX[target].one : STEPPER_SUFFIX[target].many);
         decBtn.disabled = (v <= min);
-        refreshSummary();
       };
 
       reservaForm.querySelectorAll('[data-stepper]').forEach(s => {
@@ -2034,7 +2026,6 @@
         });
       });
 
-      // Time slots
       slotsGroup.querySelectorAll('.time-slot').forEach(slot => {
         slot.addEventListener('click', () => {
           slotsGroup.querySelectorAll('.time-slot').forEach(s => {
@@ -2045,11 +2036,8 @@
           slot.setAttribute('aria-checked', 'true');
           horarioInput.value = slot.dataset.value;
           slotsGroup.classList.remove('is-error');
-          refreshSummary();
         });
       });
-
-      dataInput.addEventListener('change', refreshSummary);
 
       reservaForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -2070,7 +2058,7 @@
 
         const msg =
           'Olá! Gostaria de fazer uma reserva no Flor de Sal Bistrô & Bar.\n\n' +
-          `Nome: ${fd.get('nome')} ${fd.get('sobrenome')}\n` +
+          `Nome: ${fd.get('nome')}\n` +
           `Data: ${dataBr}\n` +
           `Horário: ${fd.get('horario')}\n` +
           `Adultos: ${fd.get('adultos')}\n` +
