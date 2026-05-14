@@ -902,10 +902,23 @@
     }
     .reserva-field__input::placeholder,
     .reserva-field__textarea::placeholder { color: rgba(250,250,248,0.32); }
+    .reserva-field__input[type="date"] {
+      color-scheme: dark;
+      accent-color: var(--fs-dourado);
+    }
     .reserva-field__input[type="date"]::-webkit-calendar-picker-indicator {
       filter: invert(0.72) sepia(0.6) saturate(1.8) hue-rotate(5deg);
       cursor: pointer;
       opacity: 0.85;
+    }
+    .reserva-field__input[type="date"]::-webkit-datetime-edit-text,
+    .reserva-field__input[type="date"]::-webkit-datetime-edit-day-field,
+    .reserva-field__input[type="date"]::-webkit-datetime-edit-month-field,
+    .reserva-field__input[type="date"]::-webkit-datetime-edit-year-field {
+      color: var(--fs-branco);
+    }
+    .reserva-field__input[type="date"]:not(:focus):invalid::-webkit-datetime-edit {
+      color: rgba(250,250,248,0.35);
     }
 
     .stepper {
