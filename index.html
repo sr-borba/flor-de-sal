@@ -3,76 +3,1849 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flor de Sal Bistrô & Bar</title>
+
+  <title>Flor de Sal Bistrô &amp; Bar | Jantar em Maceió</title>
+  <meta name="description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. 34 lugares com vista para as piscinas naturais. Reserve sua mesa." />
+  <link rel="canonical" href="https://flor-de-sal.vinie-magalhaes69.workers.dev/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Flor de Sal Bistrô &amp; Bar | Jantar em Maceió" />
+  <meta property="og:description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. 34 lugares com vista para as piscinas naturais. Reserve sua mesa." />
+  <meta property="og:image" content="https://flor-de-sal.vinie-magalhaes69.workers.dev/assets/hero-ambiente.png" />
+  <meta property="og:url" content="https://flor-de-sal.vinie-magalhaes69.workers.dev/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Restaurant","LocalBusiness"],
+        "name": "Flor de Sal Bistrô &amp; Bar",
+        "description": "Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. 34 lugares com vista para as piscinas naturais de Maceió.",
+        "url": "https://flor-de-sal.vinie-magalhaes69.workers.dev/",
+        "telephone": "+558287233023",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Doutor Antônio Gouveia, 81",
+          "addressLocality": "Pajuçara, Maceió",
+          "addressRegion": "AL",
+          "addressCountry": "BR"
+        },
+        "openingHours": "Mo-Su 19:00-22:00",
+        "servesCuisine": "Nordestina Contemporânea",
+        "priceRange": "R$39–R$125"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {"@type":"Question","name":"Qual o preço médio do jantar?","acceptedAnswer":{"@type":"Answer","text":"O cardápio é à la carte. As entradas partem de R$39 e os pratos principais chegam até R$125."}},
+          {"@type":"Question","name":"O Flor de Sal é o restaurante do hotel?","acceptedAnswer":{"@type":"Answer","text":"O Flor de Sal é um bistrô com identidade própria, localizado no Andar Lazer do Sais Beach Living Hotel. Cardápio autoral, chef independente e apenas 34 lugares."}},
+          {"@type":"Question","name":"Como faço a reserva?","acceptedAnswer":{"@type":"Answer","text":"Pelo WhatsApp do Concierge: (82) 8723-3023. A confirmação chega em até 5 minutos."}},
+          {"@type":"Question","name":"Preciso chegar no horário marcado?","acceptedAnswer":{"@type":"Answer","text":"Sim. Com apenas 34 lugares e reserva obrigatória, o horário é parte da experiência."}},
+          {"@type":"Question","name":"O restaurante atende restrições alimentares?","acceptedAnswer":{"@type":"Answer","text":"Sim. Informe a restrição no momento da reserva — a equipe se prepara com antecedência."}},
+          {"@type":"Question","name":"Funciona todos os dias?","acceptedAnswer":{"@type":"Answer","text":"Sim. O Flor de Sal serve jantar todos os dias, das 19h às 22h. A reserva é sempre obrigatória."}},
+          {"@type":"Question","name":"Onde fica exatamente?","acceptedAnswer":{"@type":"Answer","text":"Andar Lazer do Sais Beach Living Hotel — Av. Doutor Antônio Gouveia, 81, Pajuçara, Maceió."}}
+        ]
+      }
+    ]
+  }
+  </script>
+
   <style>
+    /* ── TOKENS ─────────────────────────────────────── */
     :root {
-      --fs-escuro: #1A0E06;
-      --fs-dourado: #c7a453;
-      --fs-branco: #FAFAF8;
-      --fs-areia: #F5EDD8;
+      --fs-areia:       #F5EDD8;
+      --fs-areia-50:    #FEFCF6;
+      --fs-areia-200:   #EAD9B4;
+      --fs-terra:       #6B4226;
+      --fs-terra-deep:  #3D2015;
+      --fs-musgo:       #4E6645;
+      --fs-dourado:     #c7a453;
+      --fs-dourado-200: #E3CC8A;
+      --fs-dourado-deep:#96762A;
+      --fs-escuro:      #1A0E06;
+      --fs-escuro-800:  #2E1C0F;
+      --fs-escuro-600:  #4A3020;
+      --fs-branco:      #FAFAF8;
+      --fs-branco-100:  #F0EFE8;
+
+      --fs-font-display: 'Cormorant Garamond', Georgia, serif;
+      --fs-font-body:    'Inter', system-ui, sans-serif;
+
+      --fs-text-h1:   clamp(2.25rem, 5vw, 3.75rem);
+      --fs-text-h2:   clamp(1.625rem, 3.5vw, 2.5rem);
+      --fs-text-h3:   clamp(1.25rem, 2.5vw, 1.75rem);
+      --fs-text-sub:  clamp(1rem, 2vw, 1.25rem);
+      --fs-text-body: 1rem;
+      --fs-text-caption: 0.875rem;
+      --fs-text-micro:   0.75rem;
+      --fs-text-badge:   0.6875rem;
+
+      --fs-section-y: clamp(4rem, 8vw, 6rem);
+      --fs-container: 1140px;
+      --fs-gutter:    clamp(1.25rem, 5vw, 2rem);
+
+      --fs-transition-fast: 150ms ease;
+      --fs-transition-base: 250ms ease;
+      --fs-transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+      --fs-z-sticky:  200;
+      --fs-z-overlay: 300;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
+    /* ── RESET ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      min-height: 100vh;
-      margin: 0;
-      display: grid;
-      place-items: center;
-      padding: 2rem;
+      font-family: var(--fs-font-body);
+      font-size: var(--fs-text-body);
+      line-height: 1.6;
+      color: var(--fs-escuro);
+      background: var(--fs-branco);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; font-size: inherit; }
+    :focus-visible { outline: 2px solid var(--fs-dourado); outline-offset: 3px; }
+
+    /* ── UTILITY ────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: var(--fs-container);
+      margin: 0 auto;
+      padding: 0 var(--fs-gutter);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: var(--fs-font-body);
+      font-size: var(--fs-text-badge);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fs-dourado);
+      margin-bottom: 1rem;
+    }
+
+    .section-headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .section-headline em {
+      font-style: italic;
+    }
+
+    /* ── BUTTONS ─────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 52px;
+      padding: 0 2rem;
+      font-family: var(--fs-font-body);
+      font-size: var(--fs-text-caption);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--fs-transition-base);
+      border: none;
+      text-decoration: none;
+    }
+    .btn--primary {
+      background: var(--fs-dourado);
+      color: var(--fs-escuro);
+    }
+    .btn--primary:hover { background: var(--fs-dourado-200); }
+
+    .btn--outline-light {
+      background: transparent;
       color: var(--fs-branco);
+      border: 1px solid rgba(250,250,248,0.5);
+    }
+    .btn--outline-light:hover {
+      background: rgba(250,250,248,0.08);
+      border-color: var(--fs-branco);
+    }
+
+    .btn--outline-dark {
+      background: transparent;
+      color: var(--fs-terra-deep);
+      border: 1px solid rgba(61,32,21,0.35);
+    }
+    .btn--outline-dark:hover {
+      background: rgba(61,32,21,0.06);
+      border-color: var(--fs-terra-deep);
+    }
+
+    .btn--whatsapp {
+      background: #25D366;
+      color: #fff;
+    }
+    .btn--whatsapp:hover { background: #1ebe5d; }
+
+    .btn-microcopy {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.06em;
+      opacity: 0.65;
+      text-transform: none;
+      font-weight: 400;
+    }
+
+    /* ── STICKY HEADER (desktop) ─────────────────────── */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: var(--fs-z-sticky);
+      background: rgba(26,14,6,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(199,164,83,0.15);
+      transform: translateY(-100%);
+      transition: transform var(--fs-transition-slow);
+    }
+    .site-header.is-visible { transform: translateY(0); }
+
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 0.875rem var(--fs-gutter);
+      max-width: var(--fs-container);
+      margin: 0 auto;
+    }
+
+    .site-header__logo { height: 32px; width: auto; }
+
+    .site-header__nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .site-header__nav a {
+      font-size: var(--fs-text-micro);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.65);
+      transition: color var(--fs-transition-fast);
+    }
+    .site-header__nav a:hover { color: var(--fs-branco); }
+
+    .site-header__cta {
+      background: var(--fs-dourado);
+      color: var(--fs-escuro);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.25rem;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      transition: background var(--fs-transition-fast);
+    }
+    .site-header__cta:hover { background: var(--fs-dourado-200); }
+
+    @media (max-width: 768px) {
+      .site-header__nav { display: none; }
+    }
+
+    /* ── STICKY WHATSAPP FAB (mobile) ────────────────── */
+    .sticky-fab {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: var(--fs-z-sticky);
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      background: #25D366;
+      color: #fff;
+      padding: 0.875rem 1.25rem;
+      font-size: var(--fs-text-caption);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      transition: opacity var(--fs-transition-base), transform var(--fs-transition-base);
+    }
+    .sticky-fab.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+    }
+    .sticky-fab svg { flex-shrink: 0; }
+
+    @media (min-width: 769px) { .sticky-fab { display: none; } }
+
+    /* ── S01 HERO ────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: clamp(3rem, 8vw, 5rem);
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
       background: var(--fs-escuro);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .hero__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.55;
+    }
+    .hero__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(26,14,6,0.25) 0%,
+        rgba(26,14,6,0.10) 40%,
+        rgba(26,14,6,0.65) 75%,
+        rgba(26,14,6,0.90) 100%
+      );
     }
 
-    main {
-      width: min(100%, 560px);
+    .hero__logo-wrap {
+      position: absolute;
+      top: clamp(1.5rem, 4vw, 2.5rem);
+      left: var(--fs-gutter);
+    }
+    .hero__logo { height: clamp(36px, 5vw, 52px); width: auto; }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      padding: 0 var(--fs-gutter);
+      max-width: 780px;
     }
 
-    p {
-      margin: 0 0 1.5rem;
-      color: rgba(250, 250, 248, 0.72);
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: var(--fs-text-badge);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fs-dourado);
+      margin-bottom: 1.25rem;
+    }
+    .hero__badge::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--fs-dourado);
+    }
+
+    .hero__h1 {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h1);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--fs-branco);
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .hero__h1 em {
+      font-style: italic;
+      color: var(--fs-dourado-200);
+    }
+
+    .hero__sub {
+      font-size: var(--fs-text-sub);
+      color: rgba(250,250,248,0.80);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+      max-width: 560px;
+    }
+
+    .hero__info {
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.5);
+      margin-top: 1.5rem;
+    }
+
+    .hero__cta-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero__content { max-width: 100%; }
+      .hero__cta-wrap .btn { width: 100%; }
+    }
+
+    /* ── S02 CHEF ────────────────────────────────────── */
+    .chef {
+      background: var(--fs-escuro-800);
+      padding: var(--fs-section-y) 0;
+    }
+
+    .chef__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: center;
+    }
+
+    .chef__photo-wrap {
+      position: relative;
+    }
+    .chef__photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .chef__photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 1.25rem 1.25rem;
+      background: linear-gradient(to top, rgba(26,14,6,0.92) 0%, transparent 100%);
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.6);
+    }
+
+    .chef__text { color: var(--fs-branco); }
+
+    .chef__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--fs-branco);
+      margin-bottom: 1.75rem;
+    }
+
+    .chef__body {
+      color: rgba(250,250,248,0.72);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+      font-size: 0.9375rem;
+    }
+
+    .chef__badge {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      border-left: 2px solid var(--fs-dourado);
+      padding: 0.875rem 1.25rem;
+      margin: 1.75rem 0;
+    }
+    .chef__badge-title {
+      font-size: var(--fs-text-caption);
+      font-weight: 600;
+      color: var(--fs-dourado);
+      letter-spacing: 0.04em;
+    }
+    .chef__badge-sub {
+      font-size: var(--fs-text-micro);
+      color: rgba(250,250,248,0.5);
+      letter-spacing: 0.06em;
+    }
+
+    .chef__quote {
+      border-top: 1px solid rgba(199,164,83,0.2);
+      padding-top: 1.75rem;
+      margin-top: 1.75rem;
+    }
+    .chef__quote-text {
+      font-family: var(--fs-font-display);
+      font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--fs-dourado-200);
+      line-height: 1.45;
+      margin-bottom: 0.875rem;
+    }
+    .chef__quote-author {
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.4);
+    }
+
+    @media (max-width: 768px) {
+      .chef__grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .chef__photo { aspect-ratio: 4/3; }
+    }
+
+    /* ── S03 RESTAURANTE ─────────────────────────────── */
+    .restaurante {
+      background: var(--fs-areia);
+      padding: var(--fs-section-y) 0;
+    }
+
+    .restaurante__intro {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 3.5rem;
+    }
+    .restaurante__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 400;
+      color: var(--fs-terra-deep);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .restaurante__body {
+      color: var(--fs-terra);
+      line-height: 1.75;
+      font-size: 0.9375rem;
+    }
+
+    .restaurante__photo-wrap {
+      position: relative;
+      margin-bottom: 3.5rem;
+    }
+    .restaurante__photo {
+      width: 100%;
+      height: clamp(240px, 45vw, 520px);
+      object-fit: cover;
+      object-position: center;
+    }
+    .restaurante__photo-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 2.5rem var(--fs-gutter);
+      background: linear-gradient(to top, rgba(61,32,21,0.6) 0%, transparent 60%);
+    }
+    .restaurante__num {
+      font-family: var(--fs-font-display);
+      font-size: clamp(5rem, 14vw, 10rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--fs-dourado);
+      letter-spacing: -0.04em;
+    }
+    .restaurante__num-label {
+      font-size: var(--fs-text-sub);
+      font-weight: 300;
+      color: var(--fs-branco);
+      letter-spacing: 0.04em;
+      margin-left: 0.5rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .restaurante__cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .diff-card {
+      background: var(--fs-areia-50);
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(199,164,83,0.2);
+    }
+    .diff-card__icon {
+      font-family: var(--fs-font-display);
+      font-size: 2.25rem;
+      font-weight: 300;
+      color: var(--fs-dourado);
+      margin-bottom: 0.875rem;
+      line-height: 1;
+    }
+    .diff-card__title {
+      font-family: var(--fs-font-display);
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--fs-terra-deep);
+      margin-bottom: 0.625rem;
+    }
+    .diff-card__text {
+      font-size: var(--fs-text-caption);
+      color: var(--fs-terra);
+      line-height: 1.65;
+    }
+
+    .restaurante__info {
+      text-align: center;
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fs-terra);
+      margin-bottom: 2rem;
+      opacity: 0.7;
+    }
+
+    .restaurante__cta { text-align: center; }
+
+    @media (max-width: 768px) {
+      .restaurante__cards { grid-template-columns: 1fr; }
+      .restaurante__num { font-size: clamp(4rem, 18vw, 6rem); }
+    }
+
+    /* ── S04 CARDÁPIO ────────────────────────────────── */
+    .cardapio {
+      background: var(--fs-areia-50);
+      padding: var(--fs-section-y) 0;
+    }
+
+    .cardapio__intro {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+    .cardapio__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 400;
+      color: var(--fs-terra-deep);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    .cardapio__sub {
+      color: var(--fs-terra);
+      line-height: 1.75;
+      font-size: 0.9375rem;
+    }
+
+    .cardapio__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .dish-card {
+      background: var(--fs-branco);
+      border: 1px solid rgba(199,164,83,0.15);
+      overflow: hidden;
+      transition: box-shadow var(--fs-transition-base);
+    }
+    .dish-card:hover {
+      box-shadow: 0 4px 24px rgba(26,14,6,0.10);
+    }
+    .dish-card__photo {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      object-position: center;
+    }
+    .dish-card__photo--placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--fs-areia-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(107,66,38,0.3);
+      font-size: 2rem;
+    }
+    .dish-card__body {
+      padding: 1.25rem 1.375rem 1.5rem;
+    }
+    .dish-card__name {
+      font-family: var(--fs-font-display);
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: var(--fs-terra-deep);
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .dish-card__desc {
+      font-size: var(--fs-text-caption);
+      color: var(--fs-terra);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+    .dish-card__price {
+      font-size: var(--fs-text-caption);
+      font-weight: 600;
+      color: var(--fs-dourado-deep);
+      letter-spacing: 0.02em;
+    }
+
+    .cardapio__faixa {
+      text-align: center;
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fs-terra);
+      opacity: 0.65;
+      margin-bottom: 2.5rem;
+    }
+    .cardapio__cta { text-align: center; }
+
+    @media (max-width: 600px) {
+      .cardapio__grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── S05 GALERIA ─────────────────────────────────── */
+    .galeria {
+      background: var(--fs-escuro);
+      padding: var(--fs-section-y) 0;
+    }
+
+    .galeria__intro {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .galeria__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--fs-branco);
+      line-height: 1.15;
+    }
+
+    .galeria__grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-rows: 240px 240px;
+      gap: 0.5rem;
+    }
+    .galeria__item { overflow: hidden; position: relative; }
+    .galeria__item:first-child { grid-row: span 2; }
+    .galeria__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .galeria__item:hover img { transform: scale(1.04); }
+
+    @media (max-width: 768px) {
+      .galeria__grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .galeria__item:first-child { grid-row: span 1; }
+      .galeria__item { aspect-ratio: 4/3; }
+      .galeria__item img { height: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .galeria__grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        overflow-x: auto;
+        display: flex;
+        gap: 0.5rem;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+      .galeria__item {
+        flex: 0 0 80vw;
+        scroll-snap-align: start;
+        aspect-ratio: 4/3;
+      }
+      .galeria__item:first-child { flex: 0 0 80vw; }
+    }
+
+    /* ── S06 COMO FUNCIONA ───────────────────────────── */
+    .como-funciona {
+      background: var(--fs-escuro-800);
+      padding: var(--fs-section-y) 0;
+    }
+
+    .como-funciona__intro {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .como-funciona__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 400;
+      color: var(--fs-branco);
+      line-height: 1.15;
+    }
+
+    .passos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .passos::before {
+      content: '';
+      position: absolute;
+      top: 2rem;
+      left: calc(33.33% + 1rem);
+      right: calc(33.33% + 1rem);
+      height: 1px;
+      background: rgba(199,164,83,0.2);
+      pointer-events: none;
+    }
+
+    .passo {
+      position: relative;
+      padding-top: 0;
+    }
+    .passo__num {
+      font-family: var(--fs-font-display);
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      font-weight: 300;
+      color: var(--fs-dourado);
+      line-height: 1;
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    .passo__title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--fs-branco);
+      margin-bottom: 0.625rem;
+      letter-spacing: 0.02em;
+    }
+    .passo__text {
+      font-size: var(--fs-text-caption);
+      color: rgba(250,250,248,0.6);
       line-height: 1.7;
     }
 
-    h1 {
-      margin: 0 0 1rem;
-      color: var(--fs-areia);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2rem, 8vw, 3.5rem);
-      font-weight: 400;
-      line-height: 1.05;
+    .como-funciona__nota {
+      border: 1px solid rgba(199,164,83,0.3);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    .como-funciona__nota p {
+      font-size: var(--fs-text-caption);
+      color: var(--fs-dourado-200);
+      letter-spacing: 0.04em;
+    }
+    .como-funciona__cta { text-align: center; }
+
+    .whatsapp-num {
+      display: block;
+      margin-top: 0.875rem;
+      font-size: var(--fs-text-caption);
+      color: rgba(250,250,248,0.45);
+      letter-spacing: 0.06em;
     }
 
-    a {
-      display: inline-flex;
-      min-height: 44px;
+    @media (max-width: 768px) {
+      .passos { grid-template-columns: 1fr; gap: 1.75rem; }
+      .passos::before { display: none; }
+    }
+
+    /* ── S07 FAQ ─────────────────────────────────────── */
+    .faq {
+      background: var(--fs-areia);
+      padding: var(--fs-section-y) 0;
+    }
+
+    .faq__intro {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .faq__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 400;
+      color: var(--fs-terra-deep);
+      line-height: 1.15;
+    }
+
+    .faq__list {
+      max-width: 720px;
+      margin: 0 auto 3rem;
+    }
+
+    .faq__item {
+      border-bottom: 1px solid rgba(107,66,38,0.15);
+    }
+    .faq__item:first-child { border-top: 1px solid rgba(107,66,38,0.15); }
+
+    .faq__question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--fs-terra-deep);
+      text-align: left;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .faq__question:hover { color: var(--fs-terra); }
+
+    .faq__icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      position: relative;
+      color: var(--fs-dourado);
+    }
+    .faq__icon::before, .faq__icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+      border-radius: 1px;
+      transition: transform var(--fs-transition-base), opacity var(--fs-transition-base);
+    }
+    .faq__icon::before { width: 12px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .faq__icon::after  { width: 1.5px; height: 12px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+    .faq__item.is-open .faq__icon::after { opacity: 0; transform: translate(-50%,-50%) rotate(90deg); }
+
+    .faq__answer {
+      display: none;
+      padding: 0 0 1.25rem;
+      font-size: var(--fs-text-caption);
+      color: var(--fs-terra);
+      line-height: 1.75;
+    }
+    .faq__item.is-open .faq__answer { display: block; }
+
+    .faq__cta { text-align: center; }
+
+    /* ── S08 LOCALIZAÇÃO ─────────────────────────────── */
+    .localizacao {
+      background: var(--fs-branco);
+      padding: var(--fs-section-y) 0;
+    }
+
+    .localizacao__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+
+    .localizacao__map iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+      display: block;
+      filter: grayscale(0.2) contrast(1.05);
+    }
+
+    .localizacao__info { padding-top: 0.5rem; }
+
+    .localizacao__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 400;
+      color: var(--fs-terra-deep);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .localizacao__headline em { font-style: italic; }
+
+    .localizacao__body {
+      font-size: 0.9375rem;
+      color: var(--fs-terra);
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+    }
+
+    .localizacao__details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      margin-bottom: 2rem;
+    }
+    .localizacao__detail {
+      display: flex;
+      gap: 0.875rem;
+      align-items: flex-start;
+    }
+    .localizacao__detail-icon {
+      flex-shrink: 0;
+      width: 20px;
+      color: var(--fs-dourado);
+      margin-top: 1px;
+    }
+    .localizacao__detail-text {
+      font-size: var(--fs-text-caption);
+      color: var(--fs-terra);
+      line-height: 1.5;
+    }
+    .localizacao__detail-text strong {
+      display: block;
+      font-weight: 600;
+      color: var(--fs-terra-deep);
+      margin-bottom: 0.125rem;
+    }
+
+    .localizacao__ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+      .localizacao__grid { grid-template-columns: 1fr; }
+      .localizacao__map iframe { height: 220px; }
+    }
+
+    /* ── S09 CTA FINAL ───────────────────────────────── */
+    .cta-final {
+      background: var(--fs-escuro);
+      padding: var(--fs-section-y) 0;
+      text-align: center;
+    }
+
+    .cta-final__inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .cta-final__headline {
+      font-family: var(--fs-font-display);
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 400;
+      color: var(--fs-branco);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    .cta-final__headline em {
+      font-style: italic;
+      color: var(--fs-dourado-200);
+    }
+
+    .cta-final__escassez {
+      font-size: var(--fs-text-badge);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.45);
+      margin-bottom: 1.25rem;
+    }
+
+    .cta-final__sub {
+      font-size: var(--fs-text-sub);
+      color: rgba(250,250,248,0.6);
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+      font-family: var(--fs-font-display);
+    }
+
+    .cta-final__btn { min-width: 280px; }
+
+    .cta-final__credencial {
+      margin-top: 2rem;
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.3);
+    }
+
+    @media (max-width: 480px) {
+      .cta-final__btn { width: 100%; }
+    }
+
+    /* ── FOOTER ──────────────────────────────────────── */
+    .footer {
+      background: var(--fs-escuro);
+      border-top: 1px solid rgba(199,164,83,0.12);
+      padding: 2.5rem 0;
+    }
+
+    .footer__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
+    }
+
+    .footer__logo { height: 28px; width: auto; opacity: 0.7; }
+
+    .footer__info {
+      font-size: var(--fs-text-micro);
+      color: rgba(250,250,248,0.4);
+      letter-spacing: 0.06em;
+      line-height: 1.8;
+    }
+
+    .footer__links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer__links a {
+      font-size: var(--fs-text-micro);
+      color: rgba(250,250,248,0.3);
+      letter-spacing: 0.06em;
+      transition: color var(--fs-transition-fast);
+    }
+    .footer__links a:hover { color: rgba(250,250,248,0.65); }
+
+    .footer__social {
+      display: flex;
+      gap: 1rem;
+    }
+    .footer__social a {
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0.875rem 1.25rem;
-      color: var(--fs-escuro);
-      background: var(--fs-dourado);
-      border-radius: 4px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-decoration: none;
-      text-transform: uppercase;
+      width: 36px;
+      height: 36px;
+      color: rgba(250,250,248,0.35);
+      border: 1px solid rgba(250,250,248,0.1);
+      transition: all var(--fs-transition-fast);
+    }
+    .footer__social a:hover {
+      color: var(--fs-dourado);
+      border-color: rgba(199,164,83,0.4);
     }
 
-    a:focus-visible {
-      outline: 2px solid var(--fs-branco);
-      outline-offset: 4px;
+    .footer__copy {
+      font-size: 0.6875rem;
+      color: rgba(250,250,248,0.2);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── ANIMATE IN ──────────────────────────────────── */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    [data-animate].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-animate-delay="1"] { transition-delay: 0.1s; }
+    [data-animate-delay="2"] { transition-delay: 0.25s; }
+    [data-animate-delay="3"] { transition-delay: 0.4s; }
+    [data-animate-delay="4"] { transition-delay: 0.55s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-animate], .sticky-fab, .site-header { transition: none; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ── STICKY HEADER (desktop) ──────────────────────── -->
+  <header class="site-header" id="site-header" aria-label="Navegação principal">
+    <div class="site-header__inner">
+      <a href="#hero" aria-label="Flor de Sal — Início">
+        <img
+          src="Identidade Visual/SVG/Logotipo_Flor de Sal - Dourado_Completa.svg"
+          alt="Flor de Sal Bistrô &amp; Bar"
+          class="site-header__logo"
+        />
+      </a>
+      <nav class="site-header__nav" aria-label="Âncoras da página">
+        <a href="#cardapio">Cardápio</a>
+        <a href="#como-funciona">Reserva</a>
+        <a href="#localizacao">Localização</a>
+      </nav>
+      <a
+        href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+        class="site-header__cta"
+        target="_blank"
+        rel="noopener"
+        aria-label="Reservar mesa via WhatsApp"
+      >Reservar mesa</a>
+    </div>
+  </header>
+
+  <!-- ── STICKY FAB WhatsApp (mobile) ─────────────────── -->
+  <a
+    href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+    class="sticky-fab"
+    id="sticky-fab"
+    target="_blank"
+    rel="noopener"
+    aria-label="Reservar via WhatsApp"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.559 4.14 1.535 5.876L.057 23.885a.5.5 0 0 0 .606.625l6.198-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.912 0-3.71-.504-5.265-1.385l-.378-.214-3.917 1.03 1.048-3.826-.23-.37A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+    </svg>
+    Reservar
+  </a>
+
   <main>
-    <h1>Flor de Sal Bistrô & Bar</h1>
-    <p>A landing page principal está em preparação. O Design System do projeto já está disponível para consulta.</p>
-    <a href="/designsystem/">Acessar Design System</a>
+
+    <!-- ── S01 HERO ──────────────────────────────────── -->
+    <section class="hero" id="hero" aria-label="Apresentação">
+      <div class="hero__bg">
+        <img
+          src="assets/hero-ambiente.png"
+          alt="Ambiente do Flor de Sal Bistrô &amp; Bar — Sais Beach Living Hotel, Maceió"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <a href="#hero" class="hero__logo-wrap" aria-label="Flor de Sal">
+        <img
+          src="Identidade Visual/SVG/Logotipo_Flor de Sal - Dourado_Completa.svg"
+          alt="Flor de Sal Bistrô &amp; Bar"
+          class="hero__logo"
+        />
+      </a>
+
+      <div class="container">
+        <div class="hero__content">
+          <div class="hero__badge" aria-label="Premiação">
+            Eleito Melhor Chef Banqueteiro do Brasil · Prazeres da Mesa · 2018 e 2022
+          </div>
+
+          <h1 class="hero__h1">
+            O Nordeste que você conhece.<br>
+            <em>Reinventado pelo chef que o elevou ao nível nacional.</em>
+          </h1>
+
+          <p class="hero__sub">
+            Cozinha nordestina contemporânea. 34 lugares. Vista para as piscinas naturais de Maceió.<br>
+            Cardápio assinado pelo Chef Wanderson Medeiros — o Picuí.
+          </p>
+
+          <div class="hero__cta-wrap">
+            <a
+              href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+              class="btn btn--primary"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.559 4.14 1.535 5.876L.057 23.885a.5.5 0 0 0 .606.625l6.198-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.912 0-3.71-.504-5.265-1.385l-.378-.214-3.917 1.03 1.048-3.826-.23-.37A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+              Reservar minha mesa
+            </a>
+            <span class="btn-microcopy" style="color:rgba(250,250,248,0.5)">Resposta em até 5 minutos</span>
+          </div>
+
+          <p class="hero__info">Jantar · 19h às 22h · Todos os dias · Reserva obrigatória</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S02 CHEF ──────────────────────────────────── -->
+    <section class="chef" id="chef" aria-label="O Chef">
+      <div class="container">
+        <div class="chef__grid">
+          <div class="chef__photo-wrap" data-animate>
+            <img
+              src="assets/chef-acao.png"
+              alt="Chef Wanderson Medeiros, o Picuí, no Flor de Sal"
+              class="chef__photo"
+              loading="lazy"
+            />
+            <div class="chef__photo-caption">Chef Wanderson Medeiros · o Picuí</div>
+          </div>
+
+          <div class="chef__text" data-animate data-animate-delay="1">
+            <span class="eyebrow">O Chef</span>
+            <h2 class="chef__headline">Uma cozinha que nasce antes da técnica.</h2>
+
+            <p class="chef__body">
+              Wanderson Medeiros cresceu entre fogão à lenha e a tradição de um açougue familiar com mais de 130 anos de história no sertão da Paraíba. Foi lá, em Picuí — cidade que carrega até hoje como apelido —, que aprendeu o ofício pelo tato, pelo cheiro, pela repetição de gestos que atravessam gerações.
+            </p>
+            <p class="chef__body">
+              Em 1999, assumiu o restaurante Picuí em Maceió e transformou a casa numa referência da culinária regional. Nos anos seguintes, levou essa mesma identidade para os eventos mais desejados do litoral alagoano.
+            </p>
+            <p class="chef__body">
+              No Flor de Sal, essa trajetória encontra um novo capítulo. O mesmo respeito pelos insumos nordestinos. A mesma precisão de quem passou décadas aperfeiçoando o ofício. Uma mesa com apenas 34 lugares — para quem escolhe com cuidado onde janta.
+            </p>
+
+            <div class="chef__badge">
+              <span class="chef__badge-title">Melhor Chef Banqueteiro do Brasil</span>
+              <span class="chef__badge-sub">Revista Prazeres da Mesa · 2018 · 2022 · Indicado 2026</span>
+            </div>
+
+            <div class="chef__quote">
+              <p class="chef__quote-text">"No sertão aprendi que cozinha boa não precisa de explicação. Precisa de memória."</p>
+              <span class="chef__quote-author">— Wanderson Medeiros, o Picuí</span>
+            </div>
+
+            <div style="margin-top:2rem;">
+              <a href="#cardapio" class="btn btn--outline-light">Conhecer o cardápio</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S03 RESTAURANTE ───────────────────────────── -->
+    <section class="restaurante" id="restaurante" aria-label="O Restaurante">
+      <div class="container">
+        <div class="restaurante__intro" data-animate>
+          <span class="eyebrow" style="color:var(--fs-terra)">O Restaurante</span>
+          <h2 class="restaurante__headline">Um lugar que não se repete em Maceió.</h2>
+          <p class="restaurante__body">
+            O Flor de Sal foi concebido para poucos. Não por acaso — por escolha. Com apenas 34 lugares no Andar Lazer do Sais Beach Living Hotel, o bistrô oferece algo raro em qualquer cidade: uma refeição que parece feita para você.
+          </p>
+        </div>
+
+        <div class="restaurante__photo-wrap" data-animate>
+          <img
+            src="assets/ambiente-04.jpg"
+            alt="Vista do Flor de Sal Bistrô &amp; Bar com as piscinas naturais de Maceió ao fundo"
+            class="restaurante__photo"
+            loading="lazy"
+          />
+          <div class="restaurante__photo-overlay">
+            <span class="restaurante__num">34</span>
+            <span class="restaurante__num-label">lugares</span>
+          </div>
+        </div>
+
+        <div class="restaurante__cards">
+          <div class="diff-card" data-animate>
+            <div class="diff-card__icon">34</div>
+            <h3 class="diff-card__title">Lugares</h3>
+            <p class="diff-card__text">Um ambiente intimista onde cada reserva é uma garantia de atenção. Não há mesas de passagem — há mesas escolhidas.</p>
+          </div>
+          <div class="diff-card" data-animate data-animate-delay="1">
+            <div class="diff-card__icon">★</div>
+            <h3 class="diff-card__title">Chef premiado</h3>
+            <p class="diff-card__text">Wanderson Medeiros, o Picuí. Duas vezes eleito Melhor Chef Banqueteiro do Brasil pela Prazeres da Mesa.</p>
+          </div>
+          <div class="diff-card" data-animate data-animate-delay="2">
+            <div class="diff-card__icon">◎</div>
+            <h3 class="diff-card__title">Vista singular</h3>
+            <p class="diff-card__text">As piscinas naturais de Maceió como cenário. Um horizonte que não existe em nenhum outro restaurante da cidade.</p>
+          </div>
+        </div>
+
+        <p class="restaurante__info">Jantar das 19h às 22h · Todos os dias · À la carte · Reserva obrigatória</p>
+
+        <div class="restaurante__cta" data-animate>
+          <a
+            href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+            class="btn btn--outline-dark"
+            target="_blank"
+            rel="noopener"
+          >Garantir minha reserva</a>
+          <span class="btn-microcopy" style="color:var(--fs-terra);display:block;text-align:center;">Jantar das 19h às 22h · 34 lugares</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S04 CARDÁPIO ──────────────────────────────── -->
+    <section class="cardapio" id="cardapio" aria-label="Cardápio">
+      <div class="container">
+        <div class="cardapio__intro" data-animate>
+          <span class="eyebrow" style="color:var(--fs-terra)">Cardápio</span>
+          <h2 class="cardapio__headline">Insumos que carregam história.<br><em style="font-style:italic">Pratos que criam memória.</em></h2>
+          <p class="cardapio__sub">
+            O cardápio do Flor de Sal não começa na cozinha — começa na escolha de quem cultiva, pesca e produz. Carne de sol, polvo, camarão, queijo coalho, tapioca, coco. Insumos que a região conhece de berço, reinventados com a precisão de quem dedicou décadas a esse ofício.
+          </p>
+        </div>
+
+        <div class="cardapio__grid">
+          <article class="dish-card" data-animate>
+            <img src="assets/prato-arroz-polvo.jpg" alt="Arroz de Polvo dos Milagres — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <div class="dish-card__body">
+              <h3 class="dish-card__name">Arroz de Polvo dos Milagres</h3>
+              <p class="dish-card__desc">Uma tradição de São Miguel dos Milagres levada para a mesa do Flor de Sal com a assinatura do chef. Arroz negro, polvo na brasa, azeite e o cheiro do mar em cada garfada.</p>
+              <span class="dish-card__price">R$ 125</span>
+            </div>
+          </article>
+
+          <article class="dish-card" data-animate data-animate-delay="1">
+            <img src="assets/prato-carne-sol.jpg" alt="Carne de Sol com Natas — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <div class="dish-card__body">
+              <h3 class="dish-card__name">Carne de Sol com Natas</h3>
+              <p class="dish-card__desc">O insumo mais nordestino que existe — tratado com o respeito de quem o conhece desde criança. Mignon curado, nata fresca, chips de macaxeira. Memória e precisão no mesmo prato.</p>
+              <span class="dish-card__price">R$ 99</span>
+            </div>
+          </article>
+
+          <article class="dish-card" data-animate data-animate-delay="2">
+            <img src="assets/prato-arroz-camarao.jpg" alt="Arroz Cremoso de Camarão — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <div class="dish-card__body">
+              <h3 class="dish-card__name">Arroz Cremoso de Camarão</h3>
+              <p class="dish-card__desc">Camarão selecionado, arroz cremoso e cubos de queijo coalho que fundem ao toque do calor. Um prato que representa o encontro entre o sertão e o mar.</p>
+              <span class="dish-card__price">R$ 105</span>
+            </div>
+          </article>
+
+          <article class="dish-card" data-animate data-animate-delay="3">
+            <img src="assets/prato-camarao-crocante.jpg" alt="Camarões Crocantes com Fonduta de Grana Padano — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <div class="dish-card__body">
+              <h3 class="dish-card__name">Camarões Crocantes com Fonduta</h3>
+              <p class="dish-card__desc">Camarões crocantes com fonduta de grana padano e farofa de bacon. Textura, sabor e a generosidade da cozinha nordestina em cada porção.</p>
+              <span class="dish-card__price">R$ 115</span>
+            </div>
+          </article>
+
+          <article class="dish-card" data-animate>
+            <img src="assets/prato-aneis-lula.jpg" alt="Anéis de Lula Crocantes com Molho de Limão Siciliano — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <div class="dish-card__body">
+              <h3 class="dish-card__name">Anéis de Lula Crocantes</h3>
+              <p class="dish-card__desc">Crocância e acidez em equilíbrio. Lula fresca com molho de limão siciliano — uma entrada que define o tom do que está por vir.</p>
+              <span class="dish-card__price">R$ 79</span>
+            </div>
+          </article>
+
+          <article class="dish-card" data-animate data-animate-delay="1">
+            <img src="assets/prato-cheesecake.jpg" alt="Cheesecake Torta Basca — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <div class="dish-card__body">
+              <h3 class="dish-card__name">Cheesecake · Torta Basca</h3>
+              <p class="dish-card__desc">O encerramento. Cremosa, caramelizada nas bordas, servida em temperatura que ressalta cada camada. Um clássico reinterpretado com a precisão que o Flor de Sal impõe a cada prato.</p>
+              <span class="dish-card__price">R$ 38</span>
+            </div>
+          </article>
+        </div>
+
+        <p class="cardapio__faixa">À la carte · Entradas a partir de R$39 · Pratos principais até R$125 · Cardápio completo disponível na reserva</p>
+
+        <div class="cardapio__cta" data-animate>
+          <a
+            href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar+e+conhecer+o+cardápio+completo."
+            class="btn btn--outline-dark"
+            target="_blank"
+            rel="noopener"
+          >Reservar e conhecer o cardápio completo</a>
+          <span class="btn-microcopy" style="color:var(--fs-terra);display:block;text-align:center;">Uma mensagem. Confirmação em até 5 minutos.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S05 GALERIA ───────────────────────────────── -->
+    <section class="galeria" id="galeria" aria-label="Galeria">
+      <div class="container">
+        <div class="galeria__intro" data-animate>
+          <h2 class="galeria__headline">O lugar que você vai querer lembrar.</h2>
+        </div>
+        <div class="galeria__grid" role="list" aria-label="Fotos do restaurante">
+          <div class="galeria__item" role="listitem">
+            <img src="assets/ambiente-01.png" alt="Restaurante Flor de Sal Bistrô e Bar, Maceió — vista para as piscinas naturais" loading="lazy" />
+          </div>
+          <div class="galeria__item" role="listitem">
+            <img src="assets/prato-arroz-polvo.jpg" alt="Arroz de Polvo dos Milagres — assinatura do Chef Wanderson Medeiros" loading="lazy" />
+          </div>
+          <div class="galeria__item" role="listitem">
+            <img src="assets/ambiente-02.png" alt="Ambiente do Flor de Sal Bistrô e Bar — Sais Beach Living Hotel" loading="lazy" />
+          </div>
+          <div class="galeria__item" role="listitem">
+            <img src="assets/ambiente-05.jpg" alt="Detalhe do Flor de Sal Bistrô e Bar — Pajuçara, Maceió" loading="lazy" />
+          </div>
+          <div class="galeria__item" role="listitem">
+            <img src="assets/prato-carne-sol.jpg" alt="Carne de Sol com Natas — Flor de Sal Bistrô e Bar" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S06 COMO FUNCIONA ─────────────────────────── -->
+    <section class="como-funciona" id="como-funciona" aria-label="Como fazer sua reserva">
+      <div class="container">
+        <div class="como-funciona__intro" data-animate>
+          <span class="eyebrow">Reserva</span>
+          <h2 class="como-funciona__headline">Reservar é simples.<br><em style="font-style:italic;font-family:var(--fs-font-display)">A experiência, não.</em></h2>
+        </div>
+
+        <div class="passos">
+          <div class="passo" data-animate>
+            <div class="passo__num">01</div>
+            <h3 class="passo__title">Escolha a data</h3>
+            <p class="passo__text">Jantar das 19h às 22h, todos os dias. Informe a data, o horário e o número de pessoas.</p>
+          </div>
+          <div class="passo" data-animate data-animate-delay="1">
+            <div class="passo__num">02</div>
+            <h3 class="passo__title">Fale com o Concierge</h3>
+            <p class="passo__text">WhatsApp (82) 8723-3023. Atendimento ágil, humano e sem formulários.</p>
+          </div>
+          <div class="passo" data-animate data-animate-delay="2">
+            <div class="passo__num">03</div>
+            <h3 class="passo__title">Confirme em minutos</h3>
+            <p class="passo__text">Sua mesa estará garantida em até 5 minutos. Sem espera, sem burocracia.</p>
+          </div>
+        </div>
+
+        <div class="como-funciona__nota" data-animate>
+          <p>Apenas 34 lugares por noite. Reserve com antecedência para garantir a sua mesa.</p>
+        </div>
+
+        <div class="como-funciona__cta" data-animate>
+          <a
+            href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+            class="btn btn--primary"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.559 4.14 1.535 5.876L.057 23.885a.5.5 0 0 0 .606.625l6.198-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.912 0-3.71-.504-5.265-1.385l-.378-.214-3.917 1.03 1.048-3.826-.23-.37A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+            </svg>
+            Iniciar minha reserva
+          </a>
+          <span class="btn-microcopy" style="color:rgba(250,250,248,0.45)">Confirmação em até 5 minutos</span>
+          <span class="whatsapp-num">(82) 8723-3023</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S07 FAQ ────────────────────────────────────── -->
+    <section class="faq" id="faq" aria-label="Perguntas frequentes">
+      <div class="container">
+        <div class="faq__intro" data-animate>
+          <span class="eyebrow" style="color:var(--fs-terra)">FAQ</span>
+          <h2 class="faq__headline">Algumas coisas que costumam<br>surgir antes da reserva.</h2>
+        </div>
+
+        <div class="faq__list" role="list">
+          <div class="faq__item is-open" role="listitem">
+            <button class="faq__question" aria-expanded="true" aria-controls="faq-a1">
+              Qual o preço médio do jantar?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a1">
+              O cardápio é à la carte. As entradas partem de R$39 e os pratos principais chegam até R$125. A experiência é construída conforme o que você escolhe — sem pacotes fechados, sem surpresas.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a2">
+              O Flor de Sal é o restaurante do hotel?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a2">
+              O Flor de Sal é um bistrô com identidade própria, localizado no Andar Lazer do Sais Beach Living Hotel. Cardápio autoral, chef independente e apenas 34 lugares. Não é um restaurante de hotel no sentido convencional.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a3">
+              Como faço a reserva?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a3">
+              Pelo WhatsApp do Concierge: (82) 8723-3023. Informe a data, o horário de preferência entre 19h e 22h e o número de pessoas. A confirmação chega em até 5 minutos.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a4">
+              Preciso chegar no horário marcado?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a4">
+              Sim. Com apenas 34 lugares e reserva obrigatória, o horário é parte da experiência. Se precisar reagendar, entre em contato com o Concierge com antecedência.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a5">
+              O restaurante atende restrições alimentares?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a5">
+              Sim. Informe a restrição no momento da reserva — a equipe se prepara com antecedência para garantir que sua experiência seja completa.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a6">
+              Funciona todos os dias?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a6">
+              Sim. O Flor de Sal serve jantar todos os dias, das 19h às 22h. Apenas para garantir: a reserva é sempre obrigatória.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a7">
+              Onde fica exatamente?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a7">
+              Andar Lazer do Sais Beach Living Hotel — Av. Doutor Antônio Gouveia, 81, Pajuçara, Maceió. O hotel dispõe de estacionamento rotativo (R$35 a diária). Em caso de dúvida, o Concierge orienta pelo WhatsApp.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq__cta" data-animate>
+          <a
+            href="https://wa.me/558287233023?text=Olá%2C+tenho+uma+dúvida+sobre+o+Flor+de+Sal+Bistrô+%26+Bar."
+            class="btn btn--outline-dark"
+            target="_blank"
+            rel="noopener"
+          >Ainda tem dúvidas? Fale com o Concierge</a>
+          <span class="btn-microcopy" style="color:var(--fs-terra);display:block;text-align:center;">Respondemos em até 5 minutos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S08 LOCALIZAÇÃO ───────────────────────────── -->
+    <section class="localizacao" id="localizacao" aria-label="Como chegar">
+      <div class="container">
+        <div class="localizacao__grid">
+          <div class="localizacao__map" data-animate>
+            <iframe
+              title="Mapa — Flor de Sal Bistrô &amp; Bar, Maceió"
+              src="https://maps.google.com/maps?q=Av.+Doutor+Antônio+Gouveia,+81,+Pajuçara,+Maceió,+AL&amp;output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              aria-label="Localização do Flor de Sal no Google Maps"
+            ></iframe>
+          </div>
+
+          <div class="localizacao__info" data-animate data-animate-delay="1">
+            <span class="eyebrow" style="color:var(--fs-terra)">Como chegar</span>
+            <h2 class="localizacao__headline">À beira das piscinas naturais de Maceió.</h2>
+            <p class="localizacao__body">
+              O Flor de Sal fica no Andar Lazer do Sais Beach Living Hotel, em Pajuçara — a 10 passos do mar, em frente às piscinas naturais mais famosas do Brasil.
+            </p>
+
+            <div class="localizacao__details">
+              <div class="localizacao__detail">
+                <svg class="localizacao__detail-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+                <div class="localizacao__detail-text">
+                  <strong>Endereço</strong>
+                  Av. Doutor Antônio Gouveia, 81, Pajuçara, Maceió — AL<br>
+                  Andar Lazer · Sais Beach Living Hotel
+                </div>
+              </div>
+
+              <div class="localizacao__detail">
+                <svg class="localizacao__detail-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <div class="localizacao__detail-text">
+                  <strong>Horário</strong>
+                  Jantar das 19h às 22h · Todos os dias
+                </div>
+              </div>
+
+              <div class="localizacao__detail">
+                <svg class="localizacao__detail-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                </svg>
+                <div class="localizacao__detail-text">
+                  <strong>Estacionamento</strong>
+                  Rotativo no hotel — R$35 a diária
+                </div>
+              </div>
+
+              <div class="localizacao__detail">
+                <svg class="localizacao__detail-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
+                </svg>
+                <div class="localizacao__detail-text">
+                  <strong>Distâncias</strong>
+                  10 passos do mar · 5 min do Centro · 45 min do Aeroporto Zumbi dos Palmares
+                </div>
+              </div>
+            </div>
+
+            <div class="localizacao__ctas">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Flor+de+Sal+Bistrô+Bar+Maceió+Pajuçara"
+                class="btn btn--outline-dark"
+                target="_blank"
+                rel="noopener"
+                aria-label="Abrir localização no Google Maps"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+                Como chegar
+              </a>
+              <a
+                href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+                class="btn btn--primary"
+                target="_blank"
+                rel="noopener"
+              >Reservar minha mesa</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── S09 CTA FINAL ─────────────────────────────── -->
+    <section class="cta-final" id="cta-final" aria-label="Reserve sua mesa">
+      <div class="container">
+        <div class="cta-final__inner">
+          <div data-animate>
+            <p class="cta-final__escassez">34 lugares · Jantar das 19h às 22h · Reserva obrigatória</p>
+            <h2 class="cta-final__headline">
+              Uma mesa com vista para as<br>
+              <em>piscinas naturais.</em>
+            </h2>
+            <p class="cta-final__sub">
+              O Flor de Sal não é para todos — é para quem escolhe com cuidado onde passa a noite.
+            </p>
+            <a
+              href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+              class="btn btn--primary cta-final__btn"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.559 4.14 1.535 5.876L.057 23.885a.5.5 0 0 0 .606.625l6.198-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.912 0-3.71-.504-5.265-1.385l-.378-.214-3.917 1.03 1.048-3.826-.23-.37A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+              Reservar agora
+            </a>
+            <span class="btn-microcopy" style="color:rgba(250,250,248,0.4);display:block;text-align:center;margin-top:0.875rem;">Uma mensagem. Confirmação em até 5 minutos.</span>
+            <p class="cta-final__credencial">Melhor Chef Banqueteiro do Brasil · Prazeres da Mesa · 2018 e 2022</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="footer" aria-label="Rodapé">
+    <div class="container">
+      <div class="footer__inner">
+        <img
+          src="Identidade Visual/SVG/Logotipo_Flor de Sal - Dourado_Completa.svg"
+          alt="Flor de Sal Bistrô &amp; Bar"
+          class="footer__logo"
+        />
+
+        <div class="footer__info">
+          Flor de Sal Bistrô &amp; Bar · Sais Beach Living Hotel · Pajuçara, Maceió<br>
+          WhatsApp: (82) 8723-3023
+        </div>
+
+        <div class="footer__social">
+          <a
+            href="https://instagram.com/flordesalbistrobar"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram @flordesalbistrobar"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a
+            href="https://wa.me/558287233023"
+            target="_blank"
+            rel="noopener"
+            aria-label="WhatsApp (82) 8723-3023"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.559 4.14 1.535 5.876L.057 23.885a.5.5 0 0 0 .606.625l6.198-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.912 0-3.71-.504-5.265-1.385l-.378-.214-3.917 1.03 1.048-3.826-.23-.37A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="footer__links">
+          <a href="#">Política de Privacidade</a>
+          <a href="#">Termos de Uso</a>
+        </div>
+
+        <p class="footer__copy">© 2025 Flor de Sal Bistrô &amp; Bar. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Sticky header após scroll do hero ────────────────
+    const header = document.getElementById('site-header');
+    const hero   = document.querySelector('.hero');
+    const fab    = document.getElementById('sticky-fab');
+    const ctaFinal = document.querySelector('.cta-final');
+
+    const headerObserver = new IntersectionObserver(
+      ([entry]) => header.classList.toggle('is-visible', !entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    if (hero) headerObserver.observe(hero);
+
+    // ── Oculta FAB quando CTA final está visível ──────────
+    if (fab && ctaFinal) {
+      const fabObserver = new IntersectionObserver(
+        ([entry]) => fab.classList.toggle('is-hidden', entry.isIntersecting),
+        { threshold: 0.3 }
+      );
+      fabObserver.observe(ctaFinal);
+    }
+
+    // ── Animate-in via IntersectionObserver ──────────────
+    const animEls = document.querySelectorAll('[data-animate]');
+    if (animEls.length && 'IntersectionObserver' in window) {
+      const animObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-visible');
+              animObserver.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      animEls.forEach(el => animObserver.observe(el));
+    } else {
+      animEls.forEach(el => el.classList.add('is-visible'));
+    }
+
+    // ── FAQ accordion ────────────────────────────────────
+    document.querySelectorAll('.faq__question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item   = btn.closest('.faq__item');
+        const isOpen = item.classList.contains('is-open');
+
+        document.querySelectorAll('.faq__item.is-open').forEach(open => {
+          open.classList.remove('is-open');
+          open.querySelector('.faq__question').setAttribute('aria-expanded', 'false');
+        });
+
+        if (!isOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
