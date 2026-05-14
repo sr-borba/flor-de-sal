@@ -790,75 +790,93 @@
       line-height: 1.15;
     }
 
-    .passos {
+    .reserva-form {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .reserva-form__grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 3rem;
-      position: relative;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem 1.5rem;
+      margin-bottom: 2.5rem;
     }
-
-    .passos::before {
-      content: '';
-      position: absolute;
-      top: 2rem;
-      left: calc(33.33% + 1rem);
-      right: calc(33.33% + 1rem);
-      height: 1px;
-      background: rgba(199,164,83,0.2);
-      pointer-events: none;
+    .reserva-form__field {
+      display: flex;
+      flex-direction: column;
     }
-
-    .passo {
-      position: relative;
-      padding-top: 0;
+    .reserva-form__field--full {
+      grid-column: 1 / -1;
     }
-    .passo__num {
-      font-family: var(--fs-font-display);
-      font-size: clamp(3rem, 6vw, 4.5rem);
-      font-weight: 300;
-      color: var(--fs-dourado);
-      line-height: 1;
-      opacity: 0.8;
-      margin-bottom: 1rem;
-    }
-    .passo__title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--fs-branco);
+    .reserva-form__label {
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fs-dourado-200);
       margin-bottom: 0.625rem;
+      font-weight: 500;
+    }
+    .reserva-form__input,
+    .reserva-form__select,
+    .reserva-form__textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(199,164,83,0.28);
+      padding: 0.625rem 0;
+      color: var(--fs-branco);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color var(--fs-transition-base);
+      border-radius: 0;
+    }
+    .reserva-form__input:focus,
+    .reserva-form__select:focus,
+    .reserva-form__textarea:focus {
+      border-bottom-color: var(--fs-dourado);
+    }
+    .reserva-form__textarea {
+      resize: vertical;
+      min-height: 84px;
+      line-height: 1.5;
+    }
+    .reserva-form__select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23E3CC8A' d='M6 8 0 0h12z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 0.25rem center;
+      padding-right: 1.75rem;
+      cursor: pointer;
+    }
+    .reserva-form__select option {
+      background: var(--fs-escuro-800);
+      color: var(--fs-branco);
+    }
+    .reserva-form__micro {
+      font-size: var(--fs-text-micro);
+      color: rgba(250,250,248,0.5);
+      margin-top: 0.5rem;
       letter-spacing: 0.02em;
     }
-    .passo__text {
-      font-size: var(--fs-text-caption);
-      color: rgba(250,250,248,0.6);
-      line-height: 1.7;
+    .reserva-form__input::placeholder,
+    .reserva-form__textarea::placeholder {
+      color: rgba(250,250,248,0.35);
     }
-
-    .como-funciona__nota {
-      border: 1px solid rgba(199,164,83,0.3);
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 2.5rem;
+    .reserva-form__input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.72) sepia(0.6) saturate(1.8) hue-rotate(5deg);
+      cursor: pointer;
+      opacity: 0.85;
+    }
+    .reserva-form__actions {
       text-align: center;
     }
-    .como-funciona__nota p {
-      font-size: var(--fs-text-caption);
-      color: var(--fs-dourado-200);
-      letter-spacing: 0.04em;
-    }
-    .como-funciona__cta { text-align: center; }
-
-    .whatsapp-num {
-      display: block;
-      margin-top: 0.875rem;
-      font-size: var(--fs-text-caption);
-      color: rgba(250,250,248,0.45);
-      letter-spacing: 0.06em;
+    .reserva-form__submit {
+      min-width: 280px;
     }
 
-    @media (max-width: 768px) {
-      .passos { grid-template-columns: 1fr; gap: 1.75rem; }
-      .passos::before { display: none; }
+    @media (max-width: 640px) {
+      .reserva-form__grid { grid-template-columns: 1fr; gap: 1.25rem; }
     }
 
     /* ── S07 FAQ ─────────────────────────────────────── */
@@ -1449,51 +1467,68 @@
     </section>
 
     <!-- ── S06 COMO FUNCIONA ─────────────────────────── -->
-    <section class="como-funciona" id="como-funciona" aria-label="Como fazer sua reserva">
+    <section class="como-funciona" id="como-funciona" aria-label="Reserva">
       <div class="container">
         <div class="como-funciona__intro" data-animate>
           <span class="eyebrow">Reserva</span>
-          <h2 class="como-funciona__headline">Reservar é simples.<br><em style="font-style:italic;font-family:var(--fs-font-display)">A experiência, não.</em></h2>
+          <h2 class="como-funciona__headline">Garanta sua mesa</h2>
         </div>
 
-        <div class="passos">
-          <div class="passo" data-animate>
-            <div class="passo__num">01</div>
-            <h3 class="passo__title">Escolha a data</h3>
-            <p class="passo__text">Jantar das 19h às 22h, todos os dias. Informe a data, o horário e o número de pessoas.</p>
+        <form class="reserva-form" id="reservaForm" data-animate novalidate>
+          <div class="reserva-form__grid">
+            <div class="reserva-form__field">
+              <label for="rf-nome" class="reserva-form__label">Nome</label>
+              <input type="text" id="rf-nome" name="nome" class="reserva-form__input" required autocomplete="given-name" />
+            </div>
+            <div class="reserva-form__field">
+              <label for="rf-sobrenome" class="reserva-form__label">Sobrenome</label>
+              <input type="text" id="rf-sobrenome" name="sobrenome" class="reserva-form__input" required autocomplete="family-name" />
+            </div>
+            <div class="reserva-form__field reserva-form__field--full">
+              <label for="rf-email" class="reserva-form__label">E-mail</label>
+              <input type="email" id="rf-email" name="email" class="reserva-form__input" required autocomplete="email" />
+              <span class="reserva-form__micro">Você receberá a confirmação por e-mail.</span>
+            </div>
+            <div class="reserva-form__field reserva-form__field--full">
+              <label for="rf-celular" class="reserva-form__label">Celular/WhatsApp</label>
+              <input type="tel" id="rf-celular" name="celular" class="reserva-form__input" required autocomplete="tel" placeholder="(00) 00000-0000" />
+            </div>
+            <div class="reserva-form__field">
+              <label for="rf-data" class="reserva-form__label">Data</label>
+              <input type="date" id="rf-data" name="data" class="reserva-form__input" required />
+            </div>
+            <div class="reserva-form__field">
+              <label for="rf-horario" class="reserva-form__label">Horário</label>
+              <select id="rf-horario" name="horario" class="reserva-form__select" required>
+                <option value="" disabled selected>Selecione</option>
+                <option value="19h">19h</option>
+                <option value="19h30">19h30</option>
+                <option value="20h">20h</option>
+                <option value="20h30">20h30</option>
+                <option value="21h">21h</option>
+                <option value="21h30">21h30</option>
+              </select>
+            </div>
+            <div class="reserva-form__field">
+              <label for="rf-adultos" class="reserva-form__label">Adultos</label>
+              <input type="number" id="rf-adultos" name="adultos" class="reserva-form__input" min="1" step="1" required />
+            </div>
+            <div class="reserva-form__field">
+              <label for="rf-criancas" class="reserva-form__label">Crianças até 12 anos</label>
+              <input type="number" id="rf-criancas" name="criancas" class="reserva-form__input" min="0" step="1" required />
+            </div>
+            <div class="reserva-form__field reserva-form__field--full">
+              <label for="rf-obs" class="reserva-form__label">Observações</label>
+              <textarea id="rf-obs" name="observacoes" class="reserva-form__textarea" rows="3" placeholder="Restrições alimentares, data especial, alguma preferência."></textarea>
+            </div>
           </div>
-          <div class="passo" data-animate data-animate-delay="1">
-            <div class="passo__num">02</div>
-            <h3 class="passo__title">Fale com o Concierge</h3>
-            <p class="passo__text">WhatsApp (82) 8723-3023. Atendimento ágil, humano e sem formulários.</p>
-          </div>
-          <div class="passo" data-animate data-animate-delay="2">
-            <div class="passo__num">03</div>
-            <h3 class="passo__title">Confirme em minutos</h3>
-            <p class="passo__text">Sua mesa estará garantida em até 5 minutos. Sem espera, sem burocracia.</p>
-          </div>
-        </div>
 
-        <div class="como-funciona__nota" data-animate>
-          <p>Apenas 34 lugares por noite. Reserve com antecedência para garantir a sua mesa.</p>
-        </div>
-
-        <div class="como-funciona__cta" data-animate>
-          <a
-            href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
-            class="btn btn--primary"
-            target="_blank"
-            rel="noopener"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.559 4.14 1.535 5.876L.057 23.885a.5.5 0 0 0 .606.625l6.198-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.912 0-3.71-.504-5.265-1.385l-.378-.214-3.917 1.03 1.048-3.826-.23-.37A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-            </svg>
-            Iniciar minha reserva
-          </a>
-          <span class="btn-microcopy" style="color:rgba(250,250,248,0.45)">Confirmação em até 5 minutos</span>
-          <span class="whatsapp-num">(82) 8723-3023</span>
-        </div>
+          <div class="reserva-form__actions">
+            <button type="submit" class="btn btn--primary reserva-form__submit">
+              Enviar para o Concierge
+            </button>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -1804,6 +1839,38 @@
       animEls.forEach(el => animObserver.observe(el));
     } else {
       animEls.forEach(el => el.classList.add('is-visible'));
+    }
+
+    // ── Reserva: envia formulário para o WhatsApp ────────
+    const reservaForm = document.getElementById('reservaForm');
+    if (reservaForm) {
+      const dataInput = document.getElementById('rf-data');
+      if (dataInput) dataInput.min = new Date().toISOString().split('T')[0];
+
+      reservaForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!reservaForm.checkValidity()) {
+          reservaForm.reportValidity();
+          return;
+        }
+        const fd = new FormData(reservaForm);
+        const iso = (fd.get('data') || '').toString();
+        const dataBr = iso ? iso.split('-').reverse().join('/') : '';
+        const obs = (fd.get('observacoes') || '').toString().trim() || '—';
+
+        const msg =
+          'Olá! Gostaria de fazer uma reserva no Flor de Sal Bistrô & Bar.\n\n' +
+          `Nome: ${fd.get('nome')} ${fd.get('sobrenome')}\n` +
+          `Data: ${dataBr}\n` +
+          `Horário: ${fd.get('horario')}\n` +
+          `Adultos: ${fd.get('adultos')}\n` +
+          `Crianças: ${fd.get('criancas')}\n` +
+          `Observações: ${obs}\n\n` +
+          'Aguardo a confirmação.';
+
+        const url = `https://wa.me/558287233023?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank', 'noopener');
+      });
     }
 
     // ── FAQ accordion ────────────────────────────────────
