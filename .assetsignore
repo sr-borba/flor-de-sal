@@ -1,0 +1,17 @@
+Base de Conhecimento/
+Identidade Visual/PNG/
+Identidade Visual/1x/
+Identidade Visual/Logotipo_Flor de Sal.ai
+Skills/
+.claude/
+PROJETO.md
+node_modules/
+*.docx
+*.log
+*.tmp
+wrangler.jsonc
+.gitignore
+.assetsignore
+Thumbs.db
+Desktop.ini
+.DS_Store
