@@ -153,7 +153,7 @@
       justify-content: center;
       gap: 0.5rem;
       min-height: 52px;
-      padding: 0 2rem;
+      padding: 0.75rem 2rem;
       font-family: var(--fs-font-body);
       font-size: var(--fs-text-caption);
       font-weight: 600;
@@ -163,6 +163,10 @@
       transition: all var(--fs-transition-base);
       border: none;
       text-decoration: none;
+      text-align: center;
+      line-height: 1.25;
+      white-space: normal;
+      max-width: 100%;
     }
     .btn--primary {
       background: var(--fs-dourado);
@@ -266,6 +270,9 @@
 
     @media (max-width: 768px) {
       .site-header__nav { display: none; }
+      .site-header__inner { gap: 1rem; padding: 0.75rem var(--fs-gutter); }
+      .site-header__cta { padding: 0.55rem 0.9rem; font-size: 0.65rem; letter-spacing: 0.08em; }
+      .site-header__logo { height: 26px; }
     }
 
     /* ── STICKY WHATSAPP FAB (mobile) ────────────────── */
@@ -321,7 +328,7 @@
     }
     .hero__audio-toggle {
       position: absolute;
-      bottom: clamp(1.5rem, 4vw, 2.5rem);
+      top: clamp(1.5rem, 4vw, 2.5rem);
       right: var(--fs-gutter);
       z-index: 4;
       width: 44px;
@@ -431,7 +438,11 @@
 
     @media (max-width: 600px) {
       .hero__content { max-width: 100%; }
-      .hero__cta-wrap .btn { width: 100%; }
+      .hero__cta-wrap { width: 100%; }
+      .hero__cta-wrap .btn { width: 100%; display: flex; }
+      .hero__h1 { letter-spacing: -0.015em; word-break: break-word; hyphens: auto; }
+      .hero__sub br { display: none; }
+      .hero__info { line-height: 1.6; }
     }
 
     /* ── S02 CHEF ────────────────────────────────────── */
@@ -733,8 +744,9 @@
     }
     .cardapio__cta { text-align: center; }
 
-    @media (max-width: 600px) {
-      .cardapio__grid { grid-template-columns: 1fr; }
+    @media (max-width: 768px) {
+      .cardapio__grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .cardapio__cta .btn { width: 100%; max-width: 360px; display: flex; }
     }
 
     /* ── S05 GALERIA ─────────────────────────────────── */
@@ -791,13 +803,19 @@
         gap: 0.5rem;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.25rem;
+        scroll-padding-left: var(--fs-gutter);
+      }
+      .galeria__grid::after {
+        content: '';
+        flex: 0 0 var(--fs-gutter);
       }
       .galeria__item {
-        flex: 0 0 80vw;
+        flex: 0 0 82vw;
         scroll-snap-align: start;
         aspect-ratio: 4/3;
       }
-      .galeria__item:first-child { flex: 0 0 80vw; }
+      .galeria__item:first-child { flex: 0 0 82vw; }
     }
 
     /* ── S06 COMO FUNCIONA ───────────────────────────── */
@@ -853,7 +871,8 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      gap: 1rem;
+      flex-wrap: wrap;
+      gap: 0.25rem 1rem;
       padding: 0.875rem 0;
       border-bottom: 1px solid rgba(199,164,83,0.18);
     }
@@ -973,14 +992,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 0.4rem;
       color: var(--fs-branco);
       font-weight: 500;
       font-size: 0.95rem;
       border-left: 1px solid rgba(199,164,83,0.12);
       border-right: 1px solid rgba(199,164,83,0.12);
-      padding: 0.75rem 0;
+      padding: 0.75rem 0.5rem;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .stepper__suffix { color: rgba(250,250,248,0.55); margin-left: 0.4rem; font-weight: 400; }
+    .stepper__suffix { color: rgba(250,250,248,0.55); font-weight: 400; }
 
     .time-slots {
       display: grid;
@@ -1043,8 +1067,14 @@
       .reserva-block__text { max-width: none; }
     }
     @media (max-width: 640px) {
+      .reserva-card { padding: 1.25rem; }
       .reserva-card__grid { grid-template-columns: 1fr; gap: 1.1rem; }
-      .time-slots { grid-template-columns: repeat(3, 1fr); }
+      .time-slots { grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+      .time-slot { padding: 0.7rem 0.25rem; font-size: 0.85rem; }
+    }
+    @media (max-width: 360px) {
+      .time-slot { font-size: 0.8rem; padding: 0.6rem 0.2rem; }
+      .stepper { grid-template-columns: 40px 1fr 40px; }
     }
 
     /* ── S07 FAQ ─────────────────────────────────────── */
@@ -1089,6 +1119,7 @@
       cursor: pointer;
       background: none;
       border: none;
+      line-height: 1.4;
     }
     .faq__question:hover { color: var(--fs-terra); }
 
@@ -1927,12 +1958,22 @@
     // ── Sticky header após scroll do hero ────────────────
     const header = document.getElementById('site-header');
     const hero   = document.querySelector('.hero');
+    const fab    = document.getElementById('sticky-fab');
 
     const headerObserver = new IntersectionObserver(
       ([entry]) => header.classList.toggle('is-visible', !entry.isIntersecting),
       { threshold: 0.1 }
     );
     if (hero) headerObserver.observe(hero);
+
+    // ── Oculta FAB enquanto hero está visível (mobile) ───
+    if (fab && hero) {
+      const fabObserver = new IntersectionObserver(
+        ([entry]) => fab.classList.toggle('is-hidden', entry.isIntersecting),
+        { threshold: 0.4 }
+      );
+      fabObserver.observe(hero);
+    }
 
     // ── Hero video: toggle de áudio ─────────────────────
     const heroVideo = document.getElementById('heroVideo');
