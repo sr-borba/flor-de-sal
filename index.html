@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Flor de Sal Bistrô &amp; Bar | Jantar em Maceió</title>
-  <meta name="description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. 34 lugares com vista para as piscinas naturais. Reserve sua mesa." />
-  <link rel="canonical" href="https://flor-de-sal.vinie-magalhaes69.workers.dev/" />
+  <meta name="description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. Vagas limitadas com vista para as piscinas naturais. Reserve sua mesa." />
+  <link rel="canonical" href="https://flordesal.saishotel.com.br/" />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Flor de Sal Bistrô &amp; Bar | Jantar em Maceió" />
-  <meta property="og:description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. 34 lugares com vista para as piscinas naturais. Reserve sua mesa." />
-  <meta property="og:image" content="https://flor-de-sal.vinie-magalhaes69.workers.dev/assets/hero-ambiente.jpg" />
-  <meta property="og:url" content="https://flor-de-sal.vinie-magalhaes69.workers.dev/" />
+  <meta property="og:description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. Vagas limitadas com vista para as piscinas naturais. Reserve sua mesa." />
+  <meta property="og:image" content="https://flordesal.saishotel.com.br/assets/hero-ambiente.jpg" />
+  <meta property="og:url" content="https://flordesal.saishotel.com.br/" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,8 +26,8 @@
       {
         "@type": ["Restaurant","LocalBusiness"],
         "name": "Flor de Sal Bistrô &amp; Bar",
-        "description": "Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. 34 lugares com vista para as piscinas naturais de Maceió.",
-        "url": "https://flor-de-sal.vinie-magalhaes69.workers.dev/",
+        "description": "Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. Vagas limitadas com vista para as piscinas naturais de Maceió.",
+        "url": "https://flordesal.saishotel.com.br/",
         "telephone": "+558287233023",
         "address": {
           "@type": "PostalAddress",
@@ -43,10 +43,9 @@
       {
         "@type": "FAQPage",
         "mainEntity": [
-          {"@type":"Question","name":"Qual o preço médio do jantar?","acceptedAnswer":{"@type":"Answer","text":"O cardápio é à la carte. As entradas partem de R$39 e os pratos principais chegam até R$125."}},
-          {"@type":"Question","name":"O Flor de Sal é o restaurante do hotel?","acceptedAnswer":{"@type":"Answer","text":"O Flor de Sal é um bistrô com identidade própria, localizado no Andar Lazer do Sais Beach Living Hotel. Cardápio autoral, chef independente e apenas 34 lugares."}},
+          {"@type":"Question","name":"O Flor de Sal é o restaurante do hotel?","acceptedAnswer":{"@type":"Answer","text":"O Flor de Sal é um bistrô com identidade própria, localizado no Andar Lazer do Sais Beach Living Hotel. Cardápio autoral, chef independente e vagas limitadas."}},
           {"@type":"Question","name":"Como faço a reserva?","acceptedAnswer":{"@type":"Answer","text":"Pelo WhatsApp do Concierge: (82) 8723-3023. A confirmação chega em até 5 minutos."}},
-          {"@type":"Question","name":"Preciso chegar no horário marcado?","acceptedAnswer":{"@type":"Answer","text":"Sim. Com apenas 34 lugares e reserva obrigatória, o horário é parte da experiência."}},
+          {"@type":"Question","name":"Preciso chegar no horário marcado?","acceptedAnswer":{"@type":"Answer","text":"Sim. Como o ambiente é intimista, o horário faz parte da experiência de cada mesa. Caso surja um imprevisto, basta avisar o Concierge para reagendar — é uma cortesia da casa. Há uma tolerância de 30 minutos após o horário marcado."}},
           {"@type":"Question","name":"O restaurante atende restrições alimentares?","acceptedAnswer":{"@type":"Answer","text":"Sim. Informe a restrição no momento da reserva — a equipe se prepara com antecedência."}},
           {"@type":"Question","name":"Funciona todos os dias?","acceptedAnswer":{"@type":"Answer","text":"Sim. O Flor de Sal serve jantar todos os dias, das 19h às 22h. A reserva é sempre obrigatória."}},
           {"@type":"Question","name":"Onde fica exatamente?","acceptedAnswer":{"@type":"Answer","text":"Andar Lazer do Sais Beach Living Hotel — Av. Doutor Antônio Gouveia, 81, Pajuçara, Maceió."}}
@@ -235,7 +234,7 @@
       margin: 0 auto;
     }
 
-    .site-header__logo { height: 32px; width: auto; }
+    .site-header__logo { height: 48px; width: auto; }
 
     .site-header__nav {
       display: flex;
@@ -272,7 +271,7 @@
       .site-header__nav { display: none; }
       .site-header__inner { gap: 1rem; padding: 0.75rem var(--fs-gutter); }
       .site-header__cta { padding: 0.55rem 0.9rem; font-size: 0.65rem; letter-spacing: 0.08em; }
-      .site-header__logo { height: 26px; }
+      .site-header__logo { height: 38px; }
     }
 
     /* ── STICKY WHATSAPP FAB (mobile) ────────────────── */
@@ -309,6 +308,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      padding-top: clamp(7rem, 18svh, 11rem);
       padding-bottom: clamp(3rem, 8vw, 5rem);
       overflow: hidden;
     }
@@ -381,22 +381,17 @@
     }
 
     .hero__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      display: inline-block;
       font-size: var(--fs-text-badge);
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--fs-dourado);
       margin-bottom: 1.25rem;
-    }
-    .hero__badge::before {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: var(--fs-dourado);
+      text-decoration: underline;
+      text-decoration-color: var(--fs-dourado);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.35em;
     }
 
     .hero__h1 {
@@ -440,7 +435,7 @@
       .hero__content { max-width: 100%; }
       .hero__cta-wrap { width: 100%; }
       .hero__cta-wrap .btn { width: 100%; display: flex; }
-      .hero__h1 { letter-spacing: -0.015em; word-break: break-word; hyphens: auto; }
+      .hero__h1 { letter-spacing: -0.015em; hyphens: manual; overflow-wrap: normal; word-break: normal; }
       .hero__sub br { display: none; }
       .hero__info { line-height: 1.6; }
     }
@@ -1449,7 +1444,7 @@
           </div>
 
           <p class="hero__sub">
-            Cozinha nordestina contemporânea. 34 lugares. Vista para as piscinas naturais de Maceió.<br>
+            Cozinha nordestina contemporânea. Vagas limitadas. Vista para as piscinas naturais de Maceió.<br>
             Cardápio assinado pelo Chef Picuí, Wanderson Medeiros.
           </p>
 
@@ -1497,7 +1492,7 @@
               Wanderson Medeiros carrega o apelido da cidade onde aprendeu a cozinhar: Picuí, sertão da Paraíba. Foi lá, entre fogão à lenha e tradição centenária, que o ofício entrou pelo tato antes de entrar pela técnica.
             </p>
             <p class="chef__body">
-              Duas vezes eleito Melhor Chef Banqueteiro do Brasil pela Prazeres da Mesa — em 2018 e 2022. No Flor de Sal, essa trajetória chega à mesa em 34 lugares. Para quem escolhe com cuidado onde janta.
+              Duas vezes eleito Melhor Chef Banqueteiro do Brasil pela Prazeres da Mesa — em 2018 e 2022. No Flor de Sal, essa trajetória chega à mesa em uma experiência intimista. Para quem escolhe com cuidado onde janta.
             </p>
 
             <div class="chef__badge">
@@ -1520,7 +1515,7 @@
           <span class="eyebrow" style="color:var(--fs-terra)">O Restaurante</span>
           <h2 class="restaurante__headline">Há lugares que transformam um jantar em algo maior. O Flor de Sal é um deles.</h2>
           <p class="restaurante__body">
-            Alta gastronomia, ambiente de requinte e as piscinas naturais de Maceió como cenário. Uma noite aqui tem calma deliberada — a elegância de quem sabe que não precisa apressar o que é bom.
+            Espaço intimista, adega climatizada com rótulos nacionais e internacionais e as piscinas naturais de Maceió como cenário. A essência do Beach Living à mesa.
           </p>
         </div>
 
@@ -1563,7 +1558,7 @@
             target="_blank"
             rel="noopener"
           >Garantir minha reserva</a>
-          <span class="btn-microcopy" style="color:var(--fs-terra);display:block;text-align:center;">Jantar das 19h às 22h · 34 lugares</span>
+          <span class="btn-microcopy" style="color:var(--fs-terra);display:block;text-align:center;">Jantar das 19h às 22h · Vagas limitadas</span>
         </div>
       </div>
     </section>
@@ -1673,12 +1668,12 @@
           <div class="reserva-block reserva-block--left" data-animate>
             <span class="eyebrow">Reserva</span>
             <h2 class="reserva-block__headline">Garanta sua mesa</h2>
-            <p class="reserva-block__text">A noite começa quando você reserva. São apenas 34 lugares por jantar — quem reserva garante mais do que uma mesa, garante uma noite inteiramente dedicada à sua experiência.</p>
+            <p class="reserva-block__text">Ao fazer sua reserva, você garante mais do que uma mesa, garante uma noite inteiramente dedicada à sua experiência.</p>
             <ul class="reserva-info">
               <li><span class="reserva-info__label">Jantar</span><span class="reserva-info__value">19h às 22h</span></li>
               <li><span class="reserva-info__label">Funcionamento</span><span class="reserva-info__value">Todos os dias</span></li>
-              <li><span class="reserva-info__label">Lugares</span><span class="reserva-info__value">34 por noite</span></li>
-              <li><span class="reserva-info__label">Reserva</span><span class="reserva-info__value">Obrigatória</span></li>
+              <li><span class="reserva-info__label">Lugares</span><span class="reserva-info__value">Vagas limitadas</span></li>
+              <li><span class="reserva-info__label">Reserva</span><span class="reserva-info__value">Gratuita &amp; Obrigatória</span></li>
             </ul>
           </div>
 
@@ -1765,22 +1760,12 @@
 
         <div class="faq__list" role="list">
           <div class="faq__item is-open" role="listitem">
-            <button class="faq__question" aria-expanded="true" aria-controls="faq-a1">
-              Qual o preço médio do jantar?
-              <span class="faq__icon" aria-hidden="true"></span>
-            </button>
-            <div class="faq__answer" id="faq-a1">
-              O cardápio é à la carte. As entradas partem de R$39 e os pratos principais chegam até R$125. A experiência é construída conforme o que você escolhe — sem pacotes fechados, sem surpresas.
-            </div>
-          </div>
-
-          <div class="faq__item" role="listitem">
-            <button class="faq__question" aria-expanded="false" aria-controls="faq-a2">
+            <button class="faq__question" aria-expanded="true" aria-controls="faq-a2">
               O Flor de Sal é o restaurante do hotel?
               <span class="faq__icon" aria-hidden="true"></span>
             </button>
             <div class="faq__answer" id="faq-a2">
-              O Flor de Sal é um bistrô com identidade própria, localizado no Andar Lazer do Sais Beach Living Hotel. Cardápio autoral, chef independente e apenas 34 lugares. Não é um restaurante de hotel no sentido convencional.
+              O Flor de Sal é um bistrô com identidade própria, localizado no Andar Lazer do Sais Beach Living Hotel. Cardápio autoral, chef independente e vagas limitadas. Não é um restaurante de hotel no sentido convencional.
             </div>
           </div>
 
@@ -1800,7 +1785,7 @@
               <span class="faq__icon" aria-hidden="true"></span>
             </button>
             <div class="faq__answer" id="faq-a4">
-              Sim. Com apenas 34 lugares e reserva obrigatória, o horário é parte da experiência. Se precisar reagendar, entre em contato com o Concierge com antecedência.
+              Sim. Como o ambiente é intimista, o horário faz parte da experiência de cada mesa. Caso surja um imprevisto, basta avisar o Concierge para reagendar — é uma cortesia da casa. Há uma tolerância de 30 minutos após o horário marcado; depois desse intervalo, não nos é possível assegurar sua mesa.
             </div>
           </div>
 

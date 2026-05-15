@@ -1,7 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "flor-de-sal",
+  "account_id": "bfc1da9abf06b931cba4129bd571e110",
   "compatibility_date": "2026-05-14",
+  "routes": [
+    {
+      "pattern": "flordesal.saishotel.com.br",
+      "custom_domain": true
+    }
+  ],
   "observability": {
     "enabled": true
   },
