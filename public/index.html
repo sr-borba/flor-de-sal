@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5JZJEEQSV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C5JZJEEQSV');
+  </script>
+
   <title>Flor de Sal Bistrô &amp; Bar | Jantar em Maceió</title>
   <meta name="description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. Vagas limitadas com vista para as piscinas naturais. Reserve sua mesa." />
   <link rel="canonical" href="https://flordesal.saishotel.com.br/" />
@@ -2109,6 +2118,17 @@
           'Aguardo a confirmação.';
 
         const url = `https://wa.me/558287233023?text=${encodeURIComponent(msg)}`;
+
+        if (typeof gtag === 'function') {
+          gtag('event', 'reserva_whatsapp_submit', {
+            adultos: Number(fd.get('adultos')) || 0,
+            criancas: Number(fd.get('criancas')) || 0,
+            pessoas: (Number(fd.get('adultos')) || 0) + (Number(fd.get('criancas')) || 0),
+            horario: fd.get('horario') || '',
+            tem_observacoes: obs !== '—'
+          });
+        }
+
         window.open(url, '_blank', 'noopener');
       });
     }
