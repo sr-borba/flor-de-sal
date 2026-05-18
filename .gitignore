@@ -17,13 +17,13 @@ PROJETO.MD
 .wrangler/
 
 # Materiais de trabalho (não vão para o repo público)
-Base de Conhecimento/
+Comunicação - Ignorar/
+
+# Defesas em profundidade (caso algo seja movido por engano pra raiz)
 Comunicação/
 Identidade Visual/PNG/
 Identidade Visual/1x/
 Identidade Visual/*.ai
 Skills/
 *.docx
-
-# Originais não comprimidos (apenas as versões web vão em public/)
 Originais Web/
