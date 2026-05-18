@@ -2087,6 +2087,13 @@
           });
         }
 
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead', {
+            content_name: 'Reserva Flor de Sal',
+            content_category: 'Restaurante'
+          });
+        }
+
         window.open(url, '_blank', 'noopener');
       });
     }
