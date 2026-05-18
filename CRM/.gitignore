@@ -1,0 +1,15 @@
+# Segredos e estado local — JAMAIS commitar
+.dev.vars
+.dev.vars.*
+*.sqlite
+*.sqlite3
+*.db
+.wrangler/
+node_modules/
+
+# Dumps/exports de dados — podem conter PII
+exports/
+backups/
+*.csv
+*.dump
+*.sql.gz

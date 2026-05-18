@@ -3,6 +3,7 @@
   "name": "flor-de-sal",
   "account_id": "bfc1da9abf06b931cba4129bd571e110",
   "compatibility_date": "2026-05-14",
+  "main": "CRM/src/index.js",
   "routes": [
     {
       "pattern": "flordesal.saishotel.com.br",
@@ -13,9 +14,21 @@
     "enabled": true
   },
   "assets": {
-    "directory": "./Projeto Website"
+    "directory": "./Projeto Website",
+    "binding": "ASSETS"
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "vars": {
+    "ALLOWED_ORIGIN": "https://flordesal.saishotel.com.br"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "flor-de-sal-reservas",
+      "database_id": "4582912b-28c9-4ec7-91d2-5baf8c12be71",
+      "migrations_dir": "CRM/migrations"
+    }
   ]
 }

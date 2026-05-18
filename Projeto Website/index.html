@@ -1726,6 +1726,11 @@
               </div>
             </div>
 
+            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" tabindex="-1">
+              <label for="rf-hp">Deixe em branco</label>
+              <input type="text" id="rf-hp" name="_hp" tabindex="-1" autocomplete="off" />
+            </div>
+
             <button type="submit" class="reserva-card__submit">Fazer Reserva</button>
             <p class="reserva-card__footnote">Você será encaminhado para o Concierge do Sais Beach Living Hotel.</p>
           </form>
@@ -2093,6 +2098,41 @@
             content_category: 'Restaurante'
           });
         }
+
+        // Registra a reserva no CRM (não bloqueia o WhatsApp em caso de falha).
+        // Lê UTMs do query string para atribuição de campanhas.
+        try {
+          const qs = new URLSearchParams(window.location.search);
+          const payload = {
+            nome: (fd.get('nome') || '').toString(),
+            email: (fd.get('email') || '').toString(),
+            telefone: (fd.get('celular') || '').toString(),
+            data_reserva: iso,
+            horario: (fd.get('horario') || '').toString(),
+            adultos: Number(fd.get('adultos')) || 0,
+            criancas: Number(fd.get('criancas')) || 0,
+            observacoes: (fd.get('observacoes') || '').toString(),
+            _hp: (fd.get('_hp') || '').toString(),
+            utm_source: qs.get('utm_source') || '',
+            utm_medium: qs.get('utm_medium') || '',
+            utm_campaign: qs.get('utm_campaign') || '',
+            utm_content: qs.get('utm_content') || '',
+            utm_term: qs.get('utm_term') || '',
+            referrer: document.referrer || '',
+            landing_page: window.location.href
+          };
+          const ctl = new AbortController();
+          const t = setTimeout(() => ctl.abort(), 3500);
+          fetch('/api/reservas/public', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: ctl.signal,
+            keepalive: true
+          })
+          .catch(() => { /* falha silenciosa: não bloqueia o fluxo */ })
+          .finally(() => clearTimeout(t));
+        } catch (_) { /* defensive: nunca quebrar o submit */ }
 
         window.open(url, '_blank', 'noopener');
       });
