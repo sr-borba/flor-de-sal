@@ -284,33 +284,6 @@
       .site-header__logo { height: 38px; }
     }
 
-    /* ── STICKY WHATSAPP FAB (mobile) ────────────────── */
-    .sticky-fab {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: var(--fs-z-sticky);
-      display: flex;
-      align-items: center;
-      gap: 0.625rem;
-      background: #25D366;
-      color: #fff;
-      padding: 0.875rem 1.25rem;
-      font-size: var(--fs-text-caption);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      transition: opacity var(--fs-transition-base), transform var(--fs-transition-base);
-    }
-    .sticky-fab.is-hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(8px);
-    }
-    .sticky-fab svg { flex-shrink: 0; }
-
-    @media (min-width: 769px) { .sticky-fab { display: none; } }
-
     /* ── S01 HERO ────────────────────────────────────── */
     .hero {
       position: relative;
@@ -1356,7 +1329,7 @@
     [data-animate-delay="4"] { transition-delay: 0.55s; }
 
     @media (prefers-reduced-motion: reduce) {
-      [data-animate], .sticky-fab, .site-header { transition: none; }
+      [data-animate], .site-header { transition: none; }
     }
   </style>
 </head>
@@ -1378,30 +1351,12 @@
         <a href="#localizacao">Localização</a>
       </nav>
       <a
-        href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+        href="#como-funciona"
         class="site-header__cta"
-        target="_blank"
-        rel="noopener"
-        aria-label="Reservar mesa via WhatsApp"
+        aria-label="Ir para o formulário de reserva"
       >Reservar mesa</a>
     </div>
   </header>
-
-  <!-- ── STICKY FAB WhatsApp (mobile) ─────────────────── -->
-  <a
-    href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
-    class="sticky-fab"
-    id="sticky-fab"
-    target="_blank"
-    rel="noopener"
-    aria-label="Reservar via WhatsApp"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.559 4.14 1.535 5.876L.057 23.885a.5.5 0 0 0 .606.625l6.198-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.912 0-3.71-.504-5.265-1.385l-.378-.214-3.917 1.03 1.048-3.826-.23-.37A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-    </svg>
-    Reservar
-  </a>
 
   <main>
 
@@ -1563,10 +1518,9 @@
 
         <div class="restaurante__cta" data-animate>
           <a
-            href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+            href="#como-funciona"
             class="btn btn--outline-dark"
-            target="_blank"
-            rel="noopener"
+            aria-label="Ir para o formulário de reserva"
           >Garantir minha reserva</a>
           <span class="btn-microcopy" style="color:var(--fs-terra);display:block;text-align:center;">Jantar das 19h às 22h · Vagas limitadas</span>
         </div>
@@ -1922,10 +1876,9 @@
                 Como chegar
               </a>
               <a
-                href="https://wa.me/558287233023?text=Olá%2C+gostaria+de+fazer+uma+reserva+no+Flor+de+Sal+Bistrô+%26+Bar."
+                href="#como-funciona"
                 class="btn btn--primary"
-                target="_blank"
-                rel="noopener"
+                aria-label="Ir para o formulário de reserva"
               >Reservar minha mesa</a>
             </div>
           </div>
@@ -1990,22 +1943,12 @@
     // ── Sticky header após scroll do hero ────────────────
     const header = document.getElementById('site-header');
     const hero   = document.querySelector('.hero');
-    const fab    = document.getElementById('sticky-fab');
 
     const headerObserver = new IntersectionObserver(
       ([entry]) => header.classList.toggle('is-visible', !entry.isIntersecting),
       { threshold: 0.1 }
     );
     if (hero) headerObserver.observe(hero);
-
-    // ── Oculta FAB enquanto hero está visível (mobile) ───
-    if (fab && hero) {
-      const fabObserver = new IntersectionObserver(
-        ([entry]) => fab.classList.toggle('is-hidden', entry.isIntersecting),
-        { threshold: 0.4 }
-      );
-      fabObserver.observe(hero);
-    }
 
     // ── Hero video: toggle de áudio ─────────────────────
     const heroVideo = document.getElementById('heroVideo');
