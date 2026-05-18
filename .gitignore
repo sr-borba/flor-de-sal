@@ -13,6 +13,8 @@ build/
 # Memória local do projeto
 PROJETO.md
 PROJETO.MD
+memory.md
+memory.MD
 .claude/
 .wrangler/
 
