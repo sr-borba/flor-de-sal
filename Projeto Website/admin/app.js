@@ -22,6 +22,41 @@
     })[r] || r || '—';
   }
 
+  const ICONS = {
+    dashboard: ['M3 13h8V3H3v10Z', 'M13 21h8V11h-8v10Z', 'M13 3v6h8V3h-8Z', 'M3 21h8v-6H3v6Z'],
+    calendar: ['M8 2v4', 'M16 2v4', 'M3 10h18', 'M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z'],
+    check: ['M20 6 9 17l-5-5'],
+    plus: ['M12 5v14', 'M5 12h14'],
+    chart: ['M3 3v18h18', 'M7 15l4-4 3 3 5-7'],
+    users: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z', 'M22 21v-2a4 4 0 0 0-3-3.87', 'M16 3.13a4 4 0 0 1 0 7.75'],
+    user: ['M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2', 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z'],
+    search: ['M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z', 'M21 21l-4.35-4.35'],
+    erase: ['M3 17l6-6 4 4-6 6H3v-4Z', 'M14 4l6 6-7 7-6-6 7-7Z'],
+    open: ['M7 7h10v10', 'M7 17 17 7'],
+    whatsapp: ['M21 11.5a8.5 8.5 0 0 1-12.4 7.55L3 21l1.95-5.45A8.5 8.5 0 1 1 21 11.5Z', 'M8.8 8.8c.35 3 2.4 5.25 5.45 5.9l1.25-1.25-2.05-1.05-.8.8c-1.15-.55-2.05-1.45-2.6-2.6l.8-.8-1.05-2.05L8.8 8.8Z'],
+    save: ['M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z', 'M17 21v-8H7v8', 'M7 3v5h8'],
+    download: ['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4', 'M7 10l5 5 5-5', 'M12 15V3'],
+    logout: ['M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4', 'M16 17l5-5-5-5', 'M21 12H9'],
+  };
+
+  function icon(name) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'ui-icon');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    for (const d of ICONS[name] || ICONS.open) {
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', d);
+      svg.appendChild(p);
+    }
+    return svg;
+  }
+
+  function iconText(name, text) {
+    return [icon(name), el('span', { text })];
+  }
+
   // ─── DOM helpers ────────────────────────────────────────────────────
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -276,8 +311,13 @@
     const bar = $('#topbar');
     clear(bar);
     bar.appendChild(el('div', { class: 'topbar__brand' }, [
-      el('span', { class: 'topbar__brand-dot' }),
-      el('span', { text: 'Flor de Sal · Painel' }),
+      el('img', {
+        class: 'topbar__logo',
+        src: '/Identidade%20Visual/SVG/Logotipo_Flor de Sal - Dourado_Completa.svg',
+        alt: 'Flor de Sal',
+      }),
+      el('span', { class: 'topbar__divider', text: '|' }),
+      el('span', { class: 'topbar__title', text: 'Painel de Reservas' }),
     ]));
     const userBox = el('div', { class: 'topbar__user' });
     const u = session.user;
@@ -294,19 +334,19 @@
         text: roleLabel(u.role),
       }));
     }
-    userBox.appendChild(el('a', { href: '/cdn-cgi/access/logout', text: 'Sair' }));
+    userBox.appendChild(el('a', { href: '/cdn-cgi/access/logout' }, iconText('logout', 'Sair')));
     bar.appendChild(userBox);
   }
 
   // Cada item declara a capability necessária (ou null = todos).
   const NAV_ALL = [
-    { hash: '#/dashboard',     label: 'Dashboard',    perm: 'view_dashboard' },
-    { hash: '#/reservas',      label: 'Reservas',     perm: 'view_reservas' },
-    { hash: '#/check-in',      label: 'Check-in',     perm: 'view_reservas' },
-    { hash: '#/reservas/nova', label: 'Nova reserva', perm: 'create_reserva' },
-    { hash: '#/relatorios',    label: 'Relatórios',   perm: 'view_reports' },
-    { hash: '#/usuarios',      label: 'Usuários',     perm: 'manage_users' },
-    { hash: '#/perfil',        label: 'Meu perfil',   perm: null },
+    { hash: '#/reservas',      label: 'Reservas',     icon: 'calendar',  perm: 'view_reservas' },
+    { hash: '#/reservas/nova', label: 'Nova reserva', icon: 'plus',      perm: 'create_reserva' },
+    { hash: '#/check-in',      label: 'Check-in',     icon: 'check',     perm: 'view_reservas' },
+    { hash: '#/dashboard',     label: 'Dashboard',    icon: 'dashboard', perm: 'view_dashboard' },
+    { hash: '#/relatorios',    label: 'Relatórios',   icon: 'chart',     perm: 'view_reports' },
+    { hash: '#/usuarios',      label: 'Usuários',     icon: 'users',     perm: 'manage_users' },
+    { hash: '#/perfil',        label: 'Meu perfil',   icon: 'user',      perm: null },
   ];
   function visibleNav() {
     return NAV_ALL.filter((i) => i.perm == null || can(i.perm));
@@ -318,11 +358,18 @@
       const a = el('a', {
         class: 'sidebar__link',
         href: item.hash,
-        text: item.label,
-      });
-      if (location.hash.startsWith(item.hash)) a.classList.add('is-active');
+      }, iconText(item.icon, item.label));
+      if (isNavActive(item)) a.classList.add('is-active');
       nav.appendChild(a);
     }
+  }
+
+  function isNavActive(item) {
+    const hash = location.hash || '#/dashboard';
+    if (item.hash === '#/reservas') {
+      return hash === '#/reservas' || /^#\/reservas\/\d+$/.test(hash);
+    }
+    return hash === item.hash || hash.startsWith(`${item.hash}/`);
   }
 
   function setMain(node) {
@@ -464,14 +511,15 @@
     const state = {
       q: '', status: '', origem: '', from: '', to: '', horario: '',
       order_by: 'data_reserva', order: 'asc', page: 1, per_page: 25,
+      period: 'todas',
     };
 
     async function load() {
       const main = $('#main');
       clear(main);
       main.appendChild(pageHeader('Reservas', can('create_reserva') ? el('a', {
-        class: 'btn btn--primary', href: '#/reservas/nova', text: '+ Nova reserva',
-      }) : null));
+        class: 'btn btn--primary', href: '#/reservas/nova',
+      }, iconText('plus', 'Nova reserva')) : null));
       main.appendChild(buildFilters());
       const placeholder = el('div', { class: 'loading', text: 'Carregando…' });
       main.appendChild(placeholder);
@@ -507,6 +555,7 @@
         value: state.q,
         oninput: (e) => { state.q = e.target.value; },
       })));
+      filters.appendChild(buildReservationPeriodBar());
       filters.appendChild(group('Status', selectEl(state.status, [
         ['', 'Todos'],
         ['solicitada', 'Solicitada'],
@@ -539,16 +588,68 @@
         ['criado_em:asc', 'Criado em ↑'],
       ], (v) => { const [a, b] = v.split(':'); state.order_by = a; state.order = b; })));
       filters.appendChild(el('button', {
-        class: 'btn btn--primary', type: 'submit', text: 'Aplicar',
-      }));
+        class: 'btn btn--primary', type: 'submit',
+      }, iconText('search', 'Aplicar')));
       filters.appendChild(el('button', {
-        class: 'btn btn--ghost', type: 'button', text: 'Limpar',
+        class: 'btn btn--ghost', type: 'button',
         onclick: () => {
           state.q = state.status = state.origem = state.from = state.to = state.horario = '';
+          state.period = 'todas';
           state.page = 1; load();
         },
-      }));
+      }, iconText('erase', 'Limpar')));
       return filters;
+    }
+
+    function buildReservationPeriodBar() {
+      const presets = periodPresets();
+      const wrap = el('div', { class: 'filters__group filters__group--full' }, [
+        el('label', { class: 'filters__label', text: 'Período' }),
+      ]);
+      const bar = el('div', { class: 'period-bar period-bar--compact' });
+      const options = [
+        ['todas', 'Todas'],
+        ['hoje', 'Hoje'],
+        ['amanha', 'Amanhã'],
+        ['semana', 'Esta semana'],
+        ['personalizado', 'Personalizado'],
+      ];
+      for (const [key, label] of options) {
+        bar.appendChild(el('button', {
+          class: `period-bar__btn${state.period === key ? ' is-active' : ''}`,
+          type: 'button',
+          text: label,
+          onclick: () => {
+            state.period = key;
+            state.page = 1;
+            if (key === 'todas') {
+              state.from = '';
+              state.to = '';
+            } else if (key !== 'personalizado') {
+              state.from = presets[key].from;
+              state.to = presets[key].to;
+            }
+            load();
+          },
+        }));
+      }
+      if (state.period === 'personalizado') {
+        bar.appendChild(el('div', { class: 'period-bar__custom' }, [
+          el('input', {
+            type: 'date',
+            value: state.from,
+            onchange: (e) => { state.from = e.target.value; state.page = 1; },
+          }),
+          el('span', { text: 'até' }),
+          el('input', {
+            type: 'date',
+            value: state.to,
+            onchange: (e) => { state.to = e.target.value; state.page = 1; },
+          }),
+        ]));
+      }
+      wrap.appendChild(bar);
+      return wrap;
     }
 
     function selectEl(value, opts, onChange) {
@@ -581,8 +682,8 @@
       for (const r of items) {
         const wa = whatsappLink(r.telefone);
         const actions = el('div', { class: 'table__actions' }, [
-          wa && el('a', { class: 'btn btn--sm btn--ghost', href: wa, target: '_blank', rel: 'noopener', text: 'WhatsApp' }),
-          el('a', { class: 'btn btn--sm', href: `#/reservas/${r.id}`, text: 'Abrir' }),
+          wa && el('a', { class: 'btn btn--sm btn--ghost', href: wa, target: '_blank', rel: 'noopener' }, iconText('whatsapp', 'WhatsApp')),
+          el('a', { class: 'btn btn--sm', href: `#/reservas/${r.id}` }, iconText('open', 'Abrir')),
         ]);
         tbody.appendChild(el('tr', null, [
           el('td', { class: 'mono' }, [el('a', { href: `#/reservas/${r.id}`, text: r.reservation_code })]),
@@ -696,7 +797,7 @@
       obsTxt,
     ]);
     if (canEditObs) {
-      const obsBtn = el('button', { class: 'btn btn--primary btn--sm', type: 'button', text: 'Salvar observações' });
+    const obsBtn = el('button', { class: 'btn btn--primary btn--sm', type: 'button' }, iconText('save', 'Salvar observações'));
       obsBtn.addEventListener('click', async () => {
         obsBtn.disabled = true;
         try {
@@ -741,7 +842,11 @@
       card.appendChild(el('h3', { class: 'section__title', style: 'margin:0 0 .7rem;', text: 'Ações' }));
       const actions = el('div', { style: 'display:flex;flex-direction:column;gap:.4rem;' });
       const mk = (label, kind, handler) => {
-        const b = el('button', { class: `btn${kind === 'primary' ? ' btn--primary' : kind === 'danger' ? ' btn--danger' : ''}`, type: 'button', text: label });
+        const iconName = label.includes('Confirmar') || label.includes('comparecimento') ? 'check'
+          : label.includes('Remarcar') ? 'calendar'
+            : label.includes('Cancelar') || label.includes('no-show') ? 'erase'
+              : 'open';
+        const b = el('button', { class: `btn${kind === 'primary' ? ' btn--primary' : kind === 'danger' ? ' btn--danger' : ''}`, type: 'button' }, iconText(iconName, label));
         b.addEventListener('click', handler);
         return b;
       };
@@ -921,23 +1026,29 @@
 
         const wa = whatsappLink(r.telefone);
         const actions = el('div', { class: 'checkin-card__actions' });
-        const detailLink = el('a', { class: 'btn btn--sm', href: `#/reservas/${r.id}`, text: 'Abrir' });
+        const detailLink = el('a', { class: 'btn btn--sm', href: `#/reservas/${r.id}` }, iconText('open', 'Abrir'));
         actions.appendChild(detailLink);
-        if (wa) actions.appendChild(el('a', { class: 'btn btn--sm btn--ghost', href: wa, target: '_blank', rel: 'noopener', text: 'WhatsApp' }));
+        if (wa) actions.appendChild(el('a', { class: 'btn btn--sm btn--ghost', href: wa, target: '_blank', rel: 'noopener' }, iconText('whatsapp', 'WhatsApp')));
 
         if (can('edit_reserva_status')) {
-          const compBtn = el('button', { class: 'btn btn--sm btn--primary', type: 'button', text: 'Compareceu' });
-          compBtn.addEventListener('click', async () => {
+          const compBtn = el('button', { class: 'btn btn--sm btn--primary', type: 'button' }, iconText('check', 'Compareceu'));
+          const today = isoLocal(new Date());
+          if (date > today) {
             compBtn.disabled = true;
-            try {
-              await api(`/api/admin/reservas/${r.id}/status`, { method: 'PATCH', body: JSON.stringify({ status_novo: 'compareceu' }) });
-              toast(`${r.nome}: marcado como compareceu`, 'success');
-              load();
-            } catch (e) { compBtn.disabled = false; toast(e.message, 'error'); }
-          });
+            compBtn.title = 'Comparecimento só pode ser marcado no dia da reserva ou depois.';
+          } else {
+            compBtn.addEventListener('click', async () => {
+              compBtn.disabled = true;
+              try {
+                await api(`/api/admin/reservas/${r.id}/status`, { method: 'PATCH', body: JSON.stringify({ status_novo: 'compareceu' }) });
+                toast(`${r.nome}: marcado como compareceu`, 'success');
+                load();
+              } catch (e) { compBtn.disabled = false; toast(e.message, 'error'); }
+            });
+          }
           actions.appendChild(compBtn);
 
-          const noShowBtn = el('button', { class: 'btn btn--sm btn--danger', type: 'button', text: 'No-show' });
+          const noShowBtn = el('button', { class: 'btn btn--sm btn--danger', type: 'button' }, iconText('erase', 'No-show'));
           noShowBtn.addEventListener('click', async () => {
             if (!confirm(`Confirmar no-show para ${r.nome}?`)) return;
             noShowBtn.disabled = true;
@@ -948,11 +1059,11 @@
           });
           actions.appendChild(noShowBtn);
 
-          const remarcarBtn = el('button', { class: 'btn btn--sm', type: 'button', text: 'Remarcar' });
+          const remarcarBtn = el('button', { class: 'btn btn--sm', type: 'button' }, iconText('calendar', 'Remarcar'));
           remarcarBtn.addEventListener('click', () => promptRemarcarInline(r));
           actions.appendChild(remarcarBtn);
 
-          const cancelarBtn = el('button', { class: 'btn btn--sm btn--danger', type: 'button', text: 'Cancelar' });
+          const cancelarBtn = el('button', { class: 'btn btn--sm btn--danger', type: 'button' }, iconText('erase', 'Cancelar'));
           cancelarBtn.addEventListener('click', () => promptCancelarInline(r));
           actions.appendChild(cancelarBtn);
         }
@@ -1102,8 +1213,8 @@
     ]);
     form.appendChild(grid);
     form.appendChild(el('div', { class: 'form-actions' }, [
-      el('a', { class: 'btn btn--ghost', href: '#/reservas', text: 'Cancelar' }),
-      el('button', { id: 'nova-submit', class: 'btn btn--primary', type: 'submit', text: 'Criar reserva (confirmada)' }),
+      el('a', { class: 'btn btn--ghost', href: '#/reservas' }, iconText('erase', 'Cancelar')),
+      el('button', { id: 'nova-submit', class: 'btn btn--primary', type: 'submit' }, iconText('plus', 'Criar reserva')),
     ]));
 
     main.appendChild(form);
@@ -1114,7 +1225,7 @@
     const main = $('#main');
     clear(main);
 
-    const novoBtn = el('button', { class: 'btn btn--primary', type: 'button', text: '+ Novo usuário' });
+    const novoBtn = el('button', { class: 'btn btn--primary', type: 'button' }, iconText('plus', 'Novo usuário'));
     novoBtn.addEventListener('click', () => openUserModal(null));
     main.appendChild(pageHeader('Usuários', novoBtn));
 
@@ -1151,16 +1262,15 @@
       for (const u of items) {
         const isSelf = session.user && u.id === session.user.id;
         const acts = el('div', { class: 'table__actions' }, [
-          el('button', { class: 'btn btn--sm', type: 'button', text: 'Editar',
-            onclick: () => openUserModal(u) }),
+          el('button', { class: 'btn btn--sm', type: 'button',
+            onclick: () => openUserModal(u) }, iconText('user', 'Editar')),
           el('button', {
             class: `btn btn--sm ${u.ativo ? 'btn--danger' : 'btn--primary'}`,
             type: 'button',
-            text: u.ativo ? 'Desativar' : 'Reativar',
             disabled: isSelf && u.ativo === 1,
             title: isSelf && u.ativo === 1 ? 'Você não pode desativar a si mesmo' : null,
             onclick: () => toggleAtivo(u),
-          }),
+          }, iconText(u.ativo ? 'erase' : 'check', u.ativo ? 'Desativar' : 'Reativar')),
         ]);
         tbody.appendChild(el('tr', { class: u.ativo ? '' : 'is-inactive' }, [
           el('td', { text: [u.nome, u.sobrenome].filter(Boolean).join(' ') }),
@@ -1351,7 +1461,7 @@
       ]),
     ]));
     card.appendChild(el('div', { class: 'form-actions' }, [
-      el('button', { class: 'btn btn--primary', type: 'submit', text: 'Salvar perfil' }),
+      el('button', { class: 'btn btn--primary', type: 'submit' }, iconText('save', 'Salvar perfil')),
     ]));
 
     main.appendChild(card);
@@ -1396,9 +1506,8 @@
         can('export_csv') ? el('button', {
           class: 'btn btn--primary',
           type: 'button',
-          text: 'Exportar CSV',
           onclick: exportCsv,
-        }) : null,
+        }, iconText('download', 'Exportar CSV')) : null,
       ])));
 
       // Aviso de "sem valor financeiro" — deixar claro o escopo do relatório.
@@ -1506,15 +1615,15 @@
         ], (v) => { state.utm_campaign = v; })));
       }
 
-      form.appendChild(el('button', { class: 'btn btn--primary', type: 'submit', text: 'Aplicar' }));
+      form.appendChild(el('button', { class: 'btn btn--primary', type: 'submit' }, iconText('search', 'Aplicar')));
       form.appendChild(el('button', {
-        class: 'btn btn--ghost', type: 'button', text: 'Limpar',
+        class: 'btn btn--ghost', type: 'button',
         onclick: () => {
           state.preset = 'last_30d'; state.from = ''; state.to = '';
           state.origem = ''; state.status = ''; state.utm_campaign = ''; state.horario = '';
           load();
         },
-      }));
+      }, iconText('erase', 'Limpar')));
 
       return form;
     }
