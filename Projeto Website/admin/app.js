@@ -304,6 +304,7 @@
     { hash: '#/reservas',      label: 'Reservas',     perm: 'view_reservas' },
     { hash: '#/check-in',      label: 'Check-in',     perm: 'view_reservas' },
     { hash: '#/reservas/nova', label: 'Nova reserva', perm: 'create_reserva' },
+    { hash: '#/relatorios',    label: 'Relatórios',   perm: 'view_reports' },
     { hash: '#/usuarios',      label: 'Usuários',     perm: 'manage_users' },
     { hash: '#/perfil',        label: 'Meu perfil',   perm: null },
   ];
@@ -1356,6 +1357,502 @@
     main.appendChild(card);
   }
 
+  // ─── Page: Relatórios ──────────────────────────────────────────────
+  async function renderRelatorios() {
+    const main = $('#main');
+
+    // Estado dos filtros. Default = últimos 30 dias.
+    const state = {
+      preset: 'last_30d',
+      from: '',
+      to: '',
+      origem: '',
+      status: '',
+      utm_campaign: '',
+      horario: '',
+    };
+
+    let filtrosCache = null;
+
+    function buildQs() {
+      const qs = new URLSearchParams();
+      // Se preset estiver setado e não for "custom", manda só preset.
+      // Senão manda from/to.
+      if (state.preset && state.preset !== 'custom') {
+        qs.set('preset', state.preset);
+      } else if (state.from && state.to) {
+        qs.set('from', state.from);
+        qs.set('to', state.to);
+      }
+      for (const k of ['origem', 'status', 'utm_campaign', 'horario']) {
+        if (state[k]) qs.set(k, state[k]);
+      }
+      return qs;
+    }
+
+    async function load() {
+      clear(main);
+      main.appendChild(pageHeader('Relatórios', el('div', { class: 'row' }, [
+        can('export_csv') ? el('button', {
+          class: 'btn btn--primary',
+          type: 'button',
+          text: 'Exportar CSV',
+          onclick: exportCsv,
+        }) : null,
+      ])));
+
+      // Aviso de "sem valor financeiro" — deixar claro o escopo do relatório.
+      main.appendChild(el('p', {
+        class: 'muted',
+        style: 'margin: -0.5rem 0 1.25rem; font-size: 0.85rem; line-height: 1.5;',
+        text: 'Estes relatórios medem volume e comportamento das reservas — não há valores financeiros aqui.',
+      }));
+
+      // Filtros
+      if (!filtrosCache) {
+        try {
+          filtrosCache = await api('/api/admin/relatorios/filtros');
+        } catch (e) {
+          filtrosCache = { origens: [], status: [], horarios: [], campanhas: [] };
+        }
+      }
+      main.appendChild(buildFilters());
+
+      // Métricas
+      const placeholder = el('div', { class: 'loading', text: 'Carregando métricas…' });
+      main.appendChild(placeholder);
+
+      let data;
+      try {
+        data = await api(`/api/admin/relatorios/metricas?${buildQs()}`);
+      } catch (e) {
+        placeholder.remove();
+        let msg = e.message;
+        if (e.fields) msg += ': ' + e.fields.map((f) => `${f.field} ${f.message}`).join(', ');
+        main.appendChild(el('div', { class: 'empty', text: `Erro: ${msg}` }));
+        return;
+      }
+      placeholder.remove();
+      renderConteudo(data);
+    }
+
+    function buildFilters() {
+      const form = el('form', {
+        class: 'filters',
+        onsubmit: (e) => { e.preventDefault(); load(); },
+      });
+
+      // Presets (botões em linha)
+      const presets = el('div', { class: 'filters__group filters__group--full' }, [
+        el('label', { class: 'filters__label', text: 'Período' }),
+        el('div', { class: 'preset-chips' }, [
+          ['today', 'Hoje'],
+          ['yesterday', 'Ontem'],
+          ['week', 'Esta semana'],
+          ['month', 'Este mês'],
+          ['last_30d', 'Últimos 30 dias'],
+          ['custom', 'Personalizado'],
+        ].map(([v, l]) => {
+          const btn = el('button', {
+            class: `chip${state.preset === v ? ' chip--active' : ''}`,
+            type: 'button',
+            text: l,
+            onclick: () => {
+              state.preset = v;
+              if (v !== 'custom') { state.from = ''; state.to = ''; }
+              load();
+            },
+          });
+          return btn;
+        })),
+      ]);
+      form.appendChild(presets);
+
+      // From/To só aparecem com preset=custom
+      if (state.preset === 'custom') {
+        form.appendChild(group('De', el('input', {
+          class: 'filters__input', type: 'date', value: state.from,
+          oninput: (e) => { state.from = e.target.value; },
+        })));
+        form.appendChild(group('Até', el('input', {
+          class: 'filters__input', type: 'date', value: state.to,
+          oninput: (e) => { state.to = e.target.value; },
+        })));
+      }
+
+      // Origem
+      form.appendChild(group('Origem', selectEl(state.origem, [
+        ['', 'Todas'],
+        ...(filtrosCache.origens || []).map((o) => [o, origemLabel(o)]),
+      ], (v) => { state.origem = v; })));
+
+      // Status
+      form.appendChild(group('Status', selectEl(state.status, [
+        ['', 'Todos'],
+        ...(filtrosCache.status || []).map((s) => [s, statusLabel(s)]),
+      ], (v) => { state.status = v; })));
+
+      // Horário
+      form.appendChild(group('Horário', selectEl(state.horario, [
+        ['', 'Todos'],
+        ...(filtrosCache.horarios || []).map((h) => [h, h]),
+      ], (v) => { state.horario = v; })));
+
+      // Campanha (só se houver e o user vê UTMs)
+      if (filtrosCache.campanhas && filtrosCache.campanhas.length) {
+        form.appendChild(group('Campanha', selectEl(state.utm_campaign, [
+          ['', 'Todas'],
+          ...filtrosCache.campanhas.map((c) => [c, c]),
+        ], (v) => { state.utm_campaign = v; })));
+      }
+
+      form.appendChild(el('button', { class: 'btn btn--primary', type: 'submit', text: 'Aplicar' }));
+      form.appendChild(el('button', {
+        class: 'btn btn--ghost', type: 'button', text: 'Limpar',
+        onclick: () => {
+          state.preset = 'last_30d'; state.from = ''; state.to = '';
+          state.origem = ''; state.status = ''; state.utm_campaign = ''; state.horario = '';
+          load();
+        },
+      }));
+
+      return form;
+    }
+
+    function group(label, child) {
+      return el('div', { class: 'filters__group' }, [
+        el('label', { class: 'filters__label', text: label }),
+        child,
+      ]);
+    }
+    function selectEl(value, opts, onChange) {
+      const sel = el('select', { class: 'filters__select', onchange: (e) => onChange(e.target.value) });
+      for (const [v, l] of opts) sel.appendChild(el('option', { value: v, text: l, selected: v === value }));
+      return sel;
+    }
+
+    function renderConteudo(data) {
+      // Indicador do período aplicado
+      main.appendChild(el('p', {
+        class: 'muted',
+        style: 'margin: 0 0 1rem; font-size: 0.85rem;',
+        text: `Período aplicado: ${fmtDateBr(data.period.from)} até ${fmtDateBr(data.period.to)}`,
+      }));
+
+      // Cards principais
+      main.appendChild(buildCards(data));
+
+      // Gráfico por dia
+      if (data.por_dia && data.por_dia.length) {
+        main.appendChild(buildChart(data.por_dia));
+      } else {
+        main.appendChild(el('div', { class: 'card', style: 'margin-bottom:1rem;' }, [
+          el('h3', { class: 'section__title', style: 'margin:0 0 .5rem;', text: 'Reservas por dia' }),
+          el('p', { class: 'muted', style: 'margin:0;', text: 'Sem dados no período.' }),
+        ]));
+      }
+
+      // Por origem
+      main.appendChild(buildOrigemTable(data.por_origem));
+
+      // Por campanha (só se a role vê UTMs — backend nula `por_campanha` pra gerente)
+      if (data.por_campanha) {
+        main.appendChild(buildCampanhaTable(data.por_campanha));
+      }
+
+      // Por horário
+      main.appendChild(buildHorarioTable(data.por_horario));
+    }
+
+    function buildCards(data) {
+      const t = data.totais;
+      const r = data.taxas;
+      const cards = [
+        ['Solicitadas',         fmtInt(t.solicitada)],
+        ['Aguardando',          fmtInt(t.aguardando_resposta)],
+        ['Confirmadas',         fmtInt(t.confirmada)],
+        ['Remarcadas',          fmtInt(t.remarcada)],
+        ['Cancelas',            fmtInt(t.cancelada), 'danger'],
+        ['Compareceram',        fmtInt(t.compareceu), 'success'],
+        ['No-show',             fmtInt(t.no_show), 'danger'],
+        ['Pessoas confirmadas', fmtInt(t.pessoas_confirmadas)],
+        ['Pessoas compareceram', fmtInt(t.pessoas_compareceu)],
+        ['Tx. confirmação',     fmtPct(r.taxa_confirmacao)],
+        ['Tx. comparecimento',  fmtPct(r.taxa_comparecimento), 'success'],
+        ['Tx. cancelamento',    fmtPct(r.taxa_cancelamento), 'danger'],
+        ['Tx. no-show',         fmtPct(r.taxa_no_show), 'danger'],
+      ];
+      const grid = el('div', { class: 'kpi-grid' });
+      for (const [label, value, kind] of cards) {
+        grid.appendChild(el('div', { class: `kpi${kind ? ` kpi--${kind}` : ''}` }, [
+          el('div', { class: 'kpi__label', text: label }),
+          el('div', { class: 'kpi__value', text: value }),
+        ]));
+      }
+      return grid;
+    }
+
+    function buildChart(porDia) {
+      // SVG bar chart inline. Sem dependência externa. CSP-safe.
+      const card = el('div', { class: 'card', style: 'margin-bottom:1rem;' });
+      card.appendChild(el('h3', { class: 'section__title', style: 'margin:0 0 .75rem;', text: 'Reservas por dia' }));
+
+      const max = Math.max(1, ...porDia.map((d) => d.total));
+      const W = 800;       // viewBox width
+      const H = 220;       // viewBox height
+      const PAD_L = 36;
+      const PAD_R = 12;
+      const PAD_T = 12;
+      const PAD_B = 38;
+      const chartW = W - PAD_L - PAD_R;
+      const chartH = H - PAD_T - PAD_B;
+      const n = porDia.length;
+      const barW = chartW / n;
+      const innerW = Math.max(2, barW - 4);
+
+      function svgEl(tag, attrs, children) {
+        const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        for (const k in attrs) {
+          if (attrs[k] != null) node.setAttribute(k, attrs[k]);
+        }
+        if (children) {
+          for (const c of children) if (c) node.appendChild(c);
+        }
+        return node;
+      }
+
+      const svg = svgEl('svg', {
+        viewBox: `0 0 ${W} ${H}`, class: 'chart',
+        role: 'img', 'aria-label': 'Reservas por dia',
+      });
+
+      // Eixo Y — 4 ticks (0, max/4, max/2, 3max/4, max).
+      const ticks = [0, 0.25, 0.5, 0.75, 1];
+      for (const t of ticks) {
+        const y = PAD_T + chartH * (1 - t);
+        const val = Math.round(max * t);
+        svg.appendChild(svgEl('line', {
+          x1: PAD_L, y1: y, x2: W - PAD_R, y2: y,
+          class: 'chart__grid',
+        }));
+        svg.appendChild(svgEl('text', {
+          x: PAD_L - 6, y: y + 3, 'text-anchor': 'end',
+          class: 'chart__axis',
+        }, [document.createTextNode(String(val))]));
+      }
+
+      // Barras + labels do eixo X (mostra ~6 labels distribuídos).
+      const labelStep = Math.max(1, Math.ceil(n / 8));
+      for (let i = 0; i < n; i++) {
+        const d = porDia[i];
+        const x = PAD_L + i * barW + 2;
+        const h = chartH * (d.total / max);
+        const y = PAD_T + chartH - h;
+        const bar = svgEl('rect', {
+          x, y, width: innerW, height: h,
+          class: 'chart__bar',
+        });
+        // Tooltip nativo via <title>
+        const title = svgEl('title', {}, [document.createTextNode(
+          `${fmtDateBr(d.dia)} — ${d.total} reservas (${d.pessoas} pessoas)`
+        )]);
+        bar.appendChild(title);
+        svg.appendChild(bar);
+
+        // Compareceu sobrepondo (verde)
+        if (d.compareceu > 0) {
+          const ch = chartH * (d.compareceu / max);
+          svg.appendChild(svgEl('rect', {
+            x, y: PAD_T + chartH - ch, width: innerW, height: ch,
+            class: 'chart__bar chart__bar--compareceu',
+          }));
+        }
+
+        // Label de data
+        if (i % labelStep === 0 || i === n - 1) {
+          const [, mm, dd] = d.dia.split('-');
+          svg.appendChild(svgEl('text', {
+            x: x + innerW / 2, y: PAD_T + chartH + 16,
+            'text-anchor': 'middle', class: 'chart__axis',
+          }, [document.createTextNode(`${dd}/${mm}`)]));
+        }
+      }
+
+      card.appendChild(svg);
+      card.appendChild(el('div', { class: 'chart__legend' }, [
+        el('span', { class: 'chart__legend-item' }, [
+          el('span', { class: 'chart__legend-swatch chart__legend-swatch--total' }),
+          document.createTextNode(' Total'),
+        ]),
+        el('span', { class: 'chart__legend-item' }, [
+          el('span', { class: 'chart__legend-swatch chart__legend-swatch--compareceu' }),
+          document.createTextNode(' Compareceram'),
+        ]),
+      ]));
+      return card;
+    }
+
+    function buildOrigemTable(rows) {
+      const card = el('div', { class: 'card', style: 'margin-bottom:1rem;' });
+      card.appendChild(el('h3', { class: 'section__title', style: 'margin:0 0 .75rem;', text: 'Métricas por origem' }));
+      if (!rows || !rows.length) {
+        card.appendChild(el('p', { class: 'muted', style: 'margin:0;', text: 'Sem dados no período.' }));
+        return card;
+      }
+      const wrap = el('div', { class: 'table-wrap' });
+      const table = el('table', { class: 'table table--dense' });
+      table.appendChild(el('thead', null, [
+        el('tr', null, [
+          el('th', { text: 'Origem' }),
+          el('th', { text: 'Solicitadas' }),
+          el('th', { text: 'Confirmadas' }),
+          el('th', { text: 'Compareceram' }),
+          el('th', { text: 'Canceladas' }),
+          el('th', { text: 'No-show' }),
+          el('th', { text: 'Tx. comparecimento' }),
+        ]),
+      ]));
+      const tbody = el('tbody');
+      for (const r of rows) {
+        tbody.appendChild(el('tr', null, [
+          el('td', null, [el('span', { class: `badge badge--origem-${r.origem}`, text: origemLabel(r.origem) })]),
+          el('td', { text: fmtInt(r.solicitada) }),
+          el('td', { text: fmtInt(r.confirmada) }),
+          el('td', { text: fmtInt(r.compareceu) }),
+          el('td', { text: fmtInt(r.cancelada) }),
+          el('td', { text: fmtInt(r.no_show) }),
+          el('td', { text: fmtPct(r.taxa_comparecimento) }),
+        ]));
+      }
+      table.appendChild(tbody);
+      wrap.appendChild(table);
+      card.appendChild(wrap);
+      return card;
+    }
+
+    function buildCampanhaTable(rows) {
+      const card = el('div', { class: 'card', style: 'margin-bottom:1rem;' });
+      card.appendChild(el('h3', { class: 'section__title', style: 'margin:0 0 .75rem;', text: 'Métricas por campanha (UTM)' }));
+      if (!rows || !rows.length) {
+        card.appendChild(el('p', { class: 'muted', style: 'margin:0;', text: 'Sem campanhas com dados no período.' }));
+        return card;
+      }
+      const wrap = el('div', { class: 'table-wrap' });
+      const table = el('table', { class: 'table table--dense' });
+      table.appendChild(el('thead', null, [
+        el('tr', null, [
+          el('th', { text: 'Campanha' }),
+          el('th', { text: 'Source' }),
+          el('th', { text: 'Medium' }),
+          el('th', { text: 'Solicitadas' }),
+          el('th', { text: 'Confirmadas' }),
+          el('th', { text: 'Compareceram' }),
+          el('th', { text: 'Canceladas' }),
+          el('th', { text: 'No-show' }),
+          el('th', { text: 'Tx. comparecimento' }),
+        ]),
+      ]));
+      const tbody = el('tbody');
+      for (const r of rows) {
+        tbody.appendChild(el('tr', null, [
+          el('td', { text: r.campanha }),
+          el('td', { class: 'mono', text: r.source }),
+          el('td', { class: 'mono', text: r.medium }),
+          el('td', { text: fmtInt(r.solicitada) }),
+          el('td', { text: fmtInt(r.confirmada) }),
+          el('td', { text: fmtInt(r.compareceu) }),
+          el('td', { text: fmtInt(r.cancelada) }),
+          el('td', { text: fmtInt(r.no_show) }),
+          el('td', { text: fmtPct(r.taxa_comparecimento) }),
+        ]));
+      }
+      table.appendChild(tbody);
+      wrap.appendChild(table);
+      card.appendChild(wrap);
+      return card;
+    }
+
+    function buildHorarioTable(rows) {
+      const card = el('div', { class: 'card', style: 'margin-bottom:1rem;' });
+      card.appendChild(el('h3', { class: 'section__title', style: 'margin:0 0 .75rem;', text: 'Horários mais procurados' }));
+      if (!rows || !rows.length) {
+        card.appendChild(el('p', { class: 'muted', style: 'margin:0;', text: 'Sem dados no período.' }));
+        return card;
+      }
+      const wrap = el('div', { class: 'table-wrap' });
+      const table = el('table', { class: 'table table--dense' });
+      table.appendChild(el('thead', null, [
+        el('tr', null, [
+          el('th', { text: 'Horário' }),
+          el('th', { text: 'Reservas' }),
+          el('th', { text: 'Pessoas' }),
+          el('th', { text: 'Confirmadas' }),
+          el('th', { text: 'Compareceram' }),
+          el('th', { text: 'Tx. comparecimento' }),
+          el('th', { text: 'Tx. cancelamento' }),
+        ]),
+      ]));
+      const tbody = el('tbody');
+      // Sort por total desc pra "mais procurados"
+      const sorted = [...rows].sort((a, b) => (b.total || 0) - (a.total || 0));
+      for (const r of sorted) {
+        tbody.appendChild(el('tr', null, [
+          el('td', { text: r.horario }),
+          el('td', { text: fmtInt(r.total) }),
+          el('td', { text: fmtInt(r.pessoas) }),
+          el('td', { text: fmtInt(r.confirmada) }),
+          el('td', { text: fmtInt(r.compareceu) }),
+          el('td', { text: fmtPct(r.taxa_comparecimento) }),
+          el('td', { text: fmtPct(r.taxa_cancelamento) }),
+        ]));
+      }
+      table.appendChild(tbody);
+      wrap.appendChild(table);
+      card.appendChild(wrap);
+      return card;
+    }
+
+    function origemLabel(o) {
+      return ({
+        lp: 'LP', manual: 'Manual', google: 'Google',
+        meta: 'Meta Ads', instagram: 'Instagram', direct: 'Direto',
+        organic: 'Orgânico', outro: 'Outro',
+      })[o] || o;
+    }
+
+    async function exportCsv() {
+      // Download via link temporário pra preservar headers (Content-Disposition).
+      try {
+        const r = await fetch(`/api/admin/relatorios/export?${buildQs()}`, {
+          credentials: 'same-origin',
+        });
+        if (!r.ok) {
+          let msg = `HTTP ${r.status}`;
+          try { const b = await r.json(); if (b.error?.message) msg = b.error.message; } catch {}
+          toast(msg, 'error');
+          return;
+        }
+        const blob = await r.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        // Tenta extrair filename do header; senão usa default.
+        const disp = r.headers.get('Content-Disposition') || '';
+        const m = disp.match(/filename="?([^"]+)"?/);
+        a.download = m ? m[1] : 'reservas.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        toast('CSV exportado.', 'success');
+      } catch (e) {
+        toast('Falha ao exportar CSV.', 'error');
+      }
+    }
+
+    load();
+  }
+
   // ─── Router ─────────────────────────────────────────────────────────
   // Cada rota declara a capability necessária — quem não tem é mandado
   // pra "Acesso negado". Backend re-valida tudo (frontend só esconde UI).
@@ -1365,6 +1862,7 @@
     { re: /^\/reservas\/nova$/,   perm: 'create_reserva', render: () => renderReservaNova() },
     { re: /^\/reservas\/(\d+)$/,  perm: 'view_reservas',  render: (m) => renderReservaDetail(m[1]) },
     { re: /^\/check-in$/,         perm: 'view_reservas',  render: () => renderCheckin() },
+    { re: /^\/relatorios$/,       perm: 'view_reports',   render: () => renderRelatorios() },
     { re: /^\/usuarios$/,         perm: 'manage_users',   render: () => renderUsuarios() },
     { re: /^\/perfil$/,           perm: null,             render: () => renderPerfil() },
   ];

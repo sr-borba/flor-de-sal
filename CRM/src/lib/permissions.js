@@ -16,6 +16,7 @@ export const PERMISSIONS = {
     'edit_reserva_status',
     'edit_reserva_obs',
     'view_utms',
+    'view_reports',
     'export_csv',
     'manage_users',
   ]),
@@ -25,6 +26,7 @@ export const PERMISSIONS = {
     'create_reserva',
     'edit_reserva_status',
     'edit_reserva_obs',
+    'view_reports',
     'export_csv',
   ]),
   concierge: new Set([
@@ -37,6 +39,7 @@ export const PERMISSIONS = {
     'view_dashboard',
     'view_reservas',
     'view_utms',
+    'view_reports',
     'export_csv',
   ]),
 };

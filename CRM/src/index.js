@@ -22,9 +22,11 @@ import { handleUsersList } from './routes/admin/users/list.js';
 import { handleUsersCreate } from './routes/admin/users/create.js';
 import { handleUsersUpdate } from './routes/admin/users/update.js';
 import { handleUsersMeGet, handleUsersMePatch } from './routes/admin/users/me.js';
+import { handleRelatoriosMetricas } from './routes/admin/relatorios/metricas.js';
+import { handleRelatoriosExport } from './routes/admin/relatorios/export.js';
+import { handleRelatoriosFiltros } from './routes/admin/relatorios/filtros.js';
 import {
   requireAdminAuth,
-  AuthError,
   NoAccountError,
   InactiveError,
 } from './lib/auth.js';
@@ -170,6 +172,17 @@ async function routeAdmin(request, env, ctx, path) {
 
   if (path === '/api/admin/check-in') {
     return handleAdminCheckin(request, env, ctx, auth);
+  }
+
+  // Relatórios — Fase 4.
+  if (path === '/api/admin/relatorios/metricas') {
+    return handleRelatoriosMetricas(request, env, ctx, auth);
+  }
+  if (path === '/api/admin/relatorios/export') {
+    return handleRelatoriosExport(request, env, ctx, auth);
+  }
+  if (path === '/api/admin/relatorios/filtros') {
+    return handleRelatoriosFiltros(request, env, ctx, auth);
   }
 
   // /api/admin/reservas/:id[/sub]

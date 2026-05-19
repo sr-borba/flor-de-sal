@@ -41,3 +41,48 @@ export function parsePeriodFromQuery(searchParams) {
   if ((toDt - fromDt) / (24 * 3600 * 1000) > 366) return null;
   return { from, to };
 }
+
+// Adiciona/subtrai dias de uma data ISO (YYYY-MM-DD), retornando ISO.
+export function addDaysIso(iso, days) {
+  const dt = new Date(`${iso}T00:00:00Z`);
+  dt.setUTCDate(dt.getUTCDate() + days);
+  return dt.toISOString().slice(0, 10);
+}
+
+// Resolve um preset ("today" | "yesterday" | "week" | "month" | "last_30d")
+// em { from, to } ISO no fuso de operação (America/Sao_Paulo).
+// Retorna null se preset desconhecido.
+export function resolvePeriodPreset(preset, now = new Date()) {
+  const today = todayIsoSaoPaulo(now);
+  switch (preset) {
+    case 'today':
+      return { from: today, to: today };
+    case 'yesterday': {
+      const y = addDaysIso(today, -1);
+      return { from: y, to: y };
+    }
+    case 'week': {
+      // Semana operacional: domingo a sábado contendo "hoje".
+      // Calcula dia da semana via Date.UTC do today (sem TZ — só pra dow).
+      const [y, m, d] = today.split('-').map(Number);
+      const todayDt = new Date(Date.UTC(y, m - 1, d));
+      const dow = todayDt.getUTCDay(); // 0=Dom..6=Sáb
+      const from = addDaysIso(today, -dow);
+      const to = addDaysIso(from, 6);
+      return { from, to };
+    }
+    case 'month': {
+      const [y, m] = today.split('-').map(Number);
+      const from = `${y}-${String(m).padStart(2, '0')}-01`;
+      // Último dia do mês: dia 0 do mês seguinte.
+      const last = new Date(Date.UTC(y, m, 0)).getUTCDate();
+      const to = `${y}-${String(m).padStart(2, '0')}-${String(last).padStart(2, '0')}`;
+      return { from, to };
+    }
+    case 'last_30d': {
+      return { from: addDaysIso(today, -29), to: today };
+    }
+    default:
+      return null;
+  }
+}

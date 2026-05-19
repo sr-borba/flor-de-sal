@@ -640,6 +640,126 @@ button { cursor: pointer; }
 
 .period-bar__custom { display: flex; gap: var(--fs-space-2); align-items: center; }
 
+/* ─── Relatórios ─────────────────────────────────────────────────── */
+
+.preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fs-space-2);
+}
+.chip {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-soft);
+  padding: var(--fs-space-2) var(--fs-space-3);
+  border-radius: 999px;
+  font-size: var(--fs-text-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.chip:hover { border-color: var(--admin-border-strong); color: var(--admin-text); }
+.chip--active {
+  background: var(--admin-surface-gold);
+  border-color: var(--admin-border-strong);
+  color: var(--fs-dourado-200);
+}
+
+.filters__group--full { flex: 1 1 100%; }
+
+/* KPI grid pra cards de relatório */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--fs-space-3);
+  margin-bottom: var(--fs-space-5);
+}
+.kpi {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--fs-radius-md);
+  padding: var(--fs-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fs-space-2);
+}
+.kpi__label {
+  font-size: var(--fs-text-micro);
+  color: var(--admin-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.kpi__value {
+  font-family: var(--fs-font-display);
+  font-size: 1.8rem;
+  font-weight: var(--fs-weight-regular);
+  color: var(--fs-dourado-200);
+  line-height: 1;
+}
+.kpi--success .kpi__value { color: #B4C9A5; }
+.kpi--danger .kpi__value  { color: var(--admin-danger); }
+
+/* Tabela densa pros relatórios (mais colunas em menos espaço) */
+.table--dense th, .table--dense td {
+  padding: var(--fs-space-2) var(--fs-space-3);
+  font-size: var(--fs-text-micro);
+}
+
+/* Gráfico SVG de reservas por dia */
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+}
+.chart__grid {
+  stroke: rgba(250, 250, 248, 0.06);
+  stroke-width: 1;
+}
+.chart__axis {
+  fill: var(--admin-text-muted);
+  font-size: 10px;
+  font-family: var(--fs-font-body);
+}
+.chart__bar {
+  fill: rgba(199, 164, 83, 0.32);
+  transition: fill .15s ease;
+}
+.chart__bar:hover { fill: rgba(199, 164, 83, 0.52); }
+.chart__bar--compareceu {
+  fill: rgba(138, 158, 122, 0.7);
+}
+.chart__legend {
+  display: flex;
+  gap: var(--fs-space-4);
+  margin-top: var(--fs-space-3);
+  font-size: var(--fs-text-micro);
+  color: var(--admin-text-soft);
+}
+.chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fs-space-2);
+}
+.chart__legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+.chart__legend-swatch--total      { background: rgba(199, 164, 83, 0.5); }
+.chart__legend-swatch--compareceu { background: rgba(138, 158, 122, 0.85); }
+
+/* Origem extras (calculadas) — reaproveitam o estilo das duas já existentes
+   pra LP/manual; abaixo mais variantes pra google/meta/instagram/etc */
+.badge--origem-google    { background: rgba(78, 102, 69, 0.18); color: #B4C9A5; border-color: rgba(138, 158, 122, 0.4); }
+.badge--origem-meta      { background: rgba(196, 153, 122, 0.16); color: var(--admin-info); border-color: rgba(196, 153, 122, 0.4); }
+.badge--origem-instagram { background: rgba(215, 135, 117, 0.14); color: var(--admin-danger); border-color: rgba(215, 135, 117, 0.32); }
+.badge--origem-direct    { background: rgba(250, 250, 248, 0.06); color: var(--admin-text-soft); border-color: rgba(250, 250, 248, 0.16); }
+.badge--origem-organic   { background: rgba(199, 164, 83, 0.08); color: var(--fs-dourado-200); border-color: rgba(199, 164, 83, 0.28); }
+.badge--origem-outro     { background: rgba(250, 250, 248, 0.05); color: var(--admin-text-muted); border-color: rgba(250, 250, 248, 0.12); }
+
 @media (max-width: 960px) {
   .app {
     grid-template-rows: 64px auto 1fr;
