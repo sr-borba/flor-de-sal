@@ -100,7 +100,7 @@ export async function handleReservasPublic(request, env, ctx) {
     if (!inserted || typeof inserted.id !== 'number') {
       // Não vaza detalhes — log no observability do Worker.
       console.error('reservasPublic: insert sem id', inserted);
-      return error('internal', 'Falha ao registrar reserva.', { status: 500, extra: { headers: cors } });
+      return error('internal', 'Falha ao registrar reserva.', { status: 500, headers: cors });
     }
 
     const reservaId = inserted.id;

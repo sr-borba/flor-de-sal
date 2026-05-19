@@ -1,10 +1,15 @@
-// Validação rígida do payload público de reserva.
-// Devolve { ok: true, data } ou { ok: false, errors: [...] }.
+// Validação rígida de payloads de reserva (público e admin).
 
 import { cleanString } from './security.js';
+import { todayIsoSaoPaulo } from './dates.js';
 
-const HORARIOS_PERMITIDOS = new Set([
+export const HORARIOS_PERMITIDOS = new Set([
   '19h', '19h30', '20h', '20h30', '21h', '21h30',
+]);
+
+export const STATUS_PERMITIDOS = new Set([
+  'solicitada', 'aguardando_resposta', 'confirmada',
+  'remarcada', 'cancelada', 'compareceu', 'no_show',
 ]);
 
 const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,10 +36,8 @@ function isValidFutureDate(iso) {
     dt.getUTCDate() !== d
   ) return false;
 
-  const today = new Date();
-  const todayUtc = new Date(Date.UTC(
-    today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()
-  ));
+  const today = todayIsoSaoPaulo();
+  const todayUtc = new Date(`${today}T00:00:00Z`);
   const maxDt = new Date(todayUtc.getTime() + 365 * 24 * 3600 * 1000);
   return dt.getTime() >= todayUtc.getTime() && dt.getTime() <= maxDt.getTime();
 }
@@ -120,6 +123,131 @@ export function validateReservaPublic(body) {
       ...utm,
       referrer,
       landing_page: landingPage,
+    },
+  };
+}
+
+// normalizePhone: aceita formato BR comum, devolve só dígitos. Exportado para reuso.
+export function normalizePhoneBr(raw) {
+  if (raw == null) return null;
+  const digits = String(raw).replace(/\D+/g, '');
+  if (digits.length < 8 || digits.length > 15) return null;
+  return digits;
+}
+
+// Cadastro manual (admin). Mais flexível na data (admin pode marcar passado se quiser),
+// mas mantém o resto rígido.
+export function validateReservaManual(body) {
+  const errs = [];
+  if (!body || typeof body !== 'object') {
+    return { ok: false, errors: [{ field: '_root', message: 'payload inválido' }] };
+  }
+
+  const nome = cleanString(body.nome, { maxLen: 100 });
+  if (!nome || nome.length < 2) pushErr(errs, 'nome', 'obrigatório (2-100 chars)');
+
+  const sobrenome = cleanString(body.sobrenome, { maxLen: 100 });
+
+  const emailRaw = cleanString(body.email, { maxLen: 200 });
+  let email = null;
+  if (emailRaw) {
+    if (!RE_EMAIL.test(emailRaw)) pushErr(errs, 'email', 'formato inválido');
+    else email = emailRaw.toLowerCase();
+  }
+
+  const telefone = normalizePhoneBr(body.telefone);
+  if (!telefone) pushErr(errs, 'telefone', 'obrigatório (8-15 dígitos)');
+
+  const dataReserva = cleanString(body.data_reserva, { maxLen: 10 });
+  if (!dataReserva || !RE_ISO_DATE.test(dataReserva)) {
+    pushErr(errs, 'data_reserva', 'data inválida (YYYY-MM-DD)');
+  }
+
+  const horario = cleanString(body.horario, { maxLen: 10 });
+  if (!horario || !HORARIOS_PERMITIDOS.has(horario)) {
+    pushErr(errs, 'horario', 'horário não permitido');
+  }
+
+  const adultos = parseIntStrict(body.adultos, { min: 1, max: 30 });
+  if (Number.isNaN(adultos)) pushErr(errs, 'adultos', 'inteiro entre 1 e 30');
+
+  const criancas = parseIntStrict(body.criancas ?? 0, { min: 0, max: 30 });
+  if (Number.isNaN(criancas)) pushErr(errs, 'criancas', 'inteiro entre 0 e 30');
+
+  const observacoes = cleanString(body.observacoes, { maxLen: 1000 });
+  const observacoesInternas = cleanString(body.observacoes_internas, { maxLen: 2000 });
+
+  if (errs.length > 0) return { ok: false, errors: errs };
+
+  return {
+    ok: true,
+    data: {
+      nome,
+      sobrenome,
+      email,
+      telefone,
+      data_reserva: dataReserva,
+      horario,
+      adultos,
+      criancas,
+      total_pessoas: adultos + criancas,
+      observacoes,
+      observacoes_internas: observacoesInternas,
+    },
+  };
+}
+
+// Validação de mudança de status. statusAtual vem do DB.
+// Regras: cancelada exige motivo; remarcada exige nova_data + novo_horario;
+// compareceu só pode ser marcado para data_reserva <= hoje.
+export function validateStatusChange(body, { statusAtual, dataReserva }) {
+  const errs = [];
+  if (!body || typeof body !== 'object') {
+    return { ok: false, errors: [{ field: '_root', message: 'payload inválido' }] };
+  }
+
+  const statusNovo = cleanString(body.status_novo, { maxLen: 30 });
+  if (!statusNovo || !STATUS_PERMITIDOS.has(statusNovo)) {
+    pushErr(errs, 'status_novo', 'status inválido');
+    return { ok: false, errors: errs };
+  }
+
+  const motivo = cleanString(body.motivo, { maxLen: 500 });
+  let novaData = null;
+  let novoHorario = null;
+
+  if (statusNovo === 'cancelada' && !motivo) {
+    pushErr(errs, 'motivo', 'cancelamento exige motivo');
+  }
+
+  if (statusNovo === 'remarcada') {
+    novaData = cleanString(body.nova_data, { maxLen: 10 });
+    novoHorario = cleanString(body.novo_horario, { maxLen: 10 });
+    if (!novaData || !RE_ISO_DATE.test(novaData)) {
+      pushErr(errs, 'nova_data', 'nova data inválida (YYYY-MM-DD)');
+    }
+    if (!novoHorario || !HORARIOS_PERMITIDOS.has(novoHorario)) {
+      pushErr(errs, 'novo_horario', 'novo horário não permitido');
+    }
+  }
+
+  if (statusNovo === 'compareceu') {
+    const hoje = todayIsoSaoPaulo();
+    if (dataReserva && dataReserva > hoje) {
+      pushErr(errs, 'status_novo', 'compareceu só pode ser marcado a partir do dia da reserva');
+    }
+  }
+
+  if (errs.length > 0) return { ok: false, errors: errs };
+
+  return {
+    ok: true,
+    data: {
+      status_anterior: statusAtual,
+      status_novo: statusNovo,
+      motivo,
+      nova_data: novaData,
+      novo_horario: novoHorario,
     },
   };
 }

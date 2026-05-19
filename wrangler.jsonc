@@ -21,7 +21,8 @@
     "nodejs_compat"
   ],
   "vars": {
-    "ALLOWED_ORIGIN": "https://flordesal.saishotel.com.br"
+    "ALLOWED_ORIGIN": "https://flordesal.saishotel.com.br",
+    "ACCESS_TEAM_DOMAIN": "sais-hotel.cloudflareaccess.com"
   },
   "d1_databases": [
     {

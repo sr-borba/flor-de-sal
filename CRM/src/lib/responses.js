@@ -18,8 +18,8 @@ export function json(data, { status = 200, headers = {} } = {}) {
   });
 }
 
-export function error(code, message, { status = 400, extra = {} } = {}) {
-  return json({ success: false, error: { code, message, ...extra } }, { status });
+export function error(code, message, { status = 400, extra = {}, headers = {} } = {}) {
+  return json({ success: false, error: { code, message, ...extra } }, { status, headers });
 }
 
 export function methodNotAllowed(allowed) {
