@@ -4,11 +4,16 @@
 import { json, error, methodNotAllowed } from '../../lib/responses.js';
 import { isValidIsoDate, todayIsoSaoPaulo } from '../../lib/dates.js';
 import { HORARIOS_PERMITIDOS } from '../../lib/validate.js';
+import { requirePermission } from '../../lib/permissions.js';
 
 const HORARIOS_ORDEM = ['19h', '19h30', '20h', '20h30', '21h', '21h30'];
 
-export async function handleAdminCheckin(request, env, ctx, { email }) {
+export async function handleAdminCheckin(request, env, ctx, auth) {
   if (request.method !== 'GET') return methodNotAllowed(['GET']);
+
+  // Check-in usa as mesmas capabilities de listar + mudar status.
+  const denied = requirePermission(auth, 'view_reservas', request, env, ctx);
+  if (denied) return denied;
 
   const url = new URL(request.url);
   let date = url.searchParams.get('date');

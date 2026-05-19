@@ -4,6 +4,24 @@
 (function () {
   'use strict';
 
+  // ─── User / permissions state ──────────────────────────────────────
+  // Carregado no bootstrap via GET /api/admin/me. NUNCA autoriza nada —
+  // só esconde UI. Backend re-valida toda ação.
+  const session = {
+    user: null,         // { id, nome, sobrenome, email, role, ativo }
+    perms: new Set(),   // capabilities da role atual
+  };
+  function can(action) { return session.perms.has(action); }
+
+  function roleLabel(r) {
+    return ({
+      admin: 'Admin',
+      gerente: 'Gerente',
+      concierge: 'Concierge',
+      marketing: 'Marketing',
+    })[r] || r || '—';
+  }
+
   // ─── DOM helpers ────────────────────────────────────────────────────
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -115,8 +133,8 @@
     } catch (e) {
       throw { kind: 'network', message: 'Falha de rede. Verifique sua conexão.' };
     }
-    if (r.status === 401 || r.status === 302) {
-      // CF Access provavelmente expirou a sessão. Reload completo força re-auth.
+    if (r.status === 401) {
+      // CF Access provavelmente expirou a sessão. Reload força re-auth.
       location.reload();
       throw { kind: 'auth', message: 'Sessão expirada.' };
     }
@@ -130,11 +148,62 @@
       throw { kind: 'api', status: r.status, message: 'Resposta inesperada do servidor.' };
     }
     if (!r.ok) {
+      const code = body && body.error && body.error.code;
       const msg = body && body.error && body.error.message ? body.error.message : `HTTP ${r.status}`;
       const fields = body && body.error && body.error.fields;
-      throw { kind: 'api', status: r.status, message: msg, fields };
+      throw { kind: 'api', status: r.status, code, message: msg, fields };
     }
     return body;
+  }
+
+  // ─── Blocking screens (no_account / inactive / forbidden) ───────────
+  function renderBlockingScreen({ title, message, showLogout = true }) {
+    document.body.innerHTML = '';
+    const wrap = el('div', {
+      class: 'blocking',
+      style: 'min-height:100vh;display:grid;place-items:center;padding:2rem;',
+    }, [
+      el('div', { class: 'card', style: 'max-width:520px;text-align:left;' }, [
+        el('h1', { style: 'margin:0 0 .75rem;font-size:1.3rem;', text: title }),
+        el('p', { class: 'muted', style: 'margin:0 0 1.25rem;line-height:1.5;', text: message }),
+        showLogout ? el('a', {
+          class: 'btn btn--ghost', href: '/cdn-cgi/access/logout', text: 'Sair e tentar com outra conta',
+        }) : null,
+      ]),
+    ]);
+    document.body.appendChild(wrap);
+  }
+
+  function renderAccessDenied(message) {
+    setMain(el('div', { class: 'access-denied' }, [
+      el('div', { class: 'card', style: 'max-width:520px;margin:2rem auto;' }, [
+        el('h2', { style: 'margin:0 0 .75rem;font-size:1.15rem;', text: 'Acesso negado' }),
+        el('p', { class: 'muted', style: 'margin:0;line-height:1.5;',
+          text: message || 'Você não tem permissão para acessar essa página. Procure o administrador se acredita que isso é um erro.',
+        }),
+      ]),
+    ]));
+  }
+
+  // ─── Info modal (apenas "Entendi", pra avisos pós-ação) ────────────
+  function infoModal(title, contentNode) {
+    return new Promise((resolve) => {
+      const overlay = el('div', {
+        class: 'modal-overlay',
+        style: 'position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:50;display:flex;align-items:center;justify-content:center;padding:1rem;',
+      });
+      const close = () => { overlay.remove(); resolve(); };
+      const dialog = el('div', { class: 'card', style: 'max-width:540px;width:100%;' }, [
+        el('h3', { style: 'margin:0 0 1rem;font-size:1.05rem;', text: title }),
+        contentNode,
+        el('div', { class: 'form-actions' }, [
+          el('button', { class: 'btn btn--primary', type: 'button', text: 'Entendi', onclick: close }),
+        ]),
+      ]);
+      overlay.appendChild(dialog);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+      document.body.appendChild(overlay);
+    });
   }
 
   // ─── Modal ──────────────────────────────────────────────────────────
@@ -203,29 +272,48 @@
   }
 
   // ─── Layout ─────────────────────────────────────────────────────────
-  function renderTopbar(email) {
+  function renderTopbar() {
     const bar = $('#topbar');
     clear(bar);
     bar.appendChild(el('div', { class: 'topbar__brand' }, [
       el('span', { class: 'topbar__brand-dot' }),
       el('span', { text: 'Flor de Sal · Painel' }),
     ]));
-    bar.appendChild(el('div', { class: 'topbar__user' }, [
-      email ? el('span', { text: email }) : null,
-      el('a', { href: '/cdn-cgi/access/logout', text: 'Sair' }),
-    ]));
+    const userBox = el('div', { class: 'topbar__user' });
+    const u = session.user;
+    if (u) {
+      const displayName = [u.nome, u.sobrenome].filter(Boolean).join(' ') || u.email;
+      userBox.appendChild(el('a', {
+        href: '#/perfil',
+        class: 'topbar__name',
+        title: u.email,
+        text: displayName,
+      }));
+      userBox.appendChild(el('span', {
+        class: `badge badge--role-${u.role}`,
+        text: roleLabel(u.role),
+      }));
+    }
+    userBox.appendChild(el('a', { href: '/cdn-cgi/access/logout', text: 'Sair' }));
+    bar.appendChild(userBox);
   }
 
-  const NAV = [
-    { hash: '#/dashboard',     label: 'Dashboard' },
-    { hash: '#/reservas',      label: 'Reservas' },
-    { hash: '#/check-in',      label: 'Check-in' },
-    { hash: '#/reservas/nova', label: 'Nova reserva' },
+  // Cada item declara a capability necessária (ou null = todos).
+  const NAV_ALL = [
+    { hash: '#/dashboard',     label: 'Dashboard',    perm: 'view_dashboard' },
+    { hash: '#/reservas',      label: 'Reservas',     perm: 'view_reservas' },
+    { hash: '#/check-in',      label: 'Check-in',     perm: 'view_reservas' },
+    { hash: '#/reservas/nova', label: 'Nova reserva', perm: 'create_reserva' },
+    { hash: '#/usuarios',      label: 'Usuários',     perm: 'manage_users' },
+    { hash: '#/perfil',        label: 'Meu perfil',   perm: null },
   ];
+  function visibleNav() {
+    return NAV_ALL.filter((i) => i.perm == null || can(i.perm));
+  }
   function renderSidebar() {
     const nav = $('#sidebar-nav');
     clear(nav);
-    for (const item of NAV) {
+    for (const item of visibleNav()) {
       const a = el('a', {
         class: 'sidebar__link',
         href: item.hash,
@@ -380,9 +468,9 @@
     async function load() {
       const main = $('#main');
       clear(main);
-      main.appendChild(pageHeader('Reservas', el('a', {
+      main.appendChild(pageHeader('Reservas', can('create_reserva') ? el('a', {
         class: 'btn btn--primary', href: '#/reservas/nova', text: '+ Nova reserva',
-      })));
+      }) : null));
       main.appendChild(buildFilters());
       const placeholder = el('div', { class: 'loading', text: 'Carregando…' });
       main.appendChild(placeholder);
@@ -592,29 +680,36 @@
       el('p', { style: 'margin:0;white-space:pre-wrap;', text: r.observacoes || '—' }),
     ]));
 
-    // Observações internas (editáveis)
+    // Observações internas (editáveis ou read-only conforme permissão)
+    const canEditObs = can('edit_reserva_obs');
     const obsTxt = el('textarea', {
       class: 'field__textarea', style: 'width:100%;min-height:90px;',
       value: r.observacoes_internas || '',
-      placeholder: 'Anotações internas (não visíveis ao cliente)',
+      placeholder: canEditObs
+        ? 'Anotações internas (não visíveis ao cliente)'
+        : 'Sem observações internas',
+      readonly: !canEditObs,
     });
-    const obsBtn = el('button', { class: 'btn btn--primary btn--sm', type: 'button', text: 'Salvar observações' });
-    obsBtn.addEventListener('click', async () => {
-      obsBtn.disabled = true;
-      try {
-        await api(`/api/admin/reservas/${r.id}/observacoes-internas`, {
-          method: 'PATCH',
-          body: JSON.stringify({ observacoes_internas: obsTxt.value }),
-        });
-        toast('Observações internas atualizadas.', 'success');
-      } catch (e) { toast(e.message, 'error'); }
-      finally { obsBtn.disabled = false; }
-    });
-    left.appendChild(el('div', { class: 'card', style: 'margin-top:1rem;' }, [
+    const obsCard = el('div', { class: 'card', style: 'margin-top:1rem;' }, [
       el('h3', { class: 'section__title', style: 'margin:0 0 .7rem;', text: 'Observações internas' }),
       obsTxt,
-      el('div', { class: 'form-actions' }, [obsBtn]),
-    ]));
+    ]);
+    if (canEditObs) {
+      const obsBtn = el('button', { class: 'btn btn--primary btn--sm', type: 'button', text: 'Salvar observações' });
+      obsBtn.addEventListener('click', async () => {
+        obsBtn.disabled = true;
+        try {
+          await api(`/api/admin/reservas/${r.id}/observacoes-internas`, {
+            method: 'PATCH',
+            body: JSON.stringify({ observacoes_internas: obsTxt.value }),
+          });
+          toast('Observações internas atualizadas.', 'success');
+        } catch (e) { toast(e.message, 'error'); }
+        finally { obsBtn.disabled = false; }
+      });
+      obsCard.appendChild(el('div', { class: 'form-actions' }, [obsBtn]));
+    }
+    left.appendChild(obsCard);
 
     // UTMs
     const utmKvs = [
@@ -630,8 +725,10 @@
       ]));
     }
 
-    // Ações de status
-    right.appendChild(buildActionsCard(r));
+    // Ações de status (só pra quem pode alterar)
+    if (can('edit_reserva_status')) {
+      right.appendChild(buildActionsCard(r));
+    }
 
     // Histórico
     right.appendChild(buildHistoryCard(data.history));
@@ -827,35 +924,37 @@
         actions.appendChild(detailLink);
         if (wa) actions.appendChild(el('a', { class: 'btn btn--sm btn--ghost', href: wa, target: '_blank', rel: 'noopener', text: 'WhatsApp' }));
 
-        const compBtn = el('button', { class: 'btn btn--sm btn--primary', type: 'button', text: 'Compareceu' });
-        compBtn.addEventListener('click', async () => {
-          compBtn.disabled = true;
-          try {
-            await api(`/api/admin/reservas/${r.id}/status`, { method: 'PATCH', body: JSON.stringify({ status_novo: 'compareceu' }) });
-            toast(`${r.nome}: marcado como compareceu`, 'success');
-            load();
-          } catch (e) { compBtn.disabled = false; toast(e.message, 'error'); }
-        });
-        actions.appendChild(compBtn);
+        if (can('edit_reserva_status')) {
+          const compBtn = el('button', { class: 'btn btn--sm btn--primary', type: 'button', text: 'Compareceu' });
+          compBtn.addEventListener('click', async () => {
+            compBtn.disabled = true;
+            try {
+              await api(`/api/admin/reservas/${r.id}/status`, { method: 'PATCH', body: JSON.stringify({ status_novo: 'compareceu' }) });
+              toast(`${r.nome}: marcado como compareceu`, 'success');
+              load();
+            } catch (e) { compBtn.disabled = false; toast(e.message, 'error'); }
+          });
+          actions.appendChild(compBtn);
 
-        const noShowBtn = el('button', { class: 'btn btn--sm btn--danger', type: 'button', text: 'No-show' });
-        noShowBtn.addEventListener('click', async () => {
-          if (!confirm(`Confirmar no-show para ${r.nome}?`)) return;
-          noShowBtn.disabled = true;
-          try {
-            await api(`/api/admin/reservas/${r.id}/status`, { method: 'PATCH', body: JSON.stringify({ status_novo: 'no_show' }) });
-            toast(`${r.nome}: no-show`, 'success'); load();
-          } catch (e) { noShowBtn.disabled = false; toast(e.message, 'error'); }
-        });
-        actions.appendChild(noShowBtn);
+          const noShowBtn = el('button', { class: 'btn btn--sm btn--danger', type: 'button', text: 'No-show' });
+          noShowBtn.addEventListener('click', async () => {
+            if (!confirm(`Confirmar no-show para ${r.nome}?`)) return;
+            noShowBtn.disabled = true;
+            try {
+              await api(`/api/admin/reservas/${r.id}/status`, { method: 'PATCH', body: JSON.stringify({ status_novo: 'no_show' }) });
+              toast(`${r.nome}: no-show`, 'success'); load();
+            } catch (e) { noShowBtn.disabled = false; toast(e.message, 'error'); }
+          });
+          actions.appendChild(noShowBtn);
 
-        const remarcarBtn = el('button', { class: 'btn btn--sm', type: 'button', text: 'Remarcar' });
-        remarcarBtn.addEventListener('click', () => promptRemarcarInline(r));
-        actions.appendChild(remarcarBtn);
+          const remarcarBtn = el('button', { class: 'btn btn--sm', type: 'button', text: 'Remarcar' });
+          remarcarBtn.addEventListener('click', () => promptRemarcarInline(r));
+          actions.appendChild(remarcarBtn);
 
-        const cancelarBtn = el('button', { class: 'btn btn--sm btn--danger', type: 'button', text: 'Cancelar' });
-        cancelarBtn.addEventListener('click', () => promptCancelarInline(r));
-        actions.appendChild(cancelarBtn);
+          const cancelarBtn = el('button', { class: 'btn btn--sm btn--danger', type: 'button', text: 'Cancelar' });
+          cancelarBtn.addEventListener('click', () => promptCancelarInline(r));
+          actions.appendChild(cancelarBtn);
+        }
 
         card.appendChild(left);
         card.appendChild(actions);
@@ -1009,37 +1108,331 @@
     main.appendChild(form);
   }
 
+  // ─── Page: Usuários ────────────────────────────────────────────────
+  async function renderUsuarios() {
+    const main = $('#main');
+    clear(main);
+
+    const novoBtn = el('button', { class: 'btn btn--primary', type: 'button', text: '+ Novo usuário' });
+    novoBtn.addEventListener('click', () => openUserModal(null));
+    main.appendChild(pageHeader('Usuários', novoBtn));
+
+    const placeholder = el('div', { class: 'loading', text: 'Carregando…' });
+    main.appendChild(placeholder);
+
+    let data;
+    try {
+      data = await api('/api/admin/users');
+    } catch (e) {
+      placeholder.remove();
+      main.appendChild(el('div', { class: 'empty', text: `Erro: ${e.message}` }));
+      return;
+    }
+    placeholder.remove();
+    main.appendChild(buildTable(data.items));
+
+    function buildTable(items) {
+      if (!items.length) {
+        return el('div', { class: 'empty', text: 'Nenhum usuário cadastrado.' });
+      }
+      const wrap = el('div', { class: 'table-wrap' });
+      const table = el('table', { class: 'table' });
+      table.appendChild(el('thead', null, [
+        el('tr', null, [
+          el('th', { text: 'Nome' }),
+          el('th', { text: 'E-mail' }),
+          el('th', { text: 'Papel' }),
+          el('th', { text: 'Status' }),
+          el('th', { text: '' }),
+        ]),
+      ]));
+      const tbody = el('tbody');
+      for (const u of items) {
+        const isSelf = session.user && u.id === session.user.id;
+        const acts = el('div', { class: 'table__actions' }, [
+          el('button', { class: 'btn btn--sm', type: 'button', text: 'Editar',
+            onclick: () => openUserModal(u) }),
+          el('button', {
+            class: `btn btn--sm ${u.ativo ? 'btn--danger' : 'btn--primary'}`,
+            type: 'button',
+            text: u.ativo ? 'Desativar' : 'Reativar',
+            disabled: isSelf && u.ativo === 1,
+            title: isSelf && u.ativo === 1 ? 'Você não pode desativar a si mesmo' : null,
+            onclick: () => toggleAtivo(u),
+          }),
+        ]);
+        tbody.appendChild(el('tr', { class: u.ativo ? '' : 'is-inactive' }, [
+          el('td', { text: [u.nome, u.sobrenome].filter(Boolean).join(' ') }),
+          el('td', { class: 'mono', text: u.email }),
+          el('td', null, [el('span', { class: `badge badge--role-${u.role}`, text: roleLabel(u.role) })]),
+          el('td', null, [el('span', { class: `badge ${u.ativo ? 'badge--ativo' : 'badge--inativo'}`, text: u.ativo ? 'Ativo' : 'Inativo' })]),
+          el('td', null, [acts]),
+        ]));
+      }
+      table.appendChild(tbody);
+      wrap.appendChild(table);
+      return wrap;
+    }
+
+    async function toggleAtivo(u) {
+      const acao = u.ativo ? 'desativar' : 'reativar';
+      if (!confirm(`Tem certeza que quer ${acao} ${u.nome}?`)) return;
+      try {
+        await api(`/api/admin/users/${u.id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ ativo: u.ativo ? 0 : 1 }),
+        });
+        toast(`Usuário ${u.ativo ? 'desativado' : 'reativado'}.`, 'success');
+        renderUsuarios();
+      } catch (e) { toast(e.message, 'error'); }
+    }
+
+    async function openUserModal(existing) {
+      const nomeInput = el('input', { class: 'field__input', type: 'text', value: existing?.nome || '' });
+      const sobrenomeInput = el('input', { class: 'field__input', type: 'text', value: existing?.sobrenome || '' });
+      const emailInput = el('input', {
+        class: 'field__input', type: 'email',
+        value: existing?.email || '',
+        readonly: !!existing,
+        placeholder: 'pessoa@empresa.com.br',
+      });
+      const roleSel = el('select', { class: 'field__select' });
+      for (const [v, l] of [
+        ['concierge', 'Concierge'], ['gerente', 'Gerente'],
+        ['marketing', 'Marketing'], ['admin', 'Admin'],
+      ]) {
+        roleSel.appendChild(el('option', { value: v, text: l, selected: (existing?.role || 'concierge') === v }));
+      }
+      // Não permitir trocar a própria role (backend já bloqueia).
+      if (existing && session.user && existing.id === session.user.id) {
+        roleSel.disabled = true;
+        roleSel.title = 'Você não pode alterar a própria role';
+      }
+      const errEl = el('p', { class: 'field__error' });
+
+      const content = el('div', { class: 'form-grid' }, [
+        el('div', { class: 'field' }, [el('label', { class: 'field__label', text: 'Nome' }), nomeInput]),
+        el('div', { class: 'field' }, [el('label', { class: 'field__label', text: 'Sobrenome' }), sobrenomeInput]),
+        el('div', { class: 'field field--full' }, [
+          el('label', { class: 'field__label', text: 'E-mail' }),
+          emailInput,
+          existing ? el('p', { class: 'muted', style: 'margin:.25rem 0 0;font-size:.8rem;',
+            text: 'E-mail não pode ser alterado. Recrie o usuário se precisar trocar.' }) : null,
+        ]),
+        el('div', { class: 'field field--full' }, [el('label', { class: 'field__label', text: 'Papel' }), roleSel]),
+        el('div', { class: 'field field--full' }, [errEl]),
+      ]);
+
+      const result = await modal(existing ? 'Editar usuário' : 'Novo usuário', content, () => {
+        const nome = nomeInput.value.trim();
+        const email = emailInput.value.trim();
+        if (!nome || nome.length < 2) { errEl.textContent = 'Nome obrigatório (2+ chars).'; return false; }
+        if (!existing) {
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errEl.textContent = 'E-mail inválido.'; return false;
+          }
+        }
+        return {
+          nome,
+          sobrenome: sobrenomeInput.value.trim(),
+          ...(existing ? {} : { email }),
+          role: roleSel.value,
+        };
+      });
+      if (!result) return;
+
+      try {
+        if (existing) {
+          await api(`/api/admin/users/${existing.id}`, { method: 'PATCH', body: JSON.stringify(result) });
+          toast('Usuário atualizado.', 'success');
+          renderUsuarios();
+        } else {
+          await api('/api/admin/users', { method: 'POST', body: JSON.stringify(result) });
+          renderUsuarios();
+          await showNextStepsAfterCreate(result.email);
+        }
+      } catch (e) {
+        let msg = e.message;
+        if (e.fields) msg += ': ' + e.fields.map((f) => `${f.field} ${f.message}`).join(', ');
+        toast(msg, 'error');
+      }
+    }
+
+    async function showNextStepsAfterCreate(email) {
+      const content = el('div', null, [
+        el('p', { class: 'muted', style: 'margin:0 0 1rem;line-height:1.5;',
+          text: 'O usuário foi criado no painel, mas ainda não consegue logar. Faltam dois passos manuais:' }),
+        el('ol', { style: 'margin:0 0 1rem;padding-left:1.25rem;line-height:1.6;' }, [
+          el('li', null, [
+            el('strong', { text: 'Liberar o e-mail no Cloudflare Access.' }),
+            el('br'),
+            el('span', { class: 'muted', style: 'font-size:.85rem;',
+              text: 'Zero Trust → Access → Applications → Flor de Sal — Admin → Policies → Equipe Flor de Sal → adicionar ' }),
+            el('span', { class: 'mono', style: 'font-size:.85rem;', text: email }),
+            el('span', { class: 'muted', style: 'font-size:.85rem;', text: ' → Save.' }),
+          ]),
+          el('li', { style: 'margin-top:.6rem;' }, [
+            el('strong', { text: 'Avisar a pessoa.' }),
+            el('br'),
+            el('span', { class: 'muted', style: 'font-size:.85rem;',
+              text: 'Ela acessa flordesal.saishotel.com.br/admin e recebe um código de 6 dígitos no e-mail ' }),
+            el('span', { class: 'mono', style: 'font-size:.85rem;', text: email }),
+            el('span', { class: 'muted', style: 'font-size:.85rem;', text: '.' }),
+          ]),
+        ]),
+        el('p', { class: 'muted', style: 'margin:0;font-size:.8rem;',
+          text: 'Sem o passo 1, o Cloudflare bloqueia antes do painel.' }),
+      ]);
+      await infoModal('Usuário criado — próximos passos', content);
+    }
+  }
+
+  // ─── Page: Perfil ──────────────────────────────────────────────────
+  async function renderPerfil() {
+    const main = $('#main');
+    clear(main);
+    main.appendChild(pageHeader('Meu perfil'));
+
+    const placeholder = el('div', { class: 'loading', text: 'Carregando…' });
+    main.appendChild(placeholder);
+
+    let data;
+    try { data = await api('/api/admin/users/me'); }
+    catch (e) {
+      placeholder.remove();
+      main.appendChild(el('div', { class: 'empty', text: `Erro: ${e.message}` }));
+      return;
+    }
+    placeholder.remove();
+    const u = data.user;
+
+    const nomeInput = el('input', { class: 'field__input', type: 'text', value: u.nome || '' });
+    const sobrenomeInput = el('input', { class: 'field__input', type: 'text', value: u.sobrenome || '' });
+
+    const card = el('form', {
+      class: 'card', style: 'max-width:560px;',
+      onsubmit: async (e) => {
+        e.preventDefault();
+        try {
+          const r = await api('/api/admin/users/me', {
+            method: 'PATCH',
+            body: JSON.stringify({
+              nome: nomeInput.value.trim(),
+              sobrenome: sobrenomeInput.value.trim(),
+            }),
+          });
+          // Atualiza sessão local + topbar
+          session.user = { ...session.user, nome: r.user.nome, sobrenome: r.user.sobrenome };
+          renderTopbar();
+          toast('Perfil atualizado.', 'success');
+        } catch (err) {
+          let msg = err.message;
+          if (err.fields) msg += ': ' + err.fields.map((f) => `${f.field} ${f.message}`).join(', ');
+          toast(msg, 'error');
+        }
+      },
+    });
+
+    card.appendChild(el('div', { class: 'form-grid' }, [
+      el('div', { class: 'field' }, [el('label', { class: 'field__label', text: 'Nome' }), nomeInput]),
+      el('div', { class: 'field' }, [el('label', { class: 'field__label', text: 'Sobrenome' }), sobrenomeInput]),
+      el('div', { class: 'field field--full' }, [
+        el('label', { class: 'field__label', text: 'E-mail' }),
+        el('input', { class: 'field__input', type: 'email', value: u.email, readonly: true }),
+        el('p', { class: 'muted', style: 'margin:.25rem 0 0;font-size:.8rem;',
+          text: 'E-mail vem do Cloudflare Access — alteração precisa ser feita pelo administrador.' }),
+      ]),
+      el('div', { class: 'field field--full' }, [
+        el('label', { class: 'field__label', text: 'Papel' }),
+        el('div', null, [el('span', { class: `badge badge--role-${u.role}`, text: roleLabel(u.role) })]),
+        el('p', { class: 'muted', style: 'margin:.25rem 0 0;font-size:.8rem;',
+          text: 'Só o administrador pode mudar papéis.' }),
+      ]),
+    ]));
+    card.appendChild(el('div', { class: 'form-actions' }, [
+      el('button', { class: 'btn btn--primary', type: 'submit', text: 'Salvar perfil' }),
+    ]));
+
+    main.appendChild(card);
+  }
+
   // ─── Router ─────────────────────────────────────────────────────────
+  // Cada rota declara a capability necessária — quem não tem é mandado
+  // pra "Acesso negado". Backend re-valida tudo (frontend só esconde UI).
   const routes = [
-    { re: /^\/dashboard$/, render: () => renderDashboard() },
-    { re: /^\/reservas$/, render: () => renderReservasList() },
-    { re: /^\/reservas\/nova$/, render: () => renderReservaNova() },
-    { re: /^\/reservas\/(\d+)$/, render: (m) => renderReservaDetail(m[1]) },
-    { re: /^\/check-in$/, render: () => renderCheckin() },
+    { re: /^\/dashboard$/,        perm: 'view_dashboard', render: () => renderDashboard() },
+    { re: /^\/reservas$/,         perm: 'view_reservas',  render: () => renderReservasList() },
+    { re: /^\/reservas\/nova$/,   perm: 'create_reserva', render: () => renderReservaNova() },
+    { re: /^\/reservas\/(\d+)$/,  perm: 'view_reservas',  render: (m) => renderReservaDetail(m[1]) },
+    { re: /^\/check-in$/,         perm: 'view_reservas',  render: () => renderCheckin() },
+    { re: /^\/usuarios$/,         perm: 'manage_users',   render: () => renderUsuarios() },
+    { re: /^\/perfil$/,           perm: null,             render: () => renderPerfil() },
   ];
+
+  function defaultRouteFor(role) {
+    // Concierge não tem dashboard; cai em /reservas. Outros começam no dashboard.
+    if (role === 'concierge') return '#/reservas';
+    return '#/dashboard';
+  }
 
   function router() {
     const hash = location.hash.slice(1);
     if (!hash || hash === '/' || hash === '') {
-      location.hash = '#/dashboard';
+      location.hash = defaultRouteFor(session.user?.role);
       return;
     }
     renderSidebar();
     for (const route of routes) {
       const m = hash.match(route.re);
-      if (m) { route.render(m); return; }
+      if (m) {
+        if (route.perm && !can(route.perm)) {
+          renderAccessDenied();
+          return;
+        }
+        route.render(m);
+        return;
+      }
     }
     setMain(el('div', { class: 'empty', text: 'Página não encontrada.' }));
   }
 
   // ─── Bootstrap ──────────────────────────────────────────────────────
   async function init() {
+    // Carrega usuário + permissões ANTES de renderizar qualquer página.
+    // Se 403 (no_account/inactive_account), mostra tela bloqueante — não tenta
+    // re-auth, que voltaria pro mesmo erro.
+    let me;
     try {
-      const me = await api('/api/admin/me');
-      renderTopbar(me.email);
+      me = await api('/api/admin/me');
     } catch (e) {
-      renderTopbar(null);
+      if (e.kind === 'api' && e.status === 403) {
+        if (e.code === 'no_account') {
+          renderBlockingScreen({
+            title: 'Conta não cadastrada',
+            message: 'Seu acesso passou pelo Cloudflare, mas você ainda não foi cadastrado no painel. Peça ao administrador para criar seu acesso e tente novamente.',
+          });
+          return;
+        }
+        if (e.code === 'inactive_account') {
+          renderBlockingScreen({
+            title: 'Conta desativada',
+            message: 'Sua conta no painel está desativada. Procure o administrador se acredita que isso é um erro.',
+          });
+          return;
+        }
+      }
+      // Outros erros: mostra mensagem mas mantém botão de logout.
+      renderBlockingScreen({
+        title: 'Não foi possível carregar o painel',
+        message: e.message || 'Erro inesperado. Tente recarregar a página.',
+      });
+      return;
     }
+
+    session.user = me.user;
+    session.perms = new Set(me.permissions || []);
+    renderTopbar();
+
     window.addEventListener('hashchange', router);
     router();
   }

@@ -89,17 +89,60 @@ async function verifyJwt(token, teamDomain) {
   return payload;
 }
 
-// Retorna { email } se autenticado, ou lança erro.
-// Uso: try { const { email } = await requireAdminAuth(request, env); ... } catch { 401 }
+// Erros que o caller distingue:
+//   AuthError    → 401 (sem JWT, JWT inválido, expirado)
+//   NoAccountError → 403 com mensagem "conta não cadastrada"
+//   InactiveError  → 403 com mensagem "conta desativada"
+export class AuthError extends Error {}
+export class NoAccountError extends Error {}
+export class InactiveError extends Error {}
+
+// Retorna { email, user, payload } se autenticado E autorizado, ou lança.
+// `user` é o registro da tabela users — fonte de verdade pra role/ativo.
+// Uso:
+//   try {
+//     const auth = await requireAdminAuth(request, env);
+//   } catch (e) {
+//     if (e instanceof NoAccountError) return 403 "conta não cadastrada"
+//     if (e instanceof InactiveError) return 403 "conta desativada"
+//     return 401
+//   }
 export async function requireAdminAuth(request, env) {
   if (!env.ACCESS_TEAM_DOMAIN) {
-    throw new Error('ACCESS_TEAM_DOMAIN não configurado');
+    throw new AuthError('ACCESS_TEAM_DOMAIN não configurado');
   }
   const token = request.headers.get('Cf-Access-Jwt-Assertion');
-  if (!token) throw new Error('jwt ausente');
+  if (!token) throw new AuthError('jwt ausente');
 
-  const payload = await verifyJwt(token, env.ACCESS_TEAM_DOMAIN);
+  let payload;
+  try {
+    payload = await verifyJwt(token, env.ACCESS_TEAM_DOMAIN);
+  } catch (e) {
+    throw new AuthError(e?.message || 'jwt inválido');
+  }
+
   const email = (payload.email || '').toString().toLowerCase();
-  if (!email) throw new Error('email ausente no jwt');
-  return { email, payload };
+  if (!email) throw new AuthError('email ausente no jwt');
+
+  // Busca o registro do usuário. Email é UNIQUE COLLATE NOCASE.
+  let user;
+  try {
+    user = await env.DB
+      .prepare(
+        `SELECT id, nome, sobrenome, email, role, ativo
+           FROM users
+          WHERE email = ?`
+      )
+      .bind(email)
+      .first();
+  } catch (e) {
+    // Erro de DB não deve mascarar como "sem conta". Loga e falha como auth.
+    console.error('requireAdminAuth: lookup falhou', e?.message || e);
+    throw new AuthError('falha ao carregar conta');
+  }
+
+  if (!user) throw new NoAccountError('conta não cadastrada');
+  if (user.ativo !== 1) throw new InactiveError('conta desativada');
+
+  return { email, user, payload };
 }

@@ -5,9 +5,14 @@ import { json, error, methodNotAllowed } from '../../lib/responses.js';
 import { isJsonRequest } from '../../lib/security.js';
 import { validateReservaManual } from '../../lib/validate.js';
 import { tempCode, formatReservationCode } from '../../lib/codes.js';
+import { requirePermission } from '../../lib/permissions.js';
 
-export async function handleAdminCreate(request, env, ctx, { email }) {
+export async function handleAdminCreate(request, env, ctx, auth) {
   if (request.method !== 'POST') return methodNotAllowed(['POST']);
+
+  const denied = requirePermission(auth, 'create_reserva', request, env, ctx);
+  if (denied) return denied;
+  const email = auth.email;
 
   if (!isJsonRequest(request)) {
     return error('invalid_content_type', 'Content-Type deve ser application/json', { status: 415 });

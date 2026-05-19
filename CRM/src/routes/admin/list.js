@@ -19,12 +19,16 @@ import {
 } from '../../lib/validate.js';
 import { isValidIsoDate } from '../../lib/dates.js';
 import { cleanString } from '../../lib/security.js';
+import { requirePermission } from '../../lib/permissions.js';
 
 const ORIGENS = new Set(['lp', 'manual']);
 const ORDER_BY_ALLOWED = new Set(['data_reserva', 'criado_em']);
 
-export async function handleAdminList(request, env, ctx, { email }) {
+export async function handleAdminList(request, env, ctx, auth) {
   if (request.method !== 'GET') return methodNotAllowed(['GET']);
+
+  const denied = requirePermission(auth, 'view_reservas', request, env, ctx);
+  if (denied) return denied;
 
   const url = new URL(request.url);
   const sp = url.searchParams;

@@ -12,6 +12,8 @@ export const STATUS_PERMITIDOS = new Set([
   'remarcada', 'cancelada', 'compareceu', 'no_show',
 ]);
 
+export const ROLES_PERMITIDOS = new Set(['admin', 'gerente', 'concierge', 'marketing']);
+
 const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const RE_ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -250,4 +252,125 @@ export function validateStatusChange(body, { statusAtual, dataReserva }) {
       novo_horario: novoHorario,
     },
   };
+}
+
+// Cadastro de usuário interno (admin → POST /api/admin/users).
+// Email é único (UNIQUE COLLATE NOCASE no schema). Conferência de duplicidade
+// fica no handler — aqui só validamos formato.
+export function validateUserCreate(body) {
+  const errs = [];
+  if (!body || typeof body !== 'object') {
+    return { ok: false, errors: [{ field: '_root', message: 'payload inválido' }] };
+  }
+
+  const nome = cleanString(body.nome, { maxLen: 100 });
+  if (!nome || nome.length < 2) pushErr(errs, 'nome', 'obrigatório (2-100 chars)');
+
+  const sobrenome = cleanString(body.sobrenome, { maxLen: 100 });
+
+  const emailRaw = cleanString(body.email, { maxLen: 200 });
+  let email = null;
+  if (!emailRaw) {
+    pushErr(errs, 'email', 'obrigatório');
+  } else if (!RE_EMAIL.test(emailRaw)) {
+    pushErr(errs, 'email', 'formato inválido');
+  } else {
+    email = emailRaw.toLowerCase();
+  }
+
+  const role = cleanString(body.role, { maxLen: 20 });
+  if (!role || !ROLES_PERMITIDOS.has(role)) {
+    pushErr(errs, 'role', 'role inválida');
+  }
+
+  // ativo é opcional no create; default 1.
+  let ativo = 1;
+  if (body.ativo === 0 || body.ativo === false) ativo = 0;
+  else if (body.ativo === 1 || body.ativo === true || body.ativo == null) ativo = 1;
+  else pushErr(errs, 'ativo', 'valor inválido');
+
+  if (errs.length > 0) return { ok: false, errors: errs };
+  return { ok: true, data: { nome, sobrenome, email, role, ativo } };
+}
+
+// Atualização de usuário pelo admin (PATCH /api/admin/users/:id).
+// Email NUNCA muda por aqui — fluxo administrativo separado (recriar usuário).
+// Devolve só os campos enviados; caller decide o que aplicar.
+export function validateUserUpdate(body) {
+  const errs = [];
+  if (!body || typeof body !== 'object') {
+    return { ok: false, errors: [{ field: '_root', message: 'payload inválido' }] };
+  }
+
+  const patch = {};
+
+  if (body.nome !== undefined) {
+    const v = cleanString(body.nome, { maxLen: 100 });
+    if (!v || v.length < 2) pushErr(errs, 'nome', 'obrigatório (2-100 chars)');
+    else patch.nome = v;
+  }
+
+  if (body.sobrenome !== undefined) {
+    patch.sobrenome = cleanString(body.sobrenome, { maxLen: 100 });
+  }
+
+  if (body.role !== undefined) {
+    const v = cleanString(body.role, { maxLen: 20 });
+    if (!v || !ROLES_PERMITIDOS.has(v)) pushErr(errs, 'role', 'role inválida');
+    else patch.role = v;
+  }
+
+  if (body.ativo !== undefined) {
+    if (body.ativo === 0 || body.ativo === false) patch.ativo = 0;
+    else if (body.ativo === 1 || body.ativo === true) patch.ativo = 1;
+    else pushErr(errs, 'ativo', 'valor inválido');
+  }
+
+  if (body.email !== undefined) {
+    pushErr(errs, 'email', 'e-mail não pode ser alterado por essa rota');
+  }
+
+  if (Object.keys(patch).length === 0 && errs.length === 0) {
+    pushErr(errs, '_root', 'nenhum campo informado');
+  }
+
+  if (errs.length > 0) return { ok: false, errors: errs };
+  return { ok: true, data: patch };
+}
+
+// Auto-update do próprio usuário (PATCH /api/admin/users/me).
+// Só nome e sobrenome. Tentativa de mudar role/email/ativo é rejeitada
+// silenciosamente (ignora os campos), nunca propaga.
+export function validateUserSelfUpdate(body) {
+  const errs = [];
+  if (!body || typeof body !== 'object') {
+    return { ok: false, errors: [{ field: '_root', message: 'payload inválido' }] };
+  }
+
+  const patch = {};
+
+  if (body.nome !== undefined) {
+    const v = cleanString(body.nome, { maxLen: 100 });
+    if (!v || v.length < 2) pushErr(errs, 'nome', 'obrigatório (2-100 chars)');
+    else patch.nome = v;
+  }
+
+  if (body.sobrenome !== undefined) {
+    patch.sobrenome = cleanString(body.sobrenome, { maxLen: 100 });
+  }
+
+  // role/ativo/email enviados por aqui são erros explícitos pra deixar o
+  // contrato claro pro front (em vez de aceitar e ignorar silenciosamente).
+  for (const forbidden of ['role', 'ativo', 'email', 'id']) {
+    if (body[forbidden] !== undefined) {
+      pushErr(errs, forbidden, 'campo não pode ser alterado por essa rota');
+    }
+  }
+
+  if (Object.keys(patch).length === 0 && errs.length === 0) {
+    pushErr(errs, '_root', 'nenhum campo informado');
+  }
+
+  if (errs.length > 0) return { ok: false, errors: errs };
+  return { ok: true, data: patch };
 }

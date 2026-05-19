@@ -4,9 +4,14 @@
 import { json, error, methodNotAllowed } from '../../lib/responses.js';
 import { isJsonRequest } from '../../lib/security.js';
 import { validateStatusChange } from '../../lib/validate.js';
+import { requirePermission } from '../../lib/permissions.js';
 
-export async function handleAdminStatus(request, env, ctx, { email }, id) {
+export async function handleAdminStatus(request, env, ctx, auth, id) {
   if (request.method !== 'PATCH') return methodNotAllowed(['PATCH']);
+
+  const denied = requirePermission(auth, 'edit_reserva_status', request, env, ctx);
+  if (denied) return denied;
+  const email = auth.email;
 
   if (!isJsonRequest(request)) {
     return error('invalid_content_type', 'Content-Type deve ser application/json', { status: 415 });

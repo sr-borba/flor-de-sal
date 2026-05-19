@@ -3,6 +3,7 @@
 
 import { json, error, methodNotAllowed } from '../../lib/responses.js';
 import { isValidIsoDate, todayIsoSaoPaulo } from '../../lib/dates.js';
+import { requirePermission } from '../../lib/permissions.js';
 
 function defaultPeriod() {
   const todayIso = todayIsoSaoPaulo();
@@ -12,8 +13,11 @@ function defaultPeriod() {
   return { from: pastIso, to: todayIso };
 }
 
-export async function handleAdminDashboard(request, env, ctx, { email }) {
+export async function handleAdminDashboard(request, env, ctx, auth) {
   if (request.method !== 'GET') return methodNotAllowed(['GET']);
+
+  const denied = requirePermission(auth, 'view_dashboard', request, env, ctx);
+  if (denied) return denied;
 
   const url = new URL(request.url);
   let from = url.searchParams.get('from');
