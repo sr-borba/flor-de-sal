@@ -636,6 +636,41 @@ body {
   font-weight: var(--fs-weight-semibold);
 }
 
+.pb-prose ol,
+.pb-prose ul {
+  margin: var(--fs-space-3) 0;
+  padding-left: var(--fs-space-6);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(45,28,15,0.82);
+}
+
+.pb-prose ol li,
+.pb-prose ul li {
+  margin-bottom: var(--fs-space-2);
+}
+
+.pb-prose ol li::marker {
+  color: var(--fs-dourado);
+  font-weight: var(--fs-weight-semibold);
+}
+
+.pb-prose ul li::marker {
+  color: var(--fs-dourado);
+}
+
+/* ── STATUS DOT (badge inline para ciclo de reservas) ──── */
+
+.pb-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: var(--fs-space-2);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 
 /* ── DIVISÓRIA DE GRUPO ───────────────────────────── */
 
