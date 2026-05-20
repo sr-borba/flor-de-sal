@@ -26,6 +26,7 @@ import { handleUsersMeGet, handleUsersMePatch } from './routes/admin/users/me.js
 import { handleRelatoriosMetricas } from './routes/admin/relatorios/metricas.js';
 import { handleRelatoriosExport } from './routes/admin/relatorios/export.js';
 import { handleRelatoriosFiltros } from './routes/admin/relatorios/filtros.js';
+import { handleAdminVagasTurno, handleAdminVagasDia } from './routes/admin/vagas.js';
 import {
   requireAdminAuth,
   NoAccountError,
@@ -82,6 +83,8 @@ async function routePublicApi(request, env, ctx, path) {
 //   /api/admin/reservas/:id/observacoes-internas (PATCH)
 //   /api/admin/dashboard/stats                   (GET)
 //   /api/admin/check-in                          (GET)
+//   /api/admin/vagas                             (GET — turno único)
+//   /api/admin/vagas/dia                         (GET — todos os turnos do dia)
 async function routeAdmin(request, env, ctx, path) {
   // Auth gate ÚNICO para tudo em /api/admin/*.
   // Erros são distintos para o front saber se é problema de autenticação
@@ -173,6 +176,14 @@ async function routeAdmin(request, env, ctx, path) {
 
   if (path === '/api/admin/check-in') {
     return handleAdminCheckin(request, env, ctx, auth);
+  }
+
+  // Vagas / capacidade — mais específico primeiro (vagas/dia antes de vagas).
+  if (path === '/api/admin/vagas/dia') {
+    return handleAdminVagasDia(request, env, ctx, auth);
+  }
+  if (path === '/api/admin/vagas') {
+    return handleAdminVagasTurno(request, env, ctx, auth);
   }
 
   // Relatórios — Fase 4.

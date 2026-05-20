@@ -5,6 +5,7 @@ import { json, error, methodNotAllowed } from '../../lib/responses.js';
 import { isJsonRequest } from '../../lib/security.js';
 import { validateStatusChange } from '../../lib/validate.js';
 import { requirePermission } from '../../lib/permissions.js';
+import { TURNOS, CAPACIDADE_TURNO } from './vagas.js';
 
 export async function handleAdminStatus(request, env, ctx, auth, id) {
   if (request.method !== 'PATCH') return methodNotAllowed(['PATCH']);
@@ -91,6 +92,44 @@ export async function handleAdminStatus(request, env, ctx, auth, id) {
     );
 
     await env.DB.batch(statements);
+
+    // Se confirmou uma reserva num turno já acima da capacidade, grava auditoria extra.
+    if (d.status_novo === 'confirmada' && ctx?.waitUntil) {
+      const dataRes = atual.data_reserva;
+      const horarioRes = atual.horario;
+      const turnoNome = Object.entries(TURNOS).find(([, hs]) => hs.includes(horarioRes))?.[0];
+      if (turnoNome) {
+        const auditLotado = (async () => {
+          const horarios = TURNOS[turnoNome];
+          const placeholders = horarios.map(() => '?').join(', ');
+          const row = await env.DB
+            .prepare(
+              `SELECT COALESCE(SUM(total_pessoas), 0) AS total
+                 FROM reservations
+                WHERE data_reserva = ?
+                  AND horario IN (${placeholders})
+                  AND status IN ('confirmada', 'remarcada', 'compareceu')`
+            )
+            .bind(dataRes, ...horarios)
+            .first();
+          const total = Number(row?.total ?? 0);
+          if (total > CAPACIDADE_TURNO) {
+            await env.DB
+              .prepare(
+                `INSERT INTO audit_logs (entidade, entidade_id, acao, usuario_email, detalhes)
+                 VALUES ('reservations', ?, 'confirmacao_turno_lotado', ?, ?)`
+              )
+              .bind(
+                reservaId,
+                email,
+                JSON.stringify({ turno: turnoNome, data: dataRes, total_pessoas: total, capacidade: CAPACIDADE_TURNO }),
+              )
+              .run();
+          }
+        })().catch(() => {});
+        ctx.waitUntil(auditLotado);
+      }
+    }
 
     return json({ success: true, status_novo: d.status_novo });
   } catch (e) {

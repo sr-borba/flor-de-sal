@@ -38,6 +38,11 @@ export async function handleAdminDetail(request, env, ctx, auth, id) {
     for (const f of UTM_FIELDS) delete reserva[f];
   }
 
+  // Filtra notas operacionais internas — marketing não tem view_obs_internas.
+  if (!hasPermission(auth.user.role, 'view_obs_internas')) {
+    delete reserva.observacoes_internas;
+  }
+
   return json({
     success: true,
     reserva,

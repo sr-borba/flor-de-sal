@@ -1,0 +1,17 @@
+name            = "flor-de-sal"
+main            = "src/index.js"
+compatibility_date = "2025-05-01"
+
+[assets]
+directory = "../Projeto Website"
+
+[[d1_databases]]
+binding      = "DB"
+database_name = "flor-de-sal-reservas"
+database_id  = "<SEU_D1_DATABASE_ID>"
+
+[vars]
+ALLOWED_ORIGIN     = "https://flordesal.saishotel.com.br"
+ACCESS_TEAM_DOMAIN = "<SEU_TEAM>.cloudflareaccess.com"
+# IP_HASH_SALT → definir via: wrangler secret put IP_HASH_SALT
+# Nunca colocar segredos neste arquivo.

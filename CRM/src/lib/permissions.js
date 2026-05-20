@@ -20,6 +20,7 @@ export const PERMISSIONS = {
     'view_reports',
     'export_csv',
     'manage_users',
+    'view_obs_internas', // notas operacionais internas — não expor ao marketing
   ]),
   gerente: new Set([
     'view_dashboard',
@@ -30,6 +31,7 @@ export const PERMISSIONS = {
     'export_voucher',
     'view_reports',
     'export_csv',
+    'view_obs_internas',
   ]),
   concierge: new Set([
     'view_reservas',
@@ -37,6 +39,7 @@ export const PERMISSIONS = {
     'edit_reserva_status',
     'edit_reserva_obs',
     'export_voucher',
+    'view_obs_internas',
   ]),
   marketing: new Set([
     'view_dashboard',
@@ -44,6 +47,7 @@ export const PERMISSIONS = {
     'view_utms',
     'view_reports',
     'export_csv',
+    // view_obs_internas ausente intencionalmente: marketing vê só dados analíticos
   ]),
 };
 

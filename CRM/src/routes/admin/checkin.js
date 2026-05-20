@@ -7,7 +7,7 @@ import { HORARIOS_PERMITIDOS } from '../../lib/validate.js';
 import { requirePermission } from '../../lib/permissions.js';
 
 const HORARIOS_ORDEM = [
-  '12h', '12h30', '13h', '13h30', '14h', '14h30', '15h',
+  '12h', '12h30', '13h', '13h30', '14h', '14h30',
   '19h', '19h30', '20h', '20h30', '21h', '21h30',
 ];
 

@@ -17,9 +17,17 @@ const MAX_ROWS = 5000;
 
 // Escapa um valor pra CSV: quoting com aspas duplas, escapa aspas duplicando.
 // Valor null/undefined vira string vazia.
+// Proteção contra CSV Formula Injection (CWE-1236): prefixos de fórmula
+// (=, +, -, @) recebem um apóstrofo inicial para que Excel/LibreOffice
+// tratem o valor como texto e não executem a fórmula.
 function csvCell(v) {
   if (v == null) return '';
-  const s = String(v);
+  let s = String(v);
+  // Neutraliza prefixos de fórmula ANTES do quoting.
+  if (s.startsWith('=') || s.startsWith('+') ||
+      s.startsWith('-') || s.startsWith('@')) {
+    s = "'" + s;
+  }
   // Sempre quoting pra ser seguro (vírgulas, quebras de linha, aspas, ; em pt-BR).
   return `"${s.replace(/"/g, '""')}"`;
 }

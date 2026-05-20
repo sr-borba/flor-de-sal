@@ -12,11 +12,16 @@
     perms: new Set(),   // capabilities da role atual
   };
   const HORARIOS_RESERVA = [
-    '12h', '12h30', '13h', '13h30', '14h', '14h30', '15h',
+    '12h', '12h30', '13h', '13h30', '14h', '14h30',
     '19h', '19h30', '20h', '20h30', '21h', '21h30',
   ];
   const HORARIOS_OPTIONS = HORARIOS_RESERVA.map((h) => [h, h]);
   function can(action) { return session.perms.has(action); }
+
+  const ALMOCO_HORARIOS = ['12h', '12h30', '13h', '13h30', '14h', '14h30'];
+  function horarioToTurno(h) {
+    return ALMOCO_HORARIOS.includes(h) ? 'almoco' : 'jantar';
+  }
 
   function roleLabel(r) {
     return ({
@@ -242,6 +247,28 @@
       ]);
       overlay.appendChild(dialog);
       overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+      document.body.appendChild(overlay);
+    });
+  }
+
+  // Modal de confirmação simples (sim/não) com classe configurável no botão de ação.
+  function confirmModal(title, message, btnClass) {
+    return new Promise((resolve) => {
+      const overlay = el('div', {
+        class: 'modal-overlay',
+        style: 'position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:50;display:flex;align-items:center;justify-content:center;padding:1rem;',
+      });
+      const close = (v) => { overlay.remove(); resolve(v); };
+      const dialog = el('div', { class: 'card', style: 'max-width:480px;width:100%;' }, [
+        el('h3', { style: 'margin:0 0 .75rem;font-size:1.05rem;', text: title }),
+        el('p', { class: 'muted', style: 'margin:0 0 1.25rem;line-height:1.5;', text: message }),
+        el('div', { class: 'form-actions' }, [
+          el('button', { class: 'btn btn--ghost', type: 'button', text: 'Cancelar', onclick: () => close(false) }),
+          el('button', { class: `btn ${btnClass || 'btn--primary'}`, type: 'button', text: 'Confirmar mesmo assim', onclick: () => close(true) }),
+        ]),
+      ]);
+      overlay.appendChild(dialog);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) close(false); });
       document.body.appendChild(overlay);
     });
   }
@@ -516,6 +543,27 @@
     load();
   }
 
+  // Preenche células [data-vagas-key] na tabela de reservas com badge de ocupação.
+  async function loadCapacidadeForTable(items, container) {
+    const dates = [...new Set(items.map((r) => r.data_reserva).filter(Boolean))];
+    if (!dates.length) return;
+    const cache = new Map(); // "YYYY-MM-DD:turno" → { total_pessoas, capacidade, lotado }
+    await Promise.all(dates.map(async (d) => {
+      try {
+        const res = await api(`/api/admin/vagas/dia?data=${d}`);
+        for (const t of (res.turnos || [])) cache.set(`${d}:${t.turno}`, t);
+      } catch { /* ignora falhas pontuais */ }
+    }));
+    container.querySelectorAll('[data-vagas-key]').forEach((cell) => {
+      const t = cache.get(cell.dataset.vagasKey);
+      if (!t) { clear(cell); return; }
+      const nivel = t.total_pessoas >= 26 ? 'vermelho' : t.total_pessoas >= 20 ? 'amarelo' : 'verde';
+      const label = t.total_pessoas >= 26 ? 'Acima' : t.lotado ? 'Lotado' : t.total_pessoas >= 20 ? 'Atenção' : 'OK';
+      clear(cell);
+      cell.appendChild(el('span', { class: `badge badge--cap-${nivel}`, text: `${t.total_pessoas}/${t.capacidade} ${label}` }));
+    });
+  }
+
   // ─── Page: Reservas list ────────────────────────────────────────────
   async function renderReservasList() {
     const state = {
@@ -531,6 +579,19 @@
         class: 'btn btn--primary', href: '#/reservas/nova',
       }, iconText('plus', 'Nova reserva')) : null));
       main.appendChild(buildFilters());
+
+      // Mostra painel de capacidade só quando há um dia específico filtrado.
+      const presets = periodPresets();
+      const panelDate = state.from && state.from === state.to ? state.from
+        : state.period === 'hoje' ? presets.hoje?.from ?? null
+        : state.period === 'amanha' ? presets.amanha?.from ?? null
+        : null;
+      if (panelDate) {
+        const capSlot = el('div');
+        main.appendChild(capSlot);
+        buildCapacidadePanel(panelDate).then((p) => { capSlot.replaceWith(p); }).catch(() => {});
+      }
+
       const placeholder = el('div', { class: 'loading', text: 'Carregando…' });
       main.appendChild(placeholder);
 
@@ -685,6 +746,7 @@
           el('th', { text: 'Data' }),
           el('th', { text: 'Hora' }),
           el('th', { text: 'Pess.' }),
+          el('th', { text: 'Turno' }),
           el('th', { text: 'Status' }),
           el('th', { text: 'Origem' }),
           el('th', { text: 'Telefone' }),
@@ -694,6 +756,10 @@
       const tbody = el('tbody');
       for (const r of items) {
         const wa = whatsappLink(r.telefone);
+        const turno = horarioToTurno(r.horario);
+        const capCell = el('td', { dataset: { vagasKey: `${r.data_reserva}:${turno}` } }, [
+          el('span', { class: 'muted', style: 'font-size:.78rem;', text: '…' }),
+        ]);
         const actions = el('div', { class: 'table__actions' }, [
           wa && el('a', { class: 'btn btn--sm btn--ghost', href: wa, target: '_blank', rel: 'noopener' }, iconText('whatsapp', 'WhatsApp')),
           el('a', { class: 'btn btn--sm', href: `#/reservas/${r.id}` }, iconText('open', 'Abrir')),
@@ -704,6 +770,7 @@
           el('td', { text: fmtDateBr(r.data_reserva) }),
           el('td', { text: r.horario }),
           el('td', { text: String(r.total_pessoas) }),
+          capCell,
           el('td', null, [badge(r.status)]),
           el('td', null, [origemBadge(r.origem)]),
           el('td', { text: fmtPhone(r.telefone) }),
@@ -714,6 +781,9 @@
       table.appendChild(tbody);
       wrap.appendChild(table);
       main.appendChild(wrap);
+
+      // Carrega ocupação dos turnos para cada data única e preenche as células.
+      loadCapacidadeForTable(items, wrap).catch(() => {});
 
       const ctrl = el('div', { class: 'pagination__controls' });
       ctrl.appendChild(el('button', {
@@ -869,7 +939,32 @@
         b.addEventListener('click', handler);
         return b;
       };
-      actions.appendChild(mk('Confirmar', 'primary', () => changeStatus('confirmada')));
+      actions.appendChild(mk('Confirmar', 'primary', async () => {
+        // Concierge confirma diretamente sem verificação de capacidade.
+        if (session.user?.role === 'concierge') { changeStatus('confirmada'); return; }
+        const turno = horarioToTurno(r.horario);
+        let vaga;
+        try { vaga = await api(`/api/admin/vagas?data=${r.data_reserva}&turno=${turno}`); } catch { /* segue sem alerta se API falhar */ }
+        if (vaga) {
+          const total = vaga.total_pessoas;
+          if (total >= 26) {
+            const ok = await confirmModal(
+              'Turno acima da capacidade',
+              `Atenção: o turno de ${turno === 'almoco' ? 'almoço' : 'jantar'} de ${r.data_reserva} já tem ${total} pessoas confirmadas, acima da capacidade de 25. Confirmar esta reserva mesmo assim?`,
+              'btn--danger'
+            );
+            if (!ok) return;
+          } else if (total >= 20) {
+            const ok = await confirmModal(
+              'Aviso de capacidade',
+              `O turno de ${turno === 'almoco' ? 'almoço' : 'jantar'} de ${r.data_reserva} já tem ${total}/25 pessoas confirmadas. Confirmar esta reserva mesmo assim?`,
+              'btn--primary'
+            );
+            if (!ok) return;
+          }
+        }
+        changeStatus('confirmada');
+      }));
       actions.appendChild(mk('Marcar como aguardando', null, () => changeStatus('aguardando_resposta')));
       actions.appendChild(mk('Marcar comparecimento', 'primary', () => changeStatus('compareceu')));
       actions.appendChild(mk('Marcar no-show', 'danger', () => changeStatus('no_show')));
@@ -1014,6 +1109,44 @@
     return card;
   }
 
+  // ─── Painel de capacidade por turno ───────────────────────────────
+  // Busca /api/admin/vagas/dia e monta dois blocos (almoço / jantar)
+  // com barra de progresso colorida por nível de ocupação.
+  async function buildCapacidadePanel(date) {
+    const wrap = el('div', { class: 'capacity-panel' });
+    const title = el('h3', { class: 'section__title', style: 'margin:0 0 .6rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;', text: 'Ocupação dos turnos' });
+    wrap.appendChild(title);
+    const grid = el('div', { class: 'capacity-panel__grid' });
+    wrap.appendChild(grid);
+
+    const loading = el('p', { class: 'muted', style: 'font-size:.82rem;', text: 'Carregando…' });
+    grid.appendChild(loading);
+    try {
+      const data = await api(`/api/admin/vagas/dia?data=${date}`);
+      clear(grid);
+      for (const t of data.turnos) {
+        const pct = Math.min(100, Math.round((t.total_pessoas / t.capacidade) * 100));
+        const nivel = t.total_pessoas >= 26 ? 'vermelho' : t.total_pessoas >= 20 ? 'amarelo' : 'verde';
+        const badgeText = t.total_pessoas >= 26 ? 'Acima' : t.lotado ? 'Lotado' : t.total_pessoas >= 20 ? 'Atenção' : 'OK';
+        const turnoLabel = t.turno === 'almoco' ? 'Almoço' : 'Jantar';
+        grid.appendChild(el('div', { class: 'capacity-turno' }, [
+          el('div', { class: 'capacity-turno__header' }, [
+            el('span', { class: 'capacity-turno__label', text: turnoLabel }),
+            el('span', { class: 'capacity-turno__count', text: `${t.total_pessoas} / ${t.capacidade}` }),
+            el('span', { class: `badge badge--cap-${nivel}`, text: badgeText }),
+          ]),
+          el('div', { class: 'capacity-bar' }, [
+            el('div', { class: `capacity-bar__fill capacity-bar__fill--${nivel}`, style: `width:${pct}%` }),
+          ]),
+        ]));
+      }
+    } catch {
+      clear(grid);
+      grid.appendChild(el('p', { class: 'muted', style: 'font-size:.82rem;', text: 'Ocupação indisponível.' }));
+    }
+    return wrap;
+  }
+
   // ─── Page: Check-in ────────────────────────────────────────────────
   async function renderCheckin() {
     let date = isoLocal(new Date());
@@ -1039,6 +1172,11 @@
         ]),
       ]);
       main.appendChild(searchBar);
+
+      // Painel de capacidade — renderiza assincronamente junto com os grupos.
+      const capPanel = el('div');
+      main.appendChild(capPanel);
+      buildCapacidadePanel(date).then((panel) => { capPanel.replaceWith(panel); }).catch(() => {});
 
       const container = el('div', { id: 'checkin-container' });
       main.appendChild(container);
