@@ -5,9 +5,9 @@
 //   status     — solicitada|aguardando_resposta|confirmada|...
 //   origem     — lp|manual
 //   from, to   — período de data_reserva (YYYY-MM-DD)
-//   horario    — 19h|19h30|...|21h30
-//   order_by   — data_reserva|criado_em (default: data_reserva)
-//   order      — asc|desc (default: asc)
+//   horario    — 12h|12h30|...|15h|19h|19h30|...|21h30
+//   order_by   — data_reserva|criado_em (default: criado_em)
+//   order      — asc|desc (default: desc)
 //   page       — 1+ (default: 1)
 //   per_page   — 1-100 (default: 25)
 
@@ -39,8 +39,8 @@ export async function handleAdminList(request, env, ctx, auth) {
   const from = cleanString(sp.get('from'), { maxLen: 10 });
   const to = cleanString(sp.get('to'), { maxLen: 10 });
   const horario = cleanString(sp.get('horario'), { maxLen: 10 });
-  const orderBy = ORDER_BY_ALLOWED.has(sp.get('order_by')) ? sp.get('order_by') : 'data_reserva';
-  const order = sp.get('order') === 'desc' ? 'DESC' : 'ASC';
+  const orderBy = ORDER_BY_ALLOWED.has(sp.get('order_by')) ? sp.get('order_by') : 'criado_em';
+  const order = sp.get('order') === 'asc' ? 'ASC' : 'DESC';
   const page = Math.max(1, parseInt(sp.get('page') || '1', 10) || 1);
   const perPage = Math.min(100, Math.max(1, parseInt(sp.get('per_page') || '25', 10) || 25));
 

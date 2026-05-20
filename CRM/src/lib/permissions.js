@@ -15,6 +15,7 @@ export const PERMISSIONS = {
     'create_reserva',
     'edit_reserva_status',
     'edit_reserva_obs',
+    'export_voucher',
     'view_utms',
     'view_reports',
     'export_csv',
@@ -26,6 +27,7 @@ export const PERMISSIONS = {
     'create_reserva',
     'edit_reserva_status',
     'edit_reserva_obs',
+    'export_voucher',
     'view_reports',
     'export_csv',
   ]),
@@ -34,6 +36,7 @@ export const PERMISSIONS = {
     'create_reserva',
     'edit_reserva_status',
     'edit_reserva_obs',
+    'export_voucher',
   ]),
   marketing: new Set([
     'view_dashboard',

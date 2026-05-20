@@ -18,6 +18,7 @@ import { handleAdminStatus } from './routes/admin/status.js';
 import { handleAdminObs } from './routes/admin/obs.js';
 import { handleAdminDashboard } from './routes/admin/dashboard.js';
 import { handleAdminCheckin } from './routes/admin/checkin.js';
+import { handleAdminVoucher } from './routes/admin/voucher.js';
 import { handleUsersList } from './routes/admin/users/list.js';
 import { handleUsersCreate } from './routes/admin/users/create.js';
 import { handleUsersUpdate } from './routes/admin/users/update.js';
@@ -193,6 +194,7 @@ async function routeAdmin(request, env, ctx, path) {
     if (sub === '') return handleAdminDetail(request, env, ctx, auth, id);
     if (sub === '/status') return handleAdminStatus(request, env, ctx, auth, id);
     if (sub === '/observacoes-internas') return handleAdminObs(request, env, ctx, auth, id);
+    if (sub === '/voucher') return handleAdminVoucher(request, env, ctx, auth, id);
   }
 
   return error('not_found', 'Endpoint não encontrado.', { status: 404 });

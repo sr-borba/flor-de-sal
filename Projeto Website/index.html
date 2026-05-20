@@ -28,14 +28,14 @@
   </script>
   <!-- End Meta Pixel Code -->
 
-  <title>Flor de Sal Bistrô &amp; Bar | Jantar em Maceió</title>
-  <meta name="description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. Vagas limitadas com vista para as piscinas naturais. Reserve sua mesa." />
+  <title>Flor de Sal Bistrô &amp; Bar | Almoço e Jantar em Maceió</title>
+  <meta name="description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. Almoço e jantar com vagas limitadas e vista para as piscinas naturais. Reserve sua mesa." />
   <link rel="canonical" href="https://flordesal.saishotel.com.br/" />
   <link rel="icon" type="image/svg+xml" href="/Identidade%20Visual/SVG/Logotipo_Icone_Dourado.svg" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Flor de Sal Bistrô &amp; Bar | Jantar em Maceió" />
-  <meta property="og:description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. Vagas limitadas com vista para as piscinas naturais. Reserve sua mesa." />
+  <meta property="og:title" content="Flor de Sal Bistrô &amp; Bar | Almoço e Jantar em Maceió" />
+  <meta property="og:description" content="Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros. Almoço e jantar com vagas limitadas e vista para as piscinas naturais. Reserve sua mesa." />
   <meta property="og:image" content="https://flordesal.saishotel.com.br/assets/hero-ambiente.jpg" />
   <meta property="og:url" content="https://flordesal.saishotel.com.br/" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -61,7 +61,7 @@
           "addressRegion": "AL",
           "addressCountry": "BR"
         },
-        "openingHours": "Mo-Su 19:00-22:00",
+        "openingHours": ["Mo-Su 12:00-15:00", "Mo-Su 19:00-22:00"],
         "servesCuisine": "Nordestina Contemporânea",
         "priceRange": "R$39–R$125"
       },
@@ -72,7 +72,7 @@
           {"@type":"Question","name":"Como faço a reserva?","acceptedAnswer":{"@type":"Answer","text":"Pelo WhatsApp do Concierge: (82) 8723-3023. A confirmação chega em até 5 minutos."}},
           {"@type":"Question","name":"Preciso chegar no horário marcado?","acceptedAnswer":{"@type":"Answer","text":"Sim. Como o ambiente é intimista, o horário faz parte da experiência de cada mesa. Caso surja um imprevisto, basta avisar o Concierge para reagendar — é uma cortesia da casa. Há uma tolerância de 30 minutos após o horário marcado."}},
           {"@type":"Question","name":"O restaurante atende restrições alimentares?","acceptedAnswer":{"@type":"Answer","text":"Sim. Informe a restrição no momento da reserva — a equipe se prepara com antecedência."}},
-          {"@type":"Question","name":"Funciona todos os dias?","acceptedAnswer":{"@type":"Answer","text":"Sim. O Flor de Sal serve jantar todos os dias, das 19h às 22h. A reserva é sempre obrigatória."}},
+          {"@type":"Question","name":"Funciona todos os dias?","acceptedAnswer":{"@type":"Answer","text":"Sim. O Flor de Sal serve almoço das 12h às 15h e jantar das 19h às 22h, todos os dias. A reserva é sempre obrigatória."}},
           {"@type":"Question","name":"Onde fica exatamente?","acceptedAnswer":{"@type":"Answer","text":"Andar Lazer do Sais Beach Living Hotel — Av. Doutor Antônio Gouveia, 81, Pajuçara, Maceió."}}
         ]
       }
@@ -1035,8 +1035,24 @@
 
     .time-slots {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
       gap: 0.5rem;
+    }
+    .time-slot-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .time-slot-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .time-slot-group__label {
+      color: rgba(250,250,248,0.56);
+      font-size: var(--fs-text-micro);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
     .time-slot {
       background: rgba(0,0,0,0.35);
@@ -1057,8 +1073,10 @@
       border-color: var(--fs-dourado);
       color: var(--fs-escuro);
     }
-    .time-slots.is-error { animation: shake 0.36s; }
-    .time-slots.is-error .time-slot:not(.is-active) { border-color: rgba(220,90,80,0.5); }
+    .time-slots.is-error,
+    .time-slot-groups.is-error { animation: shake 0.36s; }
+    .time-slots.is-error .time-slot:not(.is-active),
+    .time-slot-groups.is-error .time-slot:not(.is-active) { border-color: rgba(220,90,80,0.5); }
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-4px); }
@@ -1419,8 +1437,7 @@
       <div class="container">
         <div class="hero__content">
           <h1 class="hero__h1">
-            O Nordeste que você conhece.<br>
-            <em>Reinventado pelo chef que o elevou ao nível nacional.</em>
+            O Nordeste que você conhece, reinventado pelo chef que projetou seus sabores no cenário nacional.
           </h1>
 
           <div class="hero__badge" aria-label="Apresentação">
@@ -1445,7 +1462,7 @@
             </a>
           </div>
 
-          <p class="hero__info">Jantar · 19h às 22h · Todos os dias · Reserva obrigatória</p>
+          <p class="hero__info">Almoço · 12h às 15h · Jantar · 19h às 22h · Todos os dias · Reserva obrigatória</p>
         </div>
       </div>
     </section>
@@ -1476,7 +1493,7 @@
               Wanderson Medeiros carrega o apelido da cidade onde aprendeu a cozinhar: Picuí, sertão da Paraíba. Foi lá, entre fogão à lenha e tradição centenária, que o ofício entrou pelo tato antes de entrar pela técnica.
             </p>
             <p class="chef__body">
-              Duas vezes eleito Melhor Chef Banqueteiro do Brasil pela Prazeres da Mesa — em 2018 e 2022. No Flor de Sal, essa trajetória chega à mesa em uma experiência intimista. Para quem escolhe com cuidado onde janta.
+              Duas vezes eleito Melhor Chef Banqueteiro do Brasil pela Prazeres da Mesa — em 2018 e 2022. No Flor de Sal, essa trajetória chega à mesa em uma experiência intimista. Para quem escolhe com cuidado onde se senta à mesa.
             </p>
 
             <div class="chef__badge">
@@ -1497,7 +1514,7 @@
       <div class="container">
         <div class="restaurante__intro" data-animate>
           <span class="eyebrow" style="color:var(--fs-terra)">O Restaurante</span>
-          <h2 class="restaurante__headline">Há lugares que transformam um jantar em algo maior. O Flor de Sal é um deles.</h2>
+          <h2 class="restaurante__headline">Há lugares que transformam uma refeição em algo maior. O Flor de Sal é um deles.</h2>
           <p class="restaurante__body">
             Espaço intimista, adega climatizada com rótulos nacionais e internacionais e as piscinas naturais de Maceió como cenário. A essência do Beach Living à mesa.
           </p>
@@ -1519,7 +1536,7 @@
           <div class="diff-card" data-animate>
             <div class="diff-card__icon">◆</div>
             <h3 class="diff-card__title">Vagas Limitadas</h3>
-            <p class="diff-card__text">Quem reserva garante mais do que uma mesa — garante uma noite inteiramente dedicada à sua experiência.</p>
+            <p class="diff-card__text">Quem reserva garante mais do que uma mesa — garante um momento inteiramente dedicado à sua experiência.</p>
           </div>
           <div class="diff-card" data-animate data-animate-delay="1">
             <div class="diff-card__icon">★</div>
@@ -1528,12 +1545,12 @@
           </div>
           <div class="diff-card" data-animate data-animate-delay="2">
             <div class="diff-card__icon">◎</div>
-            <h3 class="diff-card__title">Vista singular</h3>
-            <p class="diff-card__text">As piscinas naturais de Maceió como cenário. Um horizonte que não existe em nenhum outro restaurante da cidade.</p>
+            <h3 class="diff-card__title">Almoço &amp; Jantar</h3>
+            <p class="diff-card__text">Do sol alto sobre o mar ao brilho dourado da noite, cada horário revela uma forma diferente de viver o Flor de Sal.</p>
           </div>
         </div>
 
-        <p class="restaurante__info">Jantar das 19h às 22h · Todos os dias · À la carte · Reserva obrigatória</p>
+        <p class="restaurante__info">Almoço das 12h às 15h · Jantar das 19h às 22h · Todos os dias · À la carte · Reserva obrigatória</p>
 
         <div class="restaurante__cta" data-animate>
           <a
@@ -1541,7 +1558,7 @@
             class="btn btn--outline-dark"
             aria-label="Ir para o formulário de reserva"
           >Garantir minha reserva</a>
-          <span class="btn-microcopy" style="color:var(--fs-terra);display:block;text-align:center;">Jantar das 19h às 22h · Vagas limitadas</span>
+          <span class="btn-microcopy" style="color:var(--fs-terra);display:block;text-align:center;">Almoço &amp; jantar · Vagas limitadas</span>
         </div>
       </div>
     </section>
@@ -1651,8 +1668,9 @@
           <div class="reserva-block reserva-block--left" data-animate>
             <span class="eyebrow">Reserva</span>
             <h2 class="reserva-block__headline">Garanta sua mesa</h2>
-            <p class="reserva-block__text">Ao fazer sua reserva, você garante mais do que uma mesa, garante uma noite inteiramente dedicada à sua experiência.</p>
+            <p class="reserva-block__text">Ao fazer sua reserva, você garante mais do que uma mesa: garante um momento inteiro dedicado à sua experiência.</p>
             <ul class="reserva-info">
+              <li><span class="reserva-info__label">Almoço</span><span class="reserva-info__value">12h às 15h</span></li>
               <li><span class="reserva-info__label">Jantar</span><span class="reserva-info__value">19h às 22h</span></li>
               <li><span class="reserva-info__label">Funcionamento</span><span class="reserva-info__value">Todos os dias</span></li>
               <li><span class="reserva-info__label">Lugares</span><span class="reserva-info__value">Vagas limitadas</span></li>
@@ -1708,14 +1726,31 @@
               </div>
 
               <div class="reserva-field reserva-field--full">
-                <label class="reserva-field__label">Horário do Jantar</label>
-                <div class="time-slots" id="timeSlots" role="radiogroup" aria-label="Horário do jantar">
-                  <button type="button" class="time-slot" data-value="19h" role="radio" aria-checked="false">19h</button>
-                  <button type="button" class="time-slot" data-value="19h30" role="radio" aria-checked="false">19h30</button>
-                  <button type="button" class="time-slot" data-value="20h" role="radio" aria-checked="false">20h</button>
-                  <button type="button" class="time-slot" data-value="20h30" role="radio" aria-checked="false">20h30</button>
-                  <button type="button" class="time-slot" data-value="21h" role="radio" aria-checked="false">21h</button>
-                  <button type="button" class="time-slot" data-value="21h30" role="radio" aria-checked="false">21h30</button>
+                <label class="reserva-field__label">Horário</label>
+                <div class="time-slot-groups" id="timeSlots" role="radiogroup" aria-label="Horário da reserva">
+                  <div class="time-slot-group">
+                    <p class="time-slot-group__label">Almoço · 12h às 15h</p>
+                    <div class="time-slots">
+                      <button type="button" class="time-slot" data-value="12h" role="radio" aria-checked="false">12h</button>
+                      <button type="button" class="time-slot" data-value="12h30" role="radio" aria-checked="false">12h30</button>
+                      <button type="button" class="time-slot" data-value="13h" role="radio" aria-checked="false">13h</button>
+                      <button type="button" class="time-slot" data-value="13h30" role="radio" aria-checked="false">13h30</button>
+                      <button type="button" class="time-slot" data-value="14h" role="radio" aria-checked="false">14h</button>
+                      <button type="button" class="time-slot" data-value="14h30" role="radio" aria-checked="false">14h30</button>
+                      <button type="button" class="time-slot" data-value="15h" role="radio" aria-checked="false">15h</button>
+                    </div>
+                  </div>
+                  <div class="time-slot-group">
+                    <p class="time-slot-group__label">Jantar · 19h às 22h</p>
+                    <div class="time-slots">
+                      <button type="button" class="time-slot" data-value="19h" role="radio" aria-checked="false">19h</button>
+                      <button type="button" class="time-slot" data-value="19h30" role="radio" aria-checked="false">19h30</button>
+                      <button type="button" class="time-slot" data-value="20h" role="radio" aria-checked="false">20h</button>
+                      <button type="button" class="time-slot" data-value="20h30" role="radio" aria-checked="false">20h30</button>
+                      <button type="button" class="time-slot" data-value="21h" role="radio" aria-checked="false">21h</button>
+                      <button type="button" class="time-slot" data-value="21h30" role="radio" aria-checked="false">21h30</button>
+                    </div>
+                  </div>
                   <input type="hidden" name="horario" id="rf-horario" />
                 </div>
               </div>
@@ -1763,7 +1798,7 @@
               <span class="faq__icon" aria-hidden="true"></span>
             </button>
             <div class="faq__answer" id="faq-a3">
-              Pelo WhatsApp do Concierge: (82) 8723-3023. Informe a data, o horário de preferência entre 19h e 22h e o número de pessoas. A confirmação chega em até 5 minutos.
+              Pelo WhatsApp do Concierge: (82) 8723-3023. Informe a data, o horário de preferência para almoço ou jantar e o número de pessoas. A confirmação chega em até 5 minutos.
             </div>
           </div>
 
@@ -1793,7 +1828,7 @@
               <span class="faq__icon" aria-hidden="true"></span>
             </button>
             <div class="faq__answer" id="faq-a6">
-              Sim. O Flor de Sal serve jantar todos os dias, das 19h às 22h. Apenas para garantir: a reserva é sempre obrigatória.
+              Sim. O Flor de Sal serve almoço das 12h às 15h e jantar das 19h às 22h, todos os dias. Apenas para garantir: a reserva é sempre obrigatória.
             </div>
           </div>
 
@@ -1860,7 +1895,7 @@
                 </svg>
                 <div class="localizacao__detail-text">
                   <strong>Horário</strong>
-                  Jantar das 19h às 22h · Todos os dias
+                  Almoço das 12h às 15h · Jantar das 19h às 22h · Todos os dias
                 </div>
               </div>
 

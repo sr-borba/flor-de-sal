@@ -11,6 +11,11 @@
     user: null,         // { id, nome, sobrenome, email, role, ativo }
     perms: new Set(),   // capabilities da role atual
   };
+  const HORARIOS_RESERVA = [
+    '12h', '12h30', '13h', '13h30', '14h', '14h30', '15h',
+    '19h', '19h30', '20h', '20h30', '21h', '21h30',
+  ];
+  const HORARIOS_OPTIONS = HORARIOS_RESERVA.map((h) => [h, h]);
   function can(action) { return session.perms.has(action); }
 
   function roleLabel(r) {
@@ -310,7 +315,12 @@
   function renderTopbar() {
     const bar = $('#topbar');
     clear(bar);
-    bar.appendChild(el('div', { class: 'topbar__brand' }, [
+    bar.appendChild(el('a', {
+      class: 'topbar__brand',
+      href: '#/reservas',
+      title: 'Ir para Reservas',
+      'aria-label': 'Ir para a tela de reservas',
+    }, [
       el('img', {
         class: 'topbar__logo',
         src: '/Identidade%20Visual/SVG/Logotipo_Flor de Sal - Dourado_Completa.svg',
@@ -510,7 +520,7 @@
   async function renderReservasList() {
     const state = {
       q: '', status: '', origem: '', from: '', to: '', horario: '',
-      order_by: 'data_reserva', order: 'asc', page: 1, per_page: 25,
+      order_by: 'criado_em', order: 'desc', page: 1, per_page: 25,
       period: 'todas',
     };
 
@@ -578,8 +588,7 @@
         oninput: (e) => { state.to = e.target.value; },
       })));
       filters.appendChild(group('Horário', selectEl(state.horario, [
-        ['', 'Todos'], ['19h', '19h'], ['19h30', '19h30'],
-        ['20h', '20h'], ['20h30', '20h30'], ['21h', '21h'], ['21h30', '21h30'],
+        ['', 'Todos'], ...HORARIOS_OPTIONS,
       ], (v) => { state.horario = v; })));
       filters.appendChild(group('Ordenar por', selectEl(`${state.order_by}:${state.order}`, [
         ['data_reserva:asc', 'Data reserva ↑'],
@@ -595,6 +604,8 @@
         onclick: () => {
           state.q = state.status = state.origem = state.from = state.to = state.horario = '';
           state.period = 'todas';
+          state.order_by = 'criado_em';
+          state.order = 'desc';
           state.page = 1; load();
         },
       }, iconText('erase', 'Limpar')));
@@ -625,6 +636,8 @@
             if (key === 'todas') {
               state.from = '';
               state.to = '';
+              state.order_by = 'criado_em';
+              state.order = 'desc';
             } else if (key !== 'personalizado') {
               state.from = presets[key].from;
               state.to = presets[key].to;
@@ -832,6 +845,12 @@
       right.appendChild(buildActionsCard(r));
     }
 
+    // Exportar voucher (admin/gerente/concierge) — apenas se o status atual
+    // permite gerar voucher (confirmada/cancelada/remarcada).
+    if (can('export_voucher') && ['confirmada', 'cancelada', 'remarcada'].includes(r.status)) {
+      right.appendChild(buildVoucherCard(r));
+    }
+
     // Histórico
     right.appendChild(buildHistoryCard(data.history));
 
@@ -858,6 +877,55 @@
       actions.appendChild(mk('Cancelar', 'danger', () => promptCancelar()));
       card.appendChild(actions);
       return card;
+    }
+
+    function buildVoucherCard(r) {
+      // Apenas o voucher do status atual: o tipo varia conforme a reserva.
+      const opcao = ({
+        confirmada: { tipo: 'confirmada', label: 'Voucher Confirmado' },
+        cancelada:  { tipo: 'cancelada',  label: 'Voucher Cancelado' },
+        remarcada:  { tipo: 'reagendada', label: 'Voucher Reagendado' },
+      })[r.status];
+      if (!opcao) return el('div'); // safety — não deveria chegar aqui
+      const card = el('div', { class: 'card', style: 'margin-top:1rem;' });
+      card.appendChild(el('h3', { class: 'section__title', style: 'margin:0 0 .35rem;', text: 'Exportar voucher' }));
+      card.appendChild(el('p', { class: 'muted', style: 'margin:0 0 .7rem;font-size:.82rem;line-height:1.4;',
+        text: 'Gera o PDF do voucher com base no status atual da reserva.' }));
+      const b = el('button', { class: 'btn btn--primary', type: 'button' }, iconText('download', opcao.label));
+      b.addEventListener('click', () => downloadVoucher(r.id, opcao.tipo, b));
+      card.appendChild(b);
+      return card;
+    }
+
+    async function downloadVoucher(reservaId, tipo, btn) {
+      btn.disabled = true;
+      try {
+        const r = await fetch(`/api/admin/reservas/${reservaId}/voucher?tipo=${encodeURIComponent(tipo)}`, {
+          credentials: 'same-origin',
+        });
+        if (!r.ok) {
+          let msg = `HTTP ${r.status}`;
+          try { const b = await r.json(); if (b.error?.message) msg = b.error.message; } catch {}
+          toast(msg, 'error');
+          return;
+        }
+        const blob = await r.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const disp = r.headers.get('Content-Disposition') || '';
+        const m = disp.match(/filename="?([^"]+)"?/);
+        a.download = m ? m[1] : `voucher-${tipo}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        toast('Voucher exportado.', 'success');
+      } catch (e) {
+        toast('Falha ao gerar voucher.', 'error');
+      } finally {
+        btn.disabled = false;
+      }
     }
 
     async function changeStatus(novo, extra) {
@@ -890,7 +958,7 @@
     async function promptRemarcar(r) {
       const dataInput = el('input', { class: 'field__input', type: 'date', value: r.data_reserva });
       const horarioSel = el('select', { class: 'field__select' });
-      for (const h of ['19h', '19h30', '20h', '20h30', '21h', '21h30']) {
+      for (const h of HORARIOS_RESERVA) {
         horarioSel.appendChild(el('option', { value: h, text: h, selected: h === r.horario }));
       }
       const motivoInput = el('input', { class: 'field__input', type: 'text', placeholder: 'Motivo (opcional)' });
@@ -1091,7 +1159,7 @@
       async function promptRemarcarInline(r) {
         const dataInput = el('input', { class: 'field__input', type: 'date', value: r.data_reserva || date });
         const horarioSel = el('select', { class: 'field__select' });
-        for (const h of ['19h', '19h30', '20h', '20h30', '21h', '21h30']) {
+        for (const h of HORARIOS_RESERVA) {
           horarioSel.appendChild(el('option', { value: h, text: h, selected: h === r.horario }));
         }
         const motivoInput = el('input', { class: 'field__input', type: 'text', placeholder: 'Motivo (opcional)' });
@@ -1203,8 +1271,7 @@
       field('data_reserva', 'Data da reserva', { type: 'date', value: today, required: true }),
       field('horario', 'Horário', { type: 'select', required: true, options: [
         ['', '— Selecione —'],
-        ['19h', '19h'], ['19h30', '19h30'], ['20h', '20h'],
-        ['20h30', '20h30'], ['21h', '21h'], ['21h30', '21h30'],
+        ...HORARIOS_OPTIONS,
       ]}),
       field('adultos', 'Adultos', { type: 'number', value: '2', min: 1, max: 30, required: true }),
       field('criancas', 'Crianças', { type: 'number', value: '0', min: 0, max: 30 }),

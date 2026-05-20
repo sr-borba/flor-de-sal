@@ -127,6 +127,11 @@ button { cursor: pointer; }
   background: var(--fs-terra-deep);
   border-right: 1px solid rgba(199, 164, 83, 0.28);
   padding: var(--fs-space-6) 0;
+  position: sticky;
+  top: 76px;
+  align-self: start;
+  height: calc(100vh - 76px);
+  overflow: hidden;
 }
 
 .sidebar__nav {
@@ -847,6 +852,9 @@ button { cursor: pointer; }
     border-right: none;
     border-bottom: 1px solid var(--admin-border);
     padding: var(--fs-space-3) 0;
+    position: static;
+    height: auto;
+    overflow: visible;
   }
   .sidebar__nav {
     flex-direction: row;

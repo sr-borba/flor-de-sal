@@ -10,6 +10,8 @@ node_modules/
 # Dumps/exports de dados — podem conter PII
 exports/
 backups/
+preview/
+preview-voucher.mjs
 *.csv
 *.dump
 *.sql.gz
