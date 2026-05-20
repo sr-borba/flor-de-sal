@@ -13,24 +13,12 @@
     gtag('config', 'G-C5JZJEEQSV');
   </script>
 
-  <!-- Meta Pixel Code -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1138586202675465');
-    fbq('track', 'PageView');
-  </script>
-  <!-- End Meta Pixel Code -->
-
   <title>Flor de Sal Bistrô &amp; Bar | Almoço e Jantar em Maceió</title>
   <meta name="description" content="Almoço (12h–14h30) e jantar (19h–22h) no Flor de Sal, Maceió. Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros." />
   <link rel="canonical" href="https://flordesal.saishotel.com.br/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1A0E06" />
+  <meta property="og:locale" content="pt_BR" />
   <link rel="icon" type="image/svg+xml" href="/Identidade%20Visual/SVG/Logotipo_Icone_Dourado.svg" />
 
   <meta property="og:type" content="website" />
@@ -40,6 +28,8 @@
   <meta property="og:url" content="https://flordesal.saishotel.com.br/" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <link rel="dns-prefetch" href="https://connect.facebook.net" />
+  <link rel="preload" as="image" href="assets/hero-poster.webp" type="image/webp" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -50,7 +40,7 @@
     "@graph": [
       {
         "@type": ["Restaurant","LocalBusiness"],
-        "name": "Flor de Sal Bistrô &amp; Bar",
+        "name": "Flor de Sal Bistrô & Bar",
         "description": "Almoço (12h–14h30) e jantar (19h–22h) no Flor de Sal, Maceió. Cozinha nordestina contemporânea assinada pelo Chef Wanderson Medeiros.",
         "url": "https://flordesal.saishotel.com.br/",
         "telephone": "+558287233023",
@@ -1367,11 +1357,6 @@
   </style>
 </head>
 <body>
-  <!-- Meta Pixel — fallback noscript -->
-  <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1138586202675465&ev=PageView&noscript=1"
-    alt="" /></noscript>
-
   <!-- ── STICKY HEADER (desktop) ──────────────────────── -->
   <header class="site-header" id="site-header" aria-label="Navegação principal">
     <div class="site-header__inner">
@@ -1403,12 +1388,12 @@
         <video
           id="heroVideo"
           src="assets/hero-video.mp4"
-          poster="assets/hero-poster.jpg"
+          poster="assets/hero-poster.webp"
           autoplay
           muted
           loop
           playsinline
-          preload="auto"
+          preload="metadata"
           aria-label="Vídeo de apresentação do Flor de Sal Bistrô e Bar"
         ></video>
       </div>
@@ -1472,12 +1457,17 @@
       <div class="container">
         <div class="chef__grid">
           <div class="chef__photo-wrap" data-animate>
-            <img
-              src="assets/chef-wanderson.jpg"
-              alt="Chef Wanderson Medeiros, o Picuí — Flor de Sal Bistrô &amp; Bar"
-              class="chef__photo"
-              loading="lazy"
-            />
+            <picture>
+              <source srcset="assets/chef-wanderson.webp" type="image/webp" />
+              <img
+                src="assets/chef-wanderson.jpg"
+                alt="Chef Wanderson Medeiros, o Picuí — Flor de Sal Bistrô &amp; Bar"
+                class="chef__photo"
+                loading="lazy"
+                width="1920"
+                height="1560"
+              />
+            </picture>
             <div class="chef__photo-caption">Chef Wanderson Medeiros · o Picuí</div>
           </div>
 
@@ -1521,12 +1511,17 @@
         </div>
 
         <div class="restaurante__photo-wrap" data-animate>
-          <img
-            src="assets/restaurante-noite.jpg"
-            alt="Salão do Flor de Sal Bistrô &amp; Bar iluminado à noite, com mesas postas e luz âmbar"
-            class="restaurante__photo"
-            loading="lazy"
-          />
+          <picture>
+            <source srcset="assets/restaurante-noite.webp" type="image/webp" />
+            <img
+              src="assets/restaurante-noite.jpg"
+              alt="Salão do Flor de Sal Bistrô &amp; Bar iluminado à noite, com mesas postas e luz âmbar"
+              class="restaurante__photo"
+              loading="lazy"
+              width="1440"
+              height="1080"
+            />
+          </picture>
           <div class="restaurante__photo-overlay">
             <span class="restaurante__num-label">Espaço intimista</span>
           </div>
@@ -1576,7 +1571,10 @@
 
         <div class="cardapio__grid">
           <article class="dish-card" data-animate>
-            <img src="assets/prato-arroz-polvo.jpg" alt="Arroz de Polvo dos Milagres — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <picture>
+              <source srcset="assets/prato-arroz-polvo.webp" type="image/webp" />
+              <img src="assets/prato-arroz-polvo.jpg" alt="Arroz de Polvo dos Milagres — Flor de Sal" class="dish-card__photo" loading="lazy" width="1280" height="1920" />
+            </picture>
             <div class="dish-card__body">
               <h3 class="dish-card__name">Arroz de Polvo dos Milagres</h3>
               <p class="dish-card__desc">Uma tradição de São Miguel dos Milagres levada para a mesa do Flor de Sal com a assinatura do chef. Arroz negro, polvo na brasa, azeite e o cheiro do mar em cada garfada.</p>
@@ -1584,7 +1582,10 @@
           </article>
 
           <article class="dish-card" data-animate data-animate-delay="1">
-            <img src="assets/prato-carne-sol.jpg" alt="Carne de Sol com Natas — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <picture>
+              <source srcset="assets/prato-carne-sol.webp" type="image/webp" />
+              <img src="assets/prato-carne-sol.jpg" alt="Carne de Sol com Natas — Flor de Sal" class="dish-card__photo" loading="lazy" width="1280" height="1920" />
+            </picture>
             <div class="dish-card__body">
               <h3 class="dish-card__name">Carne de Sol com Natas</h3>
               <p class="dish-card__desc">O insumo mais nordestino que existe — tratado com o respeito de quem o conhece desde criança. Mignon curado, nata fresca, chips de macaxeira. Memória e precisão no mesmo prato.</p>
@@ -1592,7 +1593,10 @@
           </article>
 
           <article class="dish-card" data-animate data-animate-delay="2">
-            <img src="assets/prato-arroz-camarao.jpg" alt="Arroz Cremoso de Camarão — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <picture>
+              <source srcset="assets/prato-arroz-camarao.webp" type="image/webp" />
+              <img src="assets/prato-arroz-camarao.jpg" alt="Arroz Cremoso de Camarão — Flor de Sal" class="dish-card__photo" loading="lazy" width="1920" height="1280" />
+            </picture>
             <div class="dish-card__body">
               <h3 class="dish-card__name">Arroz Cremoso de Camarão</h3>
               <p class="dish-card__desc">Camarão selecionado, arroz cremoso e cubos de queijo coalho que fundem ao toque do calor. Um prato que representa o encontro entre o sertão e o mar.</p>
@@ -1600,7 +1604,10 @@
           </article>
 
           <article class="dish-card" data-animate data-animate-delay="3">
-            <img src="assets/prato-camarao-crocante.jpg" alt="Camarões Crocantes com Fonduta de Grana Padano — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <picture>
+              <source srcset="assets/prato-camarao-crocante.webp" type="image/webp" />
+              <img src="assets/prato-camarao-crocante.jpg" alt="Camarões Crocantes com Fonduta de Grana Padano — Flor de Sal" class="dish-card__photo" loading="lazy" width="1920" height="1280" />
+            </picture>
             <div class="dish-card__body">
               <h3 class="dish-card__name">Camarões Crocantes com Fonduta</h3>
               <p class="dish-card__desc">Camarões crocantes com fonduta de grana padano e farofa de bacon. Textura, sabor e a generosidade da cozinha nordestina em cada porção.</p>
@@ -1608,7 +1615,10 @@
           </article>
 
           <article class="dish-card" data-animate>
-            <img src="assets/prato-aneis-lula.jpg" alt="Anéis de Lula Crocantes com Molho de Limão Siciliano — Flor de Sal" class="dish-card__photo" loading="lazy" />
+            <picture>
+              <source srcset="assets/prato-aneis-lula.webp" type="image/webp" />
+              <img src="assets/prato-aneis-lula.jpg" alt="Anéis de Lula Crocantes com Molho de Limão Siciliano — Flor de Sal" class="dish-card__photo" loading="lazy" width="1920" height="1280" />
+            </picture>
             <div class="dish-card__body">
               <h3 class="dish-card__name">Anéis de Lula Crocantes</h3>
               <p class="dish-card__desc">Crocância e acidez em equilíbrio. Lula fresca com molho de limão siciliano — uma entrada que define o tom do que está por vir.</p>
@@ -1616,7 +1626,10 @@
           </article>
 
           <article class="dish-card" data-animate data-animate-delay="1">
-            <img src="assets/prato-cheesecake.jpg" alt="Cheesecake Torta Basca — Flor de Sal" class="dish-card__photo" loading="lazy" style="object-position:center 70%;" />
+            <picture>
+              <source srcset="assets/prato-cheesecake.webp" type="image/webp" />
+              <img src="assets/prato-cheesecake.jpg" alt="Cheesecake Torta Basca — Flor de Sal" class="dish-card__photo" loading="lazy" style="object-position:center 70%;" width="1280" height="1920" />
+            </picture>
             <div class="dish-card__body">
               <h3 class="dish-card__name">Cheesecake · Torta Basca</h3>
               <p class="dish-card__desc">O encerramento. Cremosa, caramelizada nas bordas, servida em temperatura que ressalta cada camada. Um clássico reinterpretado com a precisão que o Flor de Sal impõe a cada prato.</p>
@@ -1643,19 +1656,34 @@
         </div>
         <div class="galeria__grid" role="list" aria-label="Fotos do restaurante">
           <div class="galeria__item" role="listitem">
-            <img src="assets/galeria-adega.jpg" alt="Adega do Flor de Sal Bistrô e Bar — curadoria de vinhos" loading="lazy" style="object-position:center center;" />
+            <picture>
+              <source srcset="assets/galeria-adega.webp" type="image/webp" />
+              <img src="assets/galeria-adega.jpg" alt="Adega do Flor de Sal Bistrô e Bar — curadoria de vinhos" loading="lazy" style="object-position:center center;" width="1448" height="1086" />
+            </picture>
           </div>
           <div class="galeria__item" role="listitem">
-            <img src="assets/prato-arroz-polvo.jpg" alt="Arroz de Polvo dos Milagres — assinatura do Chef Wanderson Medeiros" loading="lazy" />
+            <picture>
+              <source srcset="assets/prato-arroz-polvo.webp" type="image/webp" />
+              <img src="assets/prato-arroz-polvo.jpg" alt="Arroz de Polvo dos Milagres — assinatura do Chef Wanderson Medeiros" loading="lazy" width="1280" height="1920" />
+            </picture>
           </div>
           <div class="galeria__item" role="listitem">
-            <img src="assets/ambiente-02.jpg" alt="Ambiente do Flor de Sal Bistrô e Bar — Sais Beach Living Hotel" loading="lazy" />
+            <picture>
+              <source srcset="assets/ambiente-02.webp" type="image/webp" />
+              <img src="assets/ambiente-02.jpg" alt="Ambiente do Flor de Sal Bistrô e Bar — Sais Beach Living Hotel" loading="lazy" width="1920" height="1280" />
+            </picture>
           </div>
           <div class="galeria__item" role="listitem">
-            <img src="assets/ambiente-05.jpg" alt="Detalhe do Flor de Sal Bistrô e Bar — Pajuçara, Maceió" loading="lazy" />
+            <picture>
+              <source srcset="assets/ambiente-05.webp" type="image/webp" />
+              <img src="assets/ambiente-05.jpg" alt="Detalhe do Flor de Sal Bistrô e Bar — Pajuçara, Maceió" loading="lazy" width="1279" height="1920" />
+            </picture>
           </div>
           <div class="galeria__item" role="listitem">
-            <img src="assets/prato-carne-sol.jpg" alt="Carne de Sol com Natas — Flor de Sal Bistrô e Bar" loading="lazy" />
+            <picture>
+              <source srcset="assets/prato-carne-sol.webp" type="image/webp" />
+              <img src="assets/prato-carne-sol.jpg" alt="Carne de Sol com Natas — Flor de Sal Bistrô e Bar" loading="lazy" width="1280" height="1920" />
+            </picture>
           </div>
         </div>
       </div>
@@ -2191,5 +2219,19 @@
     });
   </script>
 
+  <!-- Meta Pixel Code — carregado após o conteúdo principal -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1138586202675465');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1138586202675465&ev=PageView&noscript=1" /></noscript>
 </body>
 </html>
