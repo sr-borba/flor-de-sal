@@ -20,7 +20,7 @@ const COLOR = {
   danger:     '#9B2A20',
 };
 
-const MENU_URL      = 'https://flordesal.saishotel.com.br/cardapio-jantar-flor-de-sal.pdf';
+const MENU_URL      = 'https://digitalmenu.thexpdv.com/auth/menu/cserpa';
 const INSTAGRAM_URL = 'https://instagram.com/flordesal.bypicui';
 const INSTAGRAM_HANDLE = '@flordesal.bypicui';
 
