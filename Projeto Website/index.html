@@ -63,7 +63,10 @@
           {"@type":"Question","name":"Preciso chegar no horário marcado?","acceptedAnswer":{"@type":"Answer","text":"Sim. Como o ambiente é intimista, o horário faz parte da experiência de cada mesa. Caso surja um imprevisto, basta avisar o Concierge para reagendar — é uma cortesia da casa. Há uma tolerância de 30 minutos após o horário marcado."}},
           {"@type":"Question","name":"O restaurante atende restrições alimentares?","acceptedAnswer":{"@type":"Answer","text":"Sim. Informe a restrição no momento da reserva — a equipe se prepara com antecedência."}},
           {"@type":"Question","name":"Funciona todos os dias?","acceptedAnswer":{"@type":"Answer","text":"Sim. O Flor de Sal serve almoço das 12h às 14h30 e jantar das 19h às 22h, todos os dias. A reserva é sempre obrigatória."}},
-          {"@type":"Question","name":"Onde fica exatamente?","acceptedAnswer":{"@type":"Answer","text":"Andar Lazer do Sais Beach Living Hotel — Av. Doutor Antônio Gouveia, 81, Pajuçara, Maceió."}}
+          {"@type":"Question","name":"Onde fica exatamente?","acceptedAnswer":{"@type":"Answer","text":"Andar Lazer do Sais Beach Living Hotel — Av. Doutor Antônio Gouveia, 81, Pajuçara, Maceió."}},
+          {"@type":"Question","name":"O café da manhã no Flor de Sal é aberto ao público?","acceptedAnswer":{"@type":"Answer","text":"Não. O café da manhã no Flor de Sal é exclusivo para hóspedes das categorias Suíte Panorâmica, Frente Mar e Suíte Frente Mar do Sais Beach Living Hotel, incluso na diária dessas categorias."}},
+          {"@type":"Question","name":"Como agendar o café da manhã no Flor de Sal?","acceptedAnswer":{"@type":"Answer","text":"Pelo WhatsApp do Concierge do Sais Beach Living Hotel. Recomendamos agendar na véspera. O acesso é exclusivamente mediante reserva prévia confirmada."}},
+          {"@type":"Question","name":"Qual o horário do café da manhã no Flor de Sal?","acceptedAnswer":{"@type":"Answer","text":"Segunda a sexta, das 07h às 10h, no Flor de Sal — Andar Lazer do Sais Beach Living Hotel. Exclusivo para hóspedes das categorias Suíte Panorâmica, Frente Mar e Suíte Frente Mar."}}
         ]
       }
     ]
@@ -640,6 +643,131 @@
     @media (max-width: 768px) {
       .restaurante__cards { grid-template-columns: 1fr; }
       .restaurante__num { font-size: clamp(4rem, 18vw, 6rem); }
+    }
+
+    /* ── S03b CAFÉ DA MANHÃ ──────────────────────────── */
+    .cafe-manha {
+      background: var(--fs-escuro);
+      padding: var(--fs-section-y) 0;
+    }
+
+    .cafe-manha__layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 5vw, 5rem);
+      align-items: center;
+    }
+
+    .cafe-manha__headline {
+      font-family: var(--fs-font-display);
+      font-size: var(--fs-text-h2);
+      font-weight: 300;
+      color: var(--fs-branco);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .cafe-manha__text {
+      color: rgba(250,250,248,0.68);
+      line-height: 1.8;
+      font-size: 0.9375rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .cafe-manha__rule {
+      width: 36px;
+      height: 1px;
+      background: var(--fs-dourado);
+      margin-bottom: 1.75rem;
+    }
+
+    .cafe-manha__menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem 2rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .cafe-manha__menu-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fs-dourado);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .cafe-manha__menu-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .cafe-manha__menu-items li {
+      font-size: 0.8125rem;
+      color: rgba(250,250,248,0.55);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    .cafe-manha__footnote {
+      font-size: 0.75rem;
+      color: rgba(250,250,248,0.35);
+      letter-spacing: 0.05em;
+      margin-top: 0.625rem;
+    }
+
+    .cafe-manha__horario {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(199,164,83,0.15);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.28);
+      line-height: 1.8;
+    }
+
+    .cafe-manha__video-wrap {
+      position: relative;
+      border: 1px solid rgba(199,164,83,0.28);
+      overflow: hidden;
+      border-radius: 2px;
+      background: #0d0704;
+    }
+
+    .cafe-manha__video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      max-height: 640px;
+    }
+
+    @media (max-width: 900px) {
+      .cafe-manha__layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .cafe-manha__video-wrap {
+        order: -1;
+      }
+      .cafe-manha__video {
+        max-height: 420px;
+        width: 100%;
+      }
+      .cafe-manha__menu {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cafe-manha__menu {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
     }
 
     /* ── S04 CARDÁPIO ────────────────────────────────── */
@@ -1562,6 +1690,79 @@
       </div>
     </section>
 
+    <!-- ── S03b CAFÉ DA MANHÃ ────────────────────────── -->
+    <section class="cafe-manha" id="cafe-manha" aria-label="Café da Manhã Exclusivo">
+      <div class="container">
+        <div class="cafe-manha__layout">
+
+          <!-- Conteúdo -->
+          <div class="cafe-manha__content" data-animate>
+            <span class="eyebrow">Café da Manhã Exclusivo · Hóspedes Sais Beach Living</span>
+            <h2 class="cafe-manha__headline">Uma manhã de frente<br>para as piscinas naturais.</h2>
+            <p class="cafe-manha__text">No Flor de Sal, o dia começa com vista para o mar, serviço reservado e a assinatura gastronômica do Chef Wanderson Medeiros. Exclusivo para hóspedes das categorias Suíte Panorâmica, Frente Mar e Suíte Frente Mar, o café da manhã reúne sabores nordestinos, referências internacionais e uma atmosfera íntima no Andar Lazer do Sais Beach Living.</p>
+
+            <div class="cafe-manha__rule" aria-hidden="true"></div>
+
+            <div class="cafe-manha__menu">
+              <div>
+                <p class="cafe-manha__menu-label">Da Cozinha</p>
+                <ul class="cafe-manha__menu-items">
+                  <li>Parfait do Chef</li>
+                  <li>Quiches</li>
+                  <li>Salmão gravlax com coalhada seca</li>
+                  <li>Croque monsieur &amp; Croque madame</li>
+                  <li>Ovo pochê · Ovos Benedict</li>
+                  <li>Omeletes</li>
+                  <li>Avocado toast · Cogumelos toast</li>
+                  <li>Rabanada</li>
+                  <li>Waffle — chocolate, doce de leite e mel</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cafe-manha__menu-label">Da Região</p>
+                <ul class="cafe-manha__menu-items">
+                  <li>Carne de sol na manteiga de garrafa</li>
+                  <li>Tapioca de coalho e carne seca</li>
+                  <li>Cuscuz recheado</li>
+                  <li>Cartola</li>
+                </ul>
+              </div>
+            </div>
+
+            <a
+              href="https://wa.me/558287233023?text=Olá%2C+sou+hóspede+do+Sais+Beach+Living+e+gostaria+de+agendar+o+Café+da+Manhã+no+Flor+de+Sal."
+              class="btn btn--primary"
+              target="_blank"
+              rel="noopener"
+              aria-label="Agendar café da manhã pelo WhatsApp"
+            >Agendar meu café</a>
+            <p class="cafe-manha__footnote">Incluso na diária. Reserva antecipada necessária.</p>
+
+            <p class="cafe-manha__horario">
+              Segunda a sexta · 07h às 10h<br>
+              Andar Lazer · Sais Beach Living Hotel
+            </p>
+          </div>
+
+          <!-- Vídeo -->
+          <div class="cafe-manha__video-wrap" data-animate>
+            <video
+              class="cafe-manha__video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="none"
+              aria-label="Vídeo do Café da Manhã no Flor de Sal"
+            >
+              <source src="assets/cafe-manha.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- ── S04 CARDÁPIO ──────────────────────────────── -->
     <section class="cardapio" id="cardapio" aria-label="Cardápio">
       <div class="container">
@@ -1860,6 +2061,36 @@
             </button>
             <div class="faq__answer" id="faq-a6">
               Sim. O Flor de Sal serve almoço das 12h às 14h30 e jantar das 19h às 22h, todos os dias. Apenas para garantir: a reserva é sempre obrigatória.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a8">
+              O café da manhã no Flor de Sal é aberto ao público?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a8">
+              Não. O café da manhã no Flor de Sal é exclusivo para hóspedes das categorias Suíte Panorâmica, Frente Mar e Suíte Frente Mar do Sais Beach Living Hotel. Está incluso na diária dessas categorias.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a9">
+              Como agendar o café da manhã no Flor de Sal?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a9">
+              Pelo WhatsApp do Concierge do Sais Beach Living Hotel. Recomendamos agendar na véspera para garantir o horário de preferência. O acesso é exclusivamente mediante reserva prévia confirmada.
+            </div>
+          </div>
+
+          <div class="faq__item" role="listitem">
+            <button class="faq__question" aria-expanded="false" aria-controls="faq-a10">
+              Qual o horário do café da manhã?
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__answer" id="faq-a10">
+              Segunda a sexta, das 07h às 10h, no Flor de Sal — Andar Lazer do Sais Beach Living Hotel.
             </div>
           </div>
 
